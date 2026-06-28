@@ -17,4 +17,4 @@ else
   echo "[wa3 setup] Install Go to run: go run ./tools/wa3 bundle-check"
 fi
 
-echo "[wa3 setup] done. Entry points: ../SKILL.md, ../AGENTS.md, ../WA3-SPEC.md"
+echo "[wa3 setup] done. Entry points: ../SKILL.md, ../AGENTS.md, ../README.md"

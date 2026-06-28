@@ -58,11 +58,11 @@ when turning a verified WA3 UI plan into an interface.
 
 ## Static Design Lint
 
-The normative rules, hardcoded constants, and error codes live in
-`WA3-SPEC.md` §4A.4 (`硬編碼常量`) and §4A.5 (`Design lint 與錯誤碼`). A model or
-linter MUST compare against those literals verbatim and, on any failure, emit the
-matching `DS_Exxx` code plus a one-line reason and the offending line. Do not
-guess or auto-repair the file.
+The public package documents display-template safety in `README.md` and keeps
+machine-verifiable behavior in `conformance/`. A model or linter MUST compare
+against the shipped template literals and, on any failure, emit the matching
+`DS_Exxx` code plus a one-line reason and the offending line. Do not guess or
+auto-repair the file.
 
 Reject a `*.dsdy` fail-closed when any of these are true:
 

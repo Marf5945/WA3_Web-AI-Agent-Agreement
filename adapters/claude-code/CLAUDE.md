@@ -9,9 +9,9 @@ Claude Code's sandbox has no Go toolchain, so it **cannot execute** the
 `conformance/tools/wa3` commands (`build`, `trust`, `gen-vectors`,
 `bundle-check`).
 
-- **Do static edits only** — change spec/schema/templates/adapters/manifests in
-  place, and keep `WA3-SPEC.md` byte-identical to
-  `skills/wa3-spec/references/WA3-SPEC.md` after any spec change.
+- **Do static edits only** — change public docs/schema/templates/adapters/manifests
+  in place, and keep package entry points consistent after any contract or
+  safety-model change.
 - **Never report that `bundle-check` or `build` passed** — you did not run them.
 - **Hand the Go steps to the user.** Tell them to run, on their own machine with
   Go installed:
@@ -22,14 +22,14 @@ Claude Code's sandbox has no Go toolchain, so it **cannot execute** the
   go run ./tools/wa3 bundle-check
   ```
 
-Without Go you can still check: JSON validity, the spec mirror byte-equality,
-manifest path existence, and stale-marker absence. The "Useful Commands" section
-below is **for the user to run**, not for Claude Code to execute.
+Without Go you can still check: JSON validity, manifest path existence, and
+stale-marker absence. The "Useful Commands" section below is **for the user to
+run**, not for Claude Code to execute.
 
 ## First Steps
 
 1. Read `../../AGENTS.md`.
-2. Read `../../WA3-SPEC.md` before making any normative claim.
+2. Read `../../README.md` before making any public-package claim.
 3. Use `../../builder/answers.schema.json` and `../../builder/templates/` when
    building from guided answers.
 4. Use `../../board.tdy` as the smallest collaborative-web example.

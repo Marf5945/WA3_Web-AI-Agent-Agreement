@@ -60,7 +60,7 @@ The agent should still load:
 1. `SKILL.md`
 2. `skill.json`
 3. `AGENTS.md`
-4. `WA3-SPEC.md`
+4. `README.md`
 5. `builder/answers.schema.json`
 6. `builder/templates/`
 

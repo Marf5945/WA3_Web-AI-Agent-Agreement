@@ -8,7 +8,7 @@ and enforces safety.
 ## Read Order
 
 1. Read `skill.json` for the bundle manifest and entry points.
-2. Read `WA3-SPEC.md` for normative rules.
+2. Read `README.md` for the public overview and safety model.
 3. For agent-specific behavior, read the matching file under `adapters/`.
 4. Read `docs/PROMOTE.md` before describing a draft/demo to production signing path.
    For the full publish/consume journey read the four stage docs:
@@ -71,9 +71,9 @@ profile.
 The conformance kit under `conformance/` is Go. Some agent sandboxes — including
 Claude Code's — **cannot run Go**. If `go` is unavailable in your environment:
 
-- **Make static edits only.** Edit the spec, schema, templates, adapters, and
-  manifests directly; keep the `WA3-SPEC.md` ↔ `skills/wa3-spec/references/WA3-SPEC.md`
-  mirror byte-identical after any spec change.
+- **Make static edits only.** Edit the public overview, schema, templates,
+  adapters, and manifests directly. Keep package entry points consistent after
+  any contract or safety-model change.
 - **Do NOT claim `bundle-check` / `build` passed.** You cannot execute them, so do
   not report Go-side results (manifest path checks, vector regeneration, signing).
 - **Tell the user to run the Go steps themselves**, outside the agent, on a host
@@ -92,8 +92,8 @@ Claude Code's — **cannot run Go**. If `go` is unavailable in your environment:
   `bundle-check` already skips compiled artifacts and `.gitignore` excludes them,
   but keeping the tree clean avoids surprises.
 
-What you *can* verify without Go: JSON validity, mirror byte-equality, path
-existence for manifest entries, and absence of stale markers.
+What you *can* verify without Go: JSON validity, path existence for manifest
+entries, and absence of stale markers.
 
 ## Runtime Contract
 
@@ -140,7 +140,7 @@ Consumer side (receive and render):
 
 ## Current Bundle Status
 
-- Normative spec: `WA3-SPEC.md`.
+- Normative spec: `README.md`.
 - Example contract: `board.tdy`.
 - Guided builder profile: `builder/`.
 - Functional templates: `builder/templates/`.

@@ -8,7 +8,7 @@ renderer output, and user-confirmed operations.
 
 - Manifest: `../../skill.json`
 - Quickstart: `../../AGENTS.md`
-- Normative spec: `../../WA3-SPEC.md`
+- Public overview: `../../README.md`
 - Builder schema/templates: `../../builder/`
 - Example board contract: `../../board.tdy`
 - Conformance vectors: `../../conformance/vectors`

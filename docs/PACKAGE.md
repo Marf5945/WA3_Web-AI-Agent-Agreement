@@ -35,7 +35,7 @@ Expected trust state for the draft is `unsigned_draft`.
 - Haler: `adapters/haler/haler.skill.json` projects the builder and runtime
   expectations, but the app UI still needs to wire the guided screens.
 - Claude Code / OpenClaw / Hermes: adapters are instruction-entry files that
-  point back to `skill.json`, `AGENTS.md`, `WA3-SPEC.md`, and `conformance/`.
+  point back to `skill.json`, `AGENTS.md`, `README.md`, and `conformance/`.
 - LangGraph / Voiceflow / Mistral: integration sketches are provided under
   `adapters/`; they are not the same thing as native folder-skill installs.
 - Eigent: placeholder integration guidance only until an official install

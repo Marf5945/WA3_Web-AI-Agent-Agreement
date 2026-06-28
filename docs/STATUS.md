@@ -1,8 +1,8 @@
 # WA3 Bundle — Status
 
-Single authoritative spec: `WA3-SPEC.md` (§0–§31 + Appendix A). A byte-identical
-copy is mirrored at `skills/wa3-spec/references/WA3-SPEC.md` (enforced by
-`bundle-check`).
+Public package entry point: `README.md`. The full working spec is intentionally
+kept out of the public package; `bundle-check` validates the public manifest,
+adapters, builder, vectors, and stale-marker scan.
 
 ## Done
 
@@ -110,9 +110,9 @@ go mod download              # one-time: fetch golang.org/x/text
 go run ./tools/wa3 bundle-check
 ```
 
-`bundle-check` validates: manifests parse, every manifest path exists, the spec
-and its skill reference are byte-identical, the on-disk vectors match a fresh
-regeneration, and no stale markers remain.
+`bundle-check` validates: manifests parse, every manifest path exists, the
+on-disk vectors match a fresh regeneration, the builder happy path/reject cases
+work, and no stale markers remain.
 
 ## Next
 

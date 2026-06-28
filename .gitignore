@@ -1,6 +1,11 @@
 # macOS
 .DS_Store
 
+# Public package cleanup
+WA3-SPEC.md
+/skills/wa3-spec/references/
+/output/
+
 # Python (conformance kit)
 __pycache__/
 *.pyc

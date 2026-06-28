@@ -19,7 +19,7 @@ or configure the package path in the OpenHands plugin sources.
 1. `SKILL.md`
 2. `skill.json`
 3. `AGENTS.md`
-4. `WA3-SPEC.md`
+4. `README.md`
 5. `builder/answers.schema.json`
 6. `builder/templates/`
 7. `conformance/README.md`

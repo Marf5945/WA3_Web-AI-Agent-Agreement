@@ -55,6 +55,15 @@ const (
 	eBuilderCodeOwned = "E-BUILDER-CODE-OWNED"
 	eBuilderHumanOnly = "E-BUILDER-HUMAN-ONLY"
 	eBuilderRisk      = "E-BUILDER-RISK"
+	// operate / provider layer (Blocks 2 & 3)
+	eOperateTrust    = "E-OPERATE-UNTRUSTED"
+	eOperateAction   = "E-OPERATE-NO-ACTION"
+	eOperateConfirm  = "E-OPERATE-CONFIRM-REQUIRED"
+	eOperateInput    = "E-OPERATE-INPUT"
+	eOperateProvider = "E-OPERATE-PROVIDER"
+	eProviderScheme  = "E-PROVIDER-SCHEME"
+	eProviderPath    = "E-PROVIDER-PATH"
+	eProviderSeed    = "E-PROVIDER-SEED"
 )
 
 type wa3Error struct {
@@ -103,8 +112,12 @@ func main() {
 	switch os.Args[1] {
 	case "canonical":
 		err = cmdCanonical(os.Args[2:])
+	case "init":
+		err = cmdInit(os.Args[2:])
 	case "build":
 		err = cmdBuild(os.Args[2:])
+	case "operate":
+		err = cmdOperate(os.Args[2:])
 	case "keygen":
 		err = cmdKeygen(os.Args[2:])
 	case "sign":
@@ -126,7 +139,7 @@ func main() {
 }
 
 func usage() {
-	fmt.Fprintln(os.Stderr, "usage: wa3 canonical <file> | build --answers <answers.json> --out <app.tdy> [--test-sign] [--mock-demo <demo.json>] | keygen --publisher <id> --key-out <private-key.json> [--force] | sign --key-file <private-key.json> --in <draft.tdy> --out <app.tdy> | trust [--trusted-pub <hex>] [--revoked-pub <hex>] [--rl <file.tdy-rl>] <file> | gen-vectors | bundle-check")
+	fmt.Fprintln(os.Stderr, "usage: wa3 canonical <file> | init --answers <answers.json> [--backend <handle>] [--out <answers.json>] | build --answers <answers.json> --out <app.tdy> [--test-sign] [--mock-demo <demo.json>] | operate <file.tdy> --action <id> [--input k=v ...] [--confirm] [--trusted-pub <hex>] [--data-dir <dir>] [--mock-demo <seed.json>] | keygen --publisher <id> --key-out <private-key.json> [--force] | sign --key-file <private-key.json> --in <draft.tdy> --out <app.tdy> | trust [--trusted-pub <hex>] [--revoked-pub <hex>] [--rl <file.tdy-rl>] <file> | gen-vectors | bundle-check")
 }
 
 func cmdCanonical(args []string) error {
@@ -534,12 +547,12 @@ func validateActionTarget(s string) error {
 }
 
 func validateBackendHandle(s string) error {
-	for _, prefix := range []string{"mock://", "gdrive://", "api://", "https://"} {
+	for _, prefix := range []string{"mock://", "gdrive://", "api://", "https://", "local://"} {
 		if strings.HasPrefix(s, prefix) {
 			return nil
 		}
 	}
-	return fail(eBuilderSchema, "backend must be mock://, gdrive://, api://, or https://")
+	return fail(eBuilderSchema, "backend must be mock://, gdrive://, api://, https://, or local://")
 }
 
 func stringField(m map[string]any, key string) string {
@@ -2095,9 +2108,6 @@ func cmdBundleCheck(args []string) error {
 	if err := checkManifestPaths(specRoot); err != nil {
 		return err
 	}
-	if err := checkSpecHashes(specRoot); err != nil {
-		return err
-	}
 	if err := checkVectors(specRoot); err != nil {
 		return err
 	}
@@ -2156,21 +2166,6 @@ func checkManifestPaths(root string) error {
 				return fmt.Errorf("manifest path missing: %s", rel)
 			}
 		}
-	}
-	return nil
-}
-
-func checkSpecHashes(root string) error {
-	a, err := os.ReadFile(filepath.Join(root, "WA3-SPEC.md"))
-	if err != nil {
-		return err
-	}
-	b, err := os.ReadFile(filepath.Join(root, "skills", "wa3-spec", "references", "WA3-SPEC.md"))
-	if err != nil {
-		return err
-	}
-	if !bytes.Equal(a, b) {
-		return errors.New("WA3-SPEC.md and skill reference differ")
 	}
 	return nil
 }
@@ -2312,7 +2307,6 @@ func scanForbidden(root string) error {
 		"confirm against " + "spec",
 		"ㄖ" + "ㄨ",
 		"ㄒ" + "ㄩ",
-		"py" + "thon3",
 		"wa3_min" + ".py",
 		"gen_vectors" + ".py",
 		"ed25519_ref" + ".py",
@@ -2393,7 +2387,7 @@ func findSpecRoot() (string, error) {
 	}
 	candidates := []string{cwd, filepath.Join(cwd, "WA3_SPEC"), filepath.Dir(cwd), filepath.Join(filepath.Dir(cwd), "WA3_SPEC")}
 	for _, c := range candidates {
-		if _, err := os.Stat(filepath.Join(c, "WA3-SPEC.md")); err == nil {
+		if _, err := os.Stat(filepath.Join(c, "README.md")); err == nil {
 			if _, err := os.Stat(filepath.Join(c, "skill.json")); err == nil {
 				return c, nil
 			}

@@ -9,11 +9,11 @@ description: Review, validate, author, extract design templates for, or evolve W
 
 WA3 is a portable agent-skill contract: one signed `.tdy` file declares data entities, action entry points, permissions, and display hints, while each user's agent/runtime grows its own UI shell — but **safety semantics are always enforced by `wa3-core`, never by the renderer**. This skill helps you (1) author/build a draft `.tdy` contract from user requirements, (2) review/validate an existing `.tdy` contract, and (3) evolve the specification without breaking backward compatibility.
 
-This is the Codex adapter for the portable WA3 bundle. The single authoritative
-spec is `references/WA3-SPEC.md` (kept in sync with the repo's
-`WA3_SPEC/WA3-SPEC.md`). Read it before answering anything non-trivial. The
-bundle-level quickstart and manifest live at `../../AGENTS.md` and
-`../../skill.json` when this skill is used from the repo checkout.
+This is the Codex adapter for the portable WA3 bundle. Use the public overview
+in `../../README.md`, the quickstart in `../../AGENTS.md`, and the conformance
+kit in `../../conformance/` before answering anything non-trivial. The
+bundle-level manifest lives at `../../skill.json` when this skill is used from
+the repo checkout.
 
 ## When to use
 
@@ -81,14 +81,15 @@ bundle-level quickstart and manifest live at `../../AGENTS.md` and
 
 ## Resources
 
-### references/
-- `references/WA3-SPEC.md` — the full authoritative specification (§0–§31 + Appendix A). Load it for any detailed work.
-
 ### agents/
 - `agents/openai.yaml` — interface metadata for the skill.
 
 ### output/
-- `../../output/` — **the destination for everything the builder generates.** Always write built contracts here, never next to the spec/schema/templates. Use `output/<name>.draft.tdy` for unsigned drafts, `output/<name>.test-signed.tdy` for opt-in test-signed files, and `output/<name>.mock-demo.json` for mock-provider demos. Pass it explicitly to the CLI, e.g. `--out ../output/board.draft.tdy`. A file lands here only after the deterministic gate (schema → secret-scan → risk/confirm → canonical → lint) passes; a failed gate writes nothing. Folder contents are git-ignored; only its README is tracked. Agents without a Go toolchain (e.g. Claude Code) must not run `build` themselves — edit statically and ask the user to run it; the artifact then appears in `output/`.
+- `../../output/` — optional local destination for generated builder artifacts.
+  The folder is git-ignored and not part of the public package. Prefer `/tmp`
+  for smoke tests and use `output/<name>.draft.tdy` only for local drafts.
+  Agents without a Go toolchain (e.g. Claude Code) must not run `build`
+  themselves — edit statically and ask the user to run it.
 
 ### bundle root
 - `../../AGENTS.md` — cross-agent quickstart for Haler, Codex, Claude Code, OpenClaw, and Hermes-style agents.
@@ -97,5 +98,5 @@ bundle-level quickstart and manifest live at `../../AGENTS.md` and
 - `../../design_templates/` — optional agent-readable `*.dsdy` visual profiles for rendering verified UI plans consistently. These are display-only design references, not operable WA3 contracts; they must not override action ids, targets, permissions, confirmations, trust state, or provider policy. Use `catalog.json` to recommend the closest 3 candidates by tag, and start authoring from `_TEMPLATE.dsdy`.
 - `../../conformance/` — Go-native canonicalizer, builder demo, trust classifier, bundle-check, and golden vectors; see its README for status and how to regenerate vectors.
 
-Do not duplicate the full spec inside this SKILL.md. Keep the skill concise and
-load `references/WA3-SPEC.md` only when the user asks for real WA3 work.
+Keep this adapter concise; use README, docs, and conformance files as the public
+source of package behavior.

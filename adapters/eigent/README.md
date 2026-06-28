@@ -19,7 +19,7 @@ To install this package as a **custom** skill, upload it via
 `Homepage > Agents > Skills`:
 
 - **Do not upload `SKILL.md` alone.** This skill's `SKILL.md` uses relative paths
-  back to the bundle (`../../WA3-SPEC.md`, `../../conformance/`, etc.), so a
+  back to the bundle (`../../README.md`, `../../conformance/`, etc.), so a
   standalone upload breaks those references.
 - **Upload the whole bundle as a `.zip`** with a `SKILL.md` at the archive root.
   Either repackage `skills/wa3-spec/SKILL.md` as the root with the referenced
@@ -30,7 +30,7 @@ To install this package as a **custom** skill, upload it via
 
 1. `SKILL.md`
 2. `AGENTS.md`
-3. `WA3-SPEC.md`
+3. `README.md`
 4. `builder/answers.schema.json`
 5. `builder/templates/`
 6. `conformance/README.md`

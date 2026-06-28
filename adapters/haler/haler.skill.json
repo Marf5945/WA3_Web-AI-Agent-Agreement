@@ -5,7 +5,7 @@
   "kind": "portable-contract-skill",
   "description": "Haler-readable bundle for WA3 collaborative agent-skill contracts and WA3-powered web surfaces.",
   "entry": "../../AGENTS.md",
-  "spec": "../../WA3-SPEC.md",
+  "spec": "../../README.md",
   "example_contract": "../../board.tdy",
   "builder_schema": "../../builder/answers.schema.json",
   "builder_example": "../../builder/examples/board.answers.json",

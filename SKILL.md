@@ -6,8 +6,8 @@ description: Review, validate, author, build, or evolve WA3 skill-contract files
 # WA3 Spec Bundle
 
 This is the installable root package for the WA3 portable agent-skill contract.
-It includes the normative specification, guided builder profile, adapter notes,
-and Go conformance/demo tool.
+It includes the public overview, guided builder profile, adapter notes, and Go
+conformance/demo tool.
 
 ## Non-negotiable Invariants
 
@@ -25,7 +25,7 @@ and Go conformance/demo tool.
 
 1. `skill.json` for portable bundle metadata.
 2. `AGENTS.md` for the cross-agent quickstart.
-3. `WA3-SPEC.md` for normative rules.
+3. `README.md` for the public overview and safety model.
 4. `docs/PROMOTE.md` before moving a draft/demo contract toward production signing.
 5. End-to-end flow docs, each owning one stage of the publish/consume journey:
    `docs/EXTRACT_CONTRACT.md` (webpage → builder answers, output untrusted),
@@ -101,7 +101,7 @@ go run ./tools/wa3 bundle-check
 ## Adapter Notes
 
 - Codex can install this root folder as the skill package because this file sits
-  beside `builder/`, `conformance/`, and the full spec.
+  beside `builder/`, `conformance/`, and the public overview.
 - `design_templates/` contains agent-readable `*.dsdy` visual profiles. They
   can guide renderer styling, but they never override verified contract data,
   action ids, permissions, confirmation requirements, or trust state. They are a

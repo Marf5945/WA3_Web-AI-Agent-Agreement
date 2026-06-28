@@ -8,7 +8,7 @@ entry point and map the manifest back to `../../skill.json`.
 
 1. `../../skill.json`
 2. `../../AGENTS.md`
-3. `../../WA3-SPEC.md`
+3. `../../README.md`
 4. `../../builder/answers.schema.json` and `../../builder/templates/` when
    running the guided builder flow
 5. `../../conformance/README.md` when implementing or testing parser, builder,

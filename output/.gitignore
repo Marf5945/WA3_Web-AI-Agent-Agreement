@@ -1,5 +1,0 @@
-# Ignore all generated build artifacts in this folder...
-*
-# ...but keep the folder and its documentation tracked.
-!.gitignore
-!README.md

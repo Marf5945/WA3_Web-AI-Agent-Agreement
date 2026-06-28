@@ -88,9 +88,9 @@ extraction:
 - Design template or simple default: handled by `docs/RENDER_PIPELINE.md`
   (default template, three recommendations, or the neutral fallback renderer).
 - User-provided visual reference: the user's own page/style becomes a new
-  `*.dsdy` via the design-template extraction rules in `WA3-SPEC.md` §4A and
-  `design_templates/README.md`, then binds through `docs/RENDER_PIPELINE.md`.
-  Extraction never pulls operable behavior from that reference.
+  `*.dsdy` via the design-template extraction rules in `design_templates/README.md`,
+  then binds through `docs/RENDER_PIPELINE.md`. Extraction never pulls operable
+  behavior from that reference.
 
 The user should not need to understand WA3 tokens. The UI should show plain
 labels and keep the WA3 structure behind the review screen.
