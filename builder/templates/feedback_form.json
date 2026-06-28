@@ -1,0 +1,68 @@
+{
+  "template_id": "feedback_form",
+  "template_version": "1.0.0",
+  "display_name": "Feedback form",
+  "default_app": {
+    "id": "com.example.feedback",
+    "version": "1.0",
+    "backend": "mock://feedback",
+    "scope": "shared"
+  },
+  "entities": [
+    {
+      "id": "feedback",
+      "fields": [
+        {"name": "id", "type": "ㄐㄩ"},
+        {"name": "name", "type": "ㄐㄩ"},
+        {"name": "message", "type": "ㄐㄩ"},
+        {"name": "created_at", "type": "ㄋㄞ"}
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": "submit_feedback",
+      "verb": "ㄔㄥ",
+      "target": "/feedback",
+      "mutates": true,
+      "confirm": true,
+      "risk_class": "low_mutate",
+      "purpose": "Submit feedback.",
+      "data_impact": "writes one feedback item",
+      "inputs": [
+        {"name": "name", "type": "ㄐㄩ"},
+        {"name": "message", "type": "ㄐㄩ"}
+      ],
+      "outputs": ["feedback"]
+    },
+    {
+      "id": "read_feedback",
+      "verb": "ㄎㄢ",
+      "target": "/feedback",
+      "mutates": false,
+      "confirm": false,
+      "risk_class": "read",
+      "purpose": "Read submitted feedback.",
+      "data_impact": "read-only",
+      "inputs": [],
+      "outputs": ["list", "feedback"]
+    }
+  ],
+  "blocks": [
+    {
+      "id": "feedback_form",
+      "type": "ㄔㄠ",
+      "source": "read_feedback",
+      "actions": ["submit_feedback"],
+      "fallback": ["ㄇㄢ"]
+    }
+  ],
+  "preferences": {
+    "readonly": [],
+    "hidden_actions": [],
+    "theme_colors": ["ㄆㄟ", "ㄍㄟ", "ㄕㄞ"],
+    "font_sizes": ["1", "2"],
+    "density": "comfortable",
+    "visible_blocks": ["feedback_form"]
+  }
+}

@@ -1,0 +1,261 @@
+# W3A Design Template: Terminal Tactical HUD
+
+ㄊㄡ：W3A design-template v0.1
+ㄏㄠ：design.terminal.tactical_hud
+ㄉㄞ：1.0
+ㄏㄡ：design://local/w3a-preview
+ㄈㄢ：reference-only
+
+ㄝㄇㄜ：design_template
+ㄝㄕㄡ：terminal_tactical_hud
+ㄝㄌㄞ：【source】user-provided local terminal/HUD preview【extracted】2026-06-28
+ㄝㄉㄧ：Extracted from a tactical terminal/HUD style HTML preview. Display guidance only; not an operable W3A contract and not part of the operable W3A canonical/signature trust profile.
+
+## Purpose
+
+Use this template when a W3A renderer needs a terminal-like tactical interface:
+sticky HUD navigation, square-corner panels, mono status labels, grid overlays,
+purple-accent focus states, data telemetry panels, secure-download style cards,
+forms in command-console modals, and compact toast/status feedback.
+
+## Safety Boundary
+
+- Do not copy or execute source implementation files, asset references, font
+  references, or script snippets.
+- Do not load assets because of this template; it is only a visual reference.
+- Treat all terminal labels such as "secure", "encrypted", "decrypt", "live",
+  and "system notice" as visual tone only. They do not affect W3A trust state.
+- All buttons and row actions must still map to declared W3A action ids.
+- Mutating actions still require `w3a-core` confirmation when the verified
+  contract requires it.
+
+## Layout Profile
+
+```json
+{
+  "layout_id": "terminal.tactical_hud.single_page",
+  "viewport": {
+    "max_content_width": 1280,
+    "page_padding_x": 24,
+    "page_padding_y": 32,
+    "mobile_behavior": "stack panels vertically; collapse nav links into a compact command menu"
+  },
+  "regions": [
+    {
+      "id": "hud_nav",
+      "role": "sticky_navigation_and_global_actions",
+      "height": 80,
+      "content": ["identity_cell", "title_stack", "route_buttons", "secondary_actions"]
+    },
+    {
+      "id": "mission_gateway",
+      "role": "hero_or_primary_block",
+      "layout": "desktop 5/7 split, mobile single column",
+      "content": ["status_chip", "headline", "briefing_text", "metric_pair", "interactive_viewport"]
+    },
+    {
+      "id": "telemetry_grid",
+      "role": "charts_and_status_blocks",
+      "layout": "desktop 8/4 split with stacked side dials",
+      "content": ["large_chart", "status_dial", "spec_table"]
+    },
+    {
+      "id": "chronology",
+      "role": "timeline_or_audit_history",
+      "layout": "center spine on desktop, left spine on mobile",
+      "content": ["timeline_items", "future_or_current_marker"]
+    },
+    {
+      "id": "vault_grid",
+      "role": "download_or_resource_cards",
+      "layout": "responsive 1/2/3 card grid",
+      "content": ["progress_hud", "resource_cards"]
+    },
+    {
+      "id": "modal_layer",
+      "role": "command_modal_and_toast_feedback",
+      "content": ["contact_modal", "form_modal", "bottom_right_toast"]
+    }
+  ]
+}
+```
+
+## Visual Tokens
+
+```json
+{
+  "font_stack": {
+    "display": ["Space Grotesk", "system-ui", "sans-serif"],
+    "mono": ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "monospace"]
+  },
+  "density": "compact",
+  "corners": "square or near-square; avoid pill shapes except tiny status chips",
+  "radius": {
+    "panel": 0,
+    "card": 0,
+    "control": 0,
+    "status_chip": 2
+  },
+  "colors": {
+    "background": "#181412",
+    "surface": "#201A16",
+    "surface_deep": "#2B231F",
+    "olive_dark": "#1E251F",
+    "olive_mid": "#2A362C",
+    "olive_light": "#3F5243",
+    "text": "#CBD5E1",
+    "text_bright": "#F1F5F9",
+    "accent": "#D8B4FE",
+    "accent_dark": "#A78BFA",
+    "accent_glow": "rgba(216,180,254,0.2)",
+    "modal_scrim": "rgba(0,0,0,0.8)"
+  },
+  "effects": {
+    "background": "40px HUD grid with low-opacity olive lines",
+    "noise": "optional subtle film-grain overlay; renderer may omit",
+    "active_border": "accent border plus small purple glow",
+    "text_glow": "soft purple glow for primary accent words",
+    "scanline": "optional low-opacity vertical sweep; disable under reduced motion"
+  }
+}
+```
+
+## Component Roles
+
+```json
+{
+  "hud_nav": {
+    "shape": "sticky top bar with dark translucent surface, bottom border, identity cell left, route buttons center, actions right",
+    "route_button": "mono bracket label such as [ 01 / SECTION ], active state uses accent border and accent text",
+    "notes": "route buttons are display navigation only; W3A action execution still uses verified action ids"
+  },
+  "identity_cell": {
+    "shape": "small square icon frame with bracket corners",
+    "fallback": "initials or trusted app icon supplied by runtime"
+  },
+  "status_chip": {
+    "shape": "tiny mono uppercase label inside 1px accent border",
+    "use_for": ["trust enum", "sync state", "draft/test warning", "runtime mode"]
+  },
+  "tactical_panel": {
+    "shape": "square-corner block with 1px olive border, dark tan surface, generous internal padding",
+    "decor": "optional corner bracket lines, never decorative blobs",
+    "states": ["default", "active", "warning", "disabled"]
+  },
+  "viewport_panel": {
+    "shape": "bordered dark viewport with HUD labels at corners and a centered visualization",
+    "use_for": ["charts", "mock preview", "diagram", "resource preview"],
+    "motion": "radar sweep or scan line may animate only when reduced motion is not requested"
+  },
+  "tab_selector": {
+    "shape": "three or more equal-width mono buttons with square borders",
+    "active": "accent border, accent text, faint accent background",
+    "mobile": "wrap to multiple rows without shrinking text below readability"
+  },
+  "team_or_resource_card": {
+    "shape": "bordered card with media/placeholder block, small mono label, uppercase title, mono body",
+    "hover": "border changes from olive to accent; media can move from grayscale to color if assets are local and allowed"
+  },
+  "telemetry_chart": {
+    "shape": "large dark panel with grid lines, accent line/area, mono labels",
+    "notes": "chart values must come from verified data; decorative labels must not imply live data unless runtime confirms it"
+  },
+  "dial_card": {
+    "shape": "compact status card with label, title, large mono value, and optional circular gauge",
+    "use_for": ["health", "progress", "trust", "sync", "quota"]
+  },
+  "timeline": {
+    "shape": "vertical spine with numbered square nodes and alternating content panels",
+    "mobile": "single left spine with stacked panels"
+  },
+  "progress_hud": {
+    "shape": "accent-bordered strip with terminal icon area, filename/status text, and rectangular progress bar",
+    "use_for": ["download progress", "build progress", "verification progress"],
+    "notes": "progress is display state only; do not fake completion for real operations"
+  },
+  "command_modal": {
+    "shape": "centered modal on black scrim, square corners, 2px border, mono labels and form controls",
+    "form_controls": "dark inputs with olive border, accent focus border, no rounded modern pills",
+    "success": "inline accent-bordered success alert inside modal"
+  },
+  "toast": {
+    "shape": "bottom-right dark panel with accent border, mono heading, short message",
+    "duration": "short and nonblocking; persistent errors should become inline panels"
+  },
+  "action_role_slots": {
+    "primary_submit": {
+      "match": "verified W3A action that submits a command modal, starts the main operation, or confirms a prepared flow",
+      "component": "command_modal primary button or HUD action button",
+      "style": "square accent-bordered button with mono uppercase label, accent text, and faint purple glow",
+      "fallback": "derive a same-style square primary command button from accent and surface tokens; do not create a feature"
+    },
+    "secondary_action": {
+      "match": "verified secondary action, cancel, close, or low-risk helper action",
+      "component": "command_modal secondary button or nav secondary action",
+      "style": "square dark button with olive border and muted mono text"
+    },
+    "compact_icon_action": {
+      "match": "verified row, card, or toolbar action that should stay compact",
+      "component": "small square terminal icon cell",
+      "style": "fixed square border, centered icon or short mono glyph, accent border on hover/focus"
+    },
+    "navigation_or_filter": {
+      "match": "display navigation, search, filter, or tab selector",
+      "component": "route_button or tab_selector",
+      "style": "bracketed mono label, square border, accent active state"
+    },
+    "destructive_confirm": {
+      "match": "verified destructive, irreversible, or high-risk mutating action that already requires confirmation",
+      "component": "command_modal destructive confirmation button",
+      "style": "square warning/danger button using accent glow sparingly, paired with a visible target summary",
+      "notes": "visual treatment only; confirmation and target still come from w3a-core"
+    }
+  }
+}
+```
+
+## W3A Block Mapping
+
+```json
+{
+  "ㄆㄤ": "render as terminal activity feed or tactical resource grid, with composer/form nearby only if submit action exists",
+  "ㄗㄞ": "render as resource cards, timeline entries, or compact bordered list rows",
+  "ㄔㄠ": "render as command_modal form or inline tactical_panel form",
+  "ㄙㄞ": "render as HUD-nav search/control field or panel-level filter strip",
+  "ㄉㄟ": "render as viewport_panel, spec panel, or right/detail tactical_panel",
+  "ㄇㄢ": "render as mono text block inside a bordered tactical_panel"
+}
+```
+
+## Interaction Guidance
+
+- Prefer bracketed mono labels for navigation and state, for example
+  `[ 01 / OVERVIEW ]` or `[ STATUS: DRAFT ]`.
+- Use square bordered buttons. Avoid rounded SaaS-style pills except for very
+  small numeric/status chips.
+- Keep hover/focus visible through border and text changes, not color alone.
+- When a design says "secure", "decrypt", or "encrypted", map the real state to
+  the W3A trust enum or runtime progress. Never invent security status visually.
+- Use local/runtime-provided icons where possible. If no icon library exists,
+  use text initials or simple CSS shapes instead of loading a remote pack.
+- Animations such as pulse, sweep, and scanline must be optional and respect
+  reduced-motion settings.
+- Keep panels full-width within their section; use cards only for repeated
+  people/resources/status items, modals, and actual framed tools.
+
+## Source Notes
+
+- Source: user-provided local terminal/HUD preview.
+- Source extraction date: 2026-06-28.
+- No source asset references, font references, implementation snippets, or
+  executable behavior are vendored here or loaded because of this template.
+- Extracted design signals: dark tactical tan base, olive panel borders, light
+  purple accent/glow, mono bracket navigation, sticky HUD bar, square terminal
+  panels, radar/telemetry visualization, command modals, resource vault cards,
+  progress HUD, and bottom-right toast.
+
+ㄓㄤ
+ㄓㄜ：design.local.preview
+ㄎㄟ：
+ㄔㄣ：2026-06-28T00:00:00Z
+ㄓㄥ：

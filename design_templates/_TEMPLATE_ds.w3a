@@ -1,0 +1,154 @@
+# W3A Design Template: <Template Name>
+
+ㄊㄡ：W3A design-template v0.1
+ㄏㄠ：design.<family>.<name>
+ㄉㄞ：0.1
+ㄏㄡ：design://local/<source-handle>
+ㄈㄢ：reference-only
+
+ㄝㄇㄜ：design_template
+ㄝㄕㄡ：<short_template_handle>
+ㄝㄌㄞ：【source】<durable source path or durable reference>【extracted】YYYY-MM-DD
+ㄝㄉㄧ：Display guidance only; not an operable W3A contract and not part of the operable W3A canonical/signature trust profile.
+
+## Purpose
+
+Describe the kind of renderer experience this template should guide. Do not
+copy product copy, campaign language, or user data from the source.
+
+## Safety Boundary
+
+- Display guidance only; never execute source code from the referenced design.
+- Do not copy backend targets, providers, policies, permissions, secrets, true
+  action ids, true button labels, source asset references, fonts, visual
+  identity assets, or executable implementation files.
+- Abstract placeholders are allowed when they cannot operate.
+- Every real interaction must map back to a verified operable W3A contract and
+  pass through `w3a-core`.
+
+## Layout Profile
+
+```json
+{
+  "layout_id": "<family.name.layout>",
+  "viewport": {
+    "desktop_min_width": 1024,
+    "mobile_behavior": "<stack, drawer, tabs, or other non-operable layout rule>"
+  },
+  "regions": [
+    {
+      "id": "<abstract_region_id>",
+      "role": "<abstract_region_role>",
+      "content": ["<abstract_component_role>"]
+    }
+  ],
+  "grid": {
+    "columns": "<abstract column structure>",
+    "gap": 16
+  }
+}
+```
+
+## Visual Tokens
+
+```json
+{
+  "font_stack": ["system-ui", "sans-serif"],
+  "density": "comfortable",
+  "radius": {
+    "panel": 8,
+    "card": 8,
+    "control": 6
+  },
+  "colors": {
+    "background": "#000000",
+    "surface": "#111111",
+    "text": "#ffffff",
+    "accent": "#7cc4ff"
+  },
+  "effects": {
+    "motion": "optional and disabled under reduced motion"
+  }
+}
+```
+
+## Component Roles
+
+```json
+{
+  "abstract_button_role": {
+    "shape": "describe geometry, spacing, icon/text balance, and wrapping",
+    "states": ["default", "hover", "focus", "disabled"],
+    "notes": "describe role and shape only; do not name concrete actions"
+  },
+  "abstract_panel_role": {
+    "shape": "describe panel structure and density",
+    "behavior": "visual behavior only; no provider calls or target semantics"
+  },
+  "action_role_slots": {
+    "primary_submit": {
+      "match": "verified W3A action that writes/submits or starts the main user-confirmed flow",
+      "component": "<abstract_button_role>",
+      "fallback": "derive a same-style primary control if this exact role is missing; do not create a feature"
+    },
+    "secondary_action": {
+      "match": "verified cancel, close, back, or low-risk secondary action",
+      "component": "<abstract_button_role>"
+    },
+    "compact_icon_action": {
+      "match": "verified row, card, toolbar, or repeated control that should stay compact",
+      "component": "<abstract_button_role>",
+      "notes": "icon or short-label treatment only; the UI plan still binds the verified W3A action"
+    },
+    "destructive_confirm": {
+      "match": "verified destructive or irreversible action that already requires confirmation",
+      "component": "<abstract_button_role>",
+      "notes": "visual danger treatment only; W3A confirmation still comes from w3a-core"
+    },
+    "navigation_or_filter": {
+      "match": "display navigation, search, filter, or tab control",
+      "component": "<abstract_button_role>",
+      "notes": "display-only unless bound to a verified W3A action in the UI plan"
+    }
+  }
+}
+```
+
+## W3A Block Mapping
+
+```json
+{
+  "ㄆㄤ": "map to an abstract message/list surface; bind only to verified action placeholders at render time",
+  "ㄗㄞ": "map to abstract list rows or cards",
+  "ㄔㄠ": "map to an abstract form/composer surface",
+  "ㄙㄞ": "map to an abstract search or filter affordance",
+  "ㄉㄟ": "map to an abstract detail/context surface",
+  "ㄇㄢ": "map to safe plain text"
+}
+```
+
+## Interaction Guidance
+
+- Prefer stable dimensions for repeated controls and status elements.
+- Keep focus states visible without implying trust or permission state.
+- Keep mutating-operation confirmation visible when the verified W3A contract
+  requires it.
+- Use placeholders such as `<declared_action_slot>` only for abstract mapping.
+- Every rendered button must either bind to a verified W3A action in the UI plan
+  or be marked display-navigation/display-only. If the template lacks a matching
+  role, derive a fallback from the template's tokens and record it as styling,
+  not as a new feature.
+
+## Source Notes
+
+- Durable source:
+- Extraction date:
+- License or redistribution note:
+- Extracted signals:
+- Explicitly excluded:
+
+ㄓㄤ
+ㄓㄜ：design.local.template
+ㄎㄟ：
+ㄔㄣ：YYYY-MM-DDT00:00:00Z
+ㄓㄥ：

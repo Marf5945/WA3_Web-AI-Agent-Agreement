@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+
+# Python (conformance kit)
+__pycache__/
+*.pyc
+.venv/
+
+# Go build artifacts (never commit; build with: go build -o /tmp/w3a ./tools/w3a)
+/conformance/w3a
+*.test
+*.exe
+*.o
+*.out

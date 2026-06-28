@@ -1,0 +1,8 @@
+ㄓㄜ：com.example.publisher
+ㄎㄟ：ed25519:CUR
+ㄔㄣ：2026-06-27T00:00:00Z
+ㄑㄢ：full
+ㄝㄕㄜ：3
+撤銷項：
+  com.example.board@2｜reason=superseded
+  ed25519:LEAK｜reason=compromise｜not_before=2026-06-26T12:00:00Z

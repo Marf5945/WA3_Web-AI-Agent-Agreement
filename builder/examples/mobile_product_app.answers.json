@@ -1,0 +1,72 @@
+{
+  "answers_schema_version": "1.0",
+  "template_id": "mobile_product_app",
+  "template_version": "1.0.0",
+  "app": {
+    "id": "com.demo.mobile_product_app",
+    "version": "1.0",
+    "backend": "mock://mobile-product-app",
+    "scope": "shared"
+  },
+  "publisher": {
+    "id": "com.demo.publisher"
+  },
+  "llm_suggestions": [
+    {
+      "field_path": "template.mobile_product_app.presentation_reference",
+      "value": "Inspired by a user-provided mobile product app HTML structure; app visuals, HMI panels, bottom tabs, and animation treatment must be selected separately from design_templates.",
+      "provenance": "system_suggested"
+    }
+  ],
+  "human_decisions": [
+    {
+      "action_id": "list_product_units",
+      "decision": "keep",
+      "writer": "human",
+      "provenance": "user_confirmed"
+    },
+    {
+      "action_id": "select_product_unit",
+      "decision": "keep",
+      "writer": "human",
+      "provenance": "user_confirmed"
+    },
+    {
+      "action_id": "read_case_metrics",
+      "decision": "keep",
+      "writer": "human",
+      "provenance": "user_confirmed"
+    },
+    {
+      "action_id": "read_milestones",
+      "decision": "keep",
+      "writer": "human",
+      "provenance": "user_confirmed"
+    },
+    {
+      "action_id": "search_resources",
+      "decision": "keep",
+      "writer": "human",
+      "provenance": "user_confirmed"
+    },
+    {
+      "action_id": "request_resource",
+      "decision": "keep",
+      "writer": "human",
+      "provenance": "user_confirmed"
+    },
+    {
+      "action_id": "request_call",
+      "decision": "keep",
+      "writer": "human",
+      "provenance": "user_confirmed"
+    },
+    {
+      "action_id": "submit_inquiry",
+      "decision": "keep",
+      "writer": "human",
+      "provenance": "user_confirmed"
+    }
+  ],
+  "opaque_confirmations": []
+}

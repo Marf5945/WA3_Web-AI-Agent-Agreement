@@ -1,0 +1,66 @@
+{
+  "answers_schema_version": "1.0",
+  "template_id": "product_showcase",
+  "template_version": "1.0.0",
+  "app": {
+    "id": "com.demo.product_showcase",
+    "version": "1.0",
+    "backend": "mock://product-showcase",
+    "scope": "shared"
+  },
+  "publisher": {
+    "id": "com.demo.publisher"
+  },
+  "llm_suggestions": [
+    {
+      "field_path": "template.product_showcase.presentation_reference",
+      "value": "Inspired by a user-provided product preview HTML structure; visual styling must be selected separately from design_templates.",
+      "provenance": "system_suggested"
+    }
+  ],
+  "human_decisions": [
+    {
+      "action_id": "read_product_page",
+      "decision": "keep",
+      "writer": "human",
+      "provenance": "user_confirmed"
+    },
+    {
+      "action_id": "list_solutions",
+      "decision": "keep",
+      "writer": "human",
+      "provenance": "user_confirmed"
+    },
+    {
+      "action_id": "select_solution",
+      "decision": "keep",
+      "writer": "human",
+      "provenance": "user_confirmed"
+    },
+    {
+      "action_id": "read_timeline",
+      "decision": "keep",
+      "writer": "human",
+      "provenance": "user_confirmed"
+    },
+    {
+      "action_id": "search_resources",
+      "decision": "keep",
+      "writer": "human",
+      "provenance": "user_confirmed"
+    },
+    {
+      "action_id": "request_resource",
+      "decision": "keep",
+      "writer": "human",
+      "provenance": "user_confirmed"
+    },
+    {
+      "action_id": "submit_inquiry",
+      "decision": "keep",
+      "writer": "human",
+      "provenance": "user_confirmed"
+    }
+  ],
+  "opaque_confirmations": []
+}

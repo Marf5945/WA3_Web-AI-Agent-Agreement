@@ -1,0 +1,49 @@
+{
+  "runtime_major": 1,
+  "cases": [
+    {
+      "input": "1",
+      "expect": "1.0"
+    },
+    {
+      "input": "1.0",
+      "expect": "1.0"
+    },
+    {
+      "input": "1.1",
+      "expect": "1.1"
+    },
+    {
+      "input": "10",
+      "expect_error": "E-VERSION-MAJOR"
+    },
+    {
+      "input": "2",
+      "expect_error": "E-VERSION-MAJOR"
+    },
+    {
+      "input": "01",
+      "expect_error": "E-VERSION-FORMAT"
+    },
+    {
+      "input": "1.01",
+      "expect_error": "E-VERSION-FORMAT"
+    },
+    {
+      "input": "1.",
+      "expect_error": "E-VERSION-FORMAT"
+    },
+    {
+      "input": "1.x",
+      "expect_error": "E-VERSION-FORMAT"
+    },
+    {
+      "input": ".1",
+      "expect_error": "E-VERSION-FORMAT"
+    },
+    {
+      "input": "",
+      "expect_error": "E-VERSION-FORMAT"
+    }
+  ]
+}

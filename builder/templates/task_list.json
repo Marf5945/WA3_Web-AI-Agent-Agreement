@@ -1,0 +1,89 @@
+{
+  "template_id": "task_list",
+  "template_version": "1.0.0",
+  "display_name": "Task list",
+  "default_app": {
+    "id": "com.example.tasks",
+    "version": "1.0",
+    "backend": "mock://task-list",
+    "scope": "shared"
+  },
+  "entities": [
+    {
+      "id": "task",
+      "fields": [
+        {"name": "id", "type": "ㄐㄩ"},
+        {"name": "title", "type": "ㄐㄩ"},
+        {"name": "done", "type": "ㄐㄩ"},
+        {"name": "created_at", "type": "ㄋㄞ"}
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": "read_tasks",
+      "verb": "ㄎㄢ",
+      "target": "/tasks",
+      "mutates": false,
+      "confirm": false,
+      "risk_class": "read",
+      "purpose": "Read tasks.",
+      "data_impact": "read-only",
+      "inputs": [],
+      "outputs": ["list", "task"]
+    },
+    {
+      "id": "add_task",
+      "verb": "ㄔㄥ",
+      "target": "/tasks",
+      "mutates": true,
+      "confirm": true,
+      "risk_class": "low_mutate",
+      "purpose": "Add a task.",
+      "data_impact": "writes one task",
+      "inputs": [{"name": "title", "type": "ㄐㄩ"}],
+      "outputs": ["task"]
+    },
+    {
+      "id": "toggle_task",
+      "verb": "ㄢ",
+      "target": "/tasks/{id}/toggle",
+      "mutates": true,
+      "confirm": true,
+      "risk_class": "low_mutate",
+      "purpose": "Mark a task done or not done.",
+      "data_impact": "updates one task",
+      "inputs": [{"name": "id", "type": "ㄐㄩ"}],
+      "outputs": ["task"]
+    },
+    {
+      "id": "delete_task",
+      "verb": "ㄕㄢ",
+      "target": "/tasks/{id}",
+      "mutates": true,
+      "confirm": true,
+      "risk_class": "irreversible",
+      "purpose": "Delete a task.",
+      "data_impact": "removes one task",
+      "inputs": [{"name": "id", "type": "ㄐㄩ"}],
+      "outputs": []
+    }
+  ],
+  "blocks": [
+    {
+      "id": "task_list",
+      "type": "ㄗㄞ",
+      "source": "read_tasks",
+      "actions": ["add_task", "toggle_task", "delete_task"],
+      "fallback": ["ㄇㄢ"]
+    }
+  ],
+  "preferences": {
+    "readonly": [],
+    "hidden_actions": [],
+    "theme_colors": ["ㄋㄠ", "ㄍㄟ", "ㄕㄞ"],
+    "font_sizes": ["1", "2"],
+    "density": "compact",
+    "visible_blocks": ["task_list"]
+  }
+}

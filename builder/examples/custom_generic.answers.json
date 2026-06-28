@@ -1,0 +1,100 @@
+{
+  "answers_schema_version": "1.0",
+  "template_id": "custom_generic",
+  "template_version": "1.0.0",
+  "app": {
+    "id": "com.demo.custom",
+    "version": "1.0",
+    "backend": "mock://custom",
+    "scope": "shared"
+  },
+  "publisher": {
+    "id": "com.demo.publisher"
+  },
+  "custom_template": {
+    "template_id": "custom_generic",
+    "template_version": "1.0.0",
+    "display_name": "Custom extracted app",
+    "default_app": {
+      "id": "com.example.custom",
+      "version": "1.0",
+      "backend": "mock://custom",
+      "scope": "shared"
+    },
+    "entities": [
+      {
+        "id": "item",
+        "fields": [
+          {"name": "id", "type": "ㄐㄩ"},
+          {"name": "title", "type": "ㄐㄩ"},
+          {"name": "created_at", "type": "ㄋㄞ"}
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "read_items",
+        "verb": "ㄎㄢ",
+        "target": "/items",
+        "mutates": false,
+        "confirm": false,
+        "risk_class": "read",
+        "purpose": "Read extracted items.",
+        "data_impact": "read-only",
+        "inputs": [],
+        "outputs": ["list", "item"]
+      },
+      {
+        "id": "submit_item",
+        "verb": "ㄔㄥ",
+        "target": "/items",
+        "mutates": true,
+        "confirm": true,
+        "risk_class": "low_mutate",
+        "purpose": "Submit a new item.",
+        "data_impact": "writes one item",
+        "inputs": [{"name": "title", "type": "ㄐㄩ"}],
+        "outputs": ["item"]
+      }
+    ],
+    "blocks": [
+      {
+        "id": "main_list",
+        "type": "ㄗㄞ",
+        "source": "read_items",
+        "actions": ["submit_item"],
+        "fallback": ["ㄇㄢ"]
+      }
+    ],
+    "preferences": {
+      "readonly": [],
+      "hidden_actions": [],
+      "theme_colors": ["ㄍㄟ", "ㄋㄠ", "ㄕㄞ"],
+      "font_sizes": ["1", "2"],
+      "density": "comfortable",
+      "visible_blocks": ["main_list"]
+    }
+  },
+  "llm_suggestions": [
+    {
+      "field_path": "custom_template.actions.submit_item.purpose",
+      "value": "This came from webpage extraction and needs review.",
+      "provenance": "system_suggested"
+    }
+  ],
+  "human_decisions": [
+    {
+      "action_id": "read_items",
+      "decision": "keep",
+      "writer": "human",
+      "provenance": "user_confirmed"
+    },
+    {
+      "action_id": "submit_item",
+      "decision": "keep",
+      "writer": "human",
+      "provenance": "user_confirmed"
+    }
+  ],
+  "opaque_confirmations": []
+}

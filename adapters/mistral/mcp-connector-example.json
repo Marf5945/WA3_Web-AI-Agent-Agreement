@@ -1,0 +1,15 @@
+{
+  "name": "w3a-builder-mcp",
+  "description": "Example MCP connector declaration for a W3A builder service.",
+  "tools": [
+    {
+      "name": "build_w3a_draft",
+      "input_schema": "builder/answers.schema.json",
+      "security_boundary": "deterministic_builder_gate"
+    },
+    {
+      "name": "classify_w3a_trust",
+      "security_boundary": "deterministic_trust_classifier"
+    }
+  ]
+}

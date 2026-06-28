@@ -1,0 +1,36 @@
+ㄊㄡ：W3A v0.3
+ㄏㄠ：com.example.board
+ㄉㄞ：1.0
+ㄏㄡ：gdrive://BOARD_FILE_ID
+ㄈㄢ：shared
+
+ㄋㄥ
+ㄓㄠ：submit_message
+  ㄕㄡ：text｜ㄐㄩ
+  ㄘ：ㄔㄥ
+  ㄓ：/messages
+  ㄍㄞ：yes
+  ㄖㄣ：yes
+  ㄉㄜ：message
+ㄕ：message
+  id：ㄐㄩ
+  author：ㄐㄩ
+  text：ㄐㄩ
+  created_at：ㄋㄞ
+ㄓㄠ：read_messages
+  ㄘ：ㄎㄢ
+  ㄓ：/messages
+  ㄍㄞ：no
+  ㄉㄜ：list｜message
+
+ㄎㄜ
+ㄑㄩ：main_board
+  ㄍㄜ：ㄆㄤ
+  ㄩㄢ：read_messages
+  ㄊㄠ：submit_message｜react｜search_messages
+  ㄊㄞ：ㄗㄞ｜ㄇㄢ
+
+ㄕㄜ
+ㄘㄤ：submit_message｜react
+ㄋㄛ：react｜submit_message
+ㄎㄞ：main_board

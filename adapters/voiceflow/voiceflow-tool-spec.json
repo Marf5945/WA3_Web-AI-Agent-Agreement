@@ -1,0 +1,24 @@
+{
+  "name": "build_w3a_draft",
+  "description": "Send guided answers to a trusted W3A builder backend and return build/trust status.",
+  "input_schema": {
+    "type": "object",
+    "required": ["answers"],
+    "properties": {
+      "answers": {
+        "type": "object",
+        "description": "W3A builder answers matching builder/answers.schema.json."
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "required": ["ok"],
+    "properties": {
+      "ok": {"type": "boolean"},
+      "state": {"type": "string"},
+      "error_code": {"type": "string"},
+      "repair_hint": {"type": "string"}
+    }
+  }
+}

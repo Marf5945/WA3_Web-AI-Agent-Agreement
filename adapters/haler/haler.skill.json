@@ -1,0 +1,34 @@
+{
+  "name": "w3a-spec",
+  "display_name": "W3A Spec",
+  "version": "0.3.0-draft",
+  "kind": "portable-contract-skill",
+  "description": "Haler-readable bundle for W3A collaborative agent-skill contracts and W3A-powered web surfaces.",
+  "entry": "../../AGENTS.md",
+  "spec": "../../W3A-SPEC.md",
+  "example_contract": "../../board.w3a",
+  "builder_schema": "../../builder/answers.schema.json",
+  "builder_example": "../../builder/examples/board.answers.json",
+  "builder_templates": "../../builder/templates",
+  "conformance": "../../conformance/README.md",
+  "runtime_expectations": {
+    "core_trusted": true,
+    "renderer_trusted": false,
+    "authoring_llm_trusted": false,
+    "verify_before_use": true,
+    "mutating_operate_requires_confirmation": true,
+    "builder_gates_before_file_write": true,
+    "ai_output_surface": "display_only_or_draft_first"
+  },
+  "supports": [
+    "guided_builder",
+    "build_from_answers",
+    "lint",
+    "canonicalize",
+    "trust_enum",
+    "verify",
+    "compile",
+    "render_collaboration_web",
+    "operate_with_confirmation"
+  ]
+}

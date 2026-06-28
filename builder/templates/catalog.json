@@ -1,0 +1,83 @@
+{
+  "schema_version": "1.0",
+  "purpose": "Functional template recommendation index for the W3A guided builder. This catalog describes operable builder templates and may name template ids, but it must not contain credentials, concrete provider permissions, production backend targets, or trust state.",
+  "selection_policy": {
+    "must_show_feature_manifest_before_build": true,
+    "must_ask_design_template_separately": true,
+    "no_auto_build_without_user_confirmation": true
+  },
+  "templates": [
+    {
+      "template_id": "board",
+      "file": "board.json",
+      "display_name": "Message board",
+      "tags": ["message_board", "collaboration", "comments", "reactions", "search"],
+      "best_for": ["team_board", "community_notes", "shared_discussion"],
+      "recommended_design_templates": [
+        {"handle": "haler_console", "file": "haler_console_ds.w3a", "reason": "Best fit for conversation, composer, and compact collaboration controls."},
+        {"handle": "mobile_holographic_hmi_app", "file": "mobile_holographic_hmi_ds.w3a", "reason": "Good mobile-first fallback for compact resource and message flows."},
+        {"handle": "terminal_tactical_hud", "file": "terminal_tactical_ds.w3a", "reason": "Dense operator-style fallback for status-heavy boards."}
+      ],
+      "default_blocks": ["main_board"],
+      "default_actions": ["read_messages", "submit_message", "react", "search_messages"]
+    },
+    {
+      "template_id": "task_list",
+      "file": "task_list.json",
+      "display_name": "Task list",
+      "tags": ["tasks", "checklist", "workflow", "delete", "status"],
+      "best_for": ["shared_tasks", "simple_project_tracker", "personal_todo"],
+      "recommended_design_templates": [
+        {"handle": "haler_console", "file": "haler_console_ds.w3a", "reason": "Best fit for compact task rows, tool cards, and inline confirmations."},
+        {"handle": "mobile_holographic_hmi_app", "file": "mobile_holographic_hmi_ds.w3a", "reason": "Good fit for guided mobile task workflows."},
+        {"handle": "terminal_tactical_hud", "file": "terminal_tactical_ds.w3a", "reason": "Dense fallback for operational task dashboards."}
+      ],
+      "default_blocks": ["task_list"],
+      "default_actions": ["read_tasks", "add_task", "toggle_task", "delete_task"]
+    },
+    {
+      "template_id": "feedback_form",
+      "file": "feedback_form.json",
+      "display_name": "Feedback form",
+      "tags": ["form", "feedback", "intake", "submission"],
+      "best_for": ["contact_form", "survey_intake", "support_feedback"],
+      "recommended_design_templates": [
+        {"handle": "mobile_holographic_hmi_app", "file": "mobile_holographic_hmi_ds.w3a", "reason": "Best fit for compact modal-style intake forms."},
+        {"handle": "haler_console", "file": "haler_console_ds.w3a", "reason": "Good fit for structured intake and review surfaces."},
+        {"handle": "modern_industrial_glass_site", "file": "modern_industrial_glass_ds.w3a", "reason": "Good public-site fallback for contact and inquiry forms."}
+      ],
+      "default_blocks": ["feedback_form"],
+      "default_actions": ["submit_feedback", "read_feedback"]
+    },
+    {
+      "template_id": "product_showcase",
+      "file": "product_showcase.json",
+      "display_name": "Product showcase",
+      "tags": ["product_page", "landing_page", "marketing", "solutions", "resources", "inquiry", "timeline", "metrics"],
+      "best_for": ["product_intro_page", "public_product_site", "solution_showcase", "brochure_site", "launch_page"],
+      "source_inspiration": "user_provided_product_preview_html_2026_06_28",
+      "recommended_design_templates": [
+        {"handle": "modern_industrial_glass_site", "file": "modern_industrial_glass_ds.w3a", "reason": "Best fit for website-style product pages with hero, metrics, timeline, and resource cards."},
+        {"handle": "mobile_holographic_hmi_app", "file": "mobile_holographic_hmi_ds.w3a", "reason": "Mobile-first fallback for product cards and resource flows."},
+        {"handle": "terminal_tactical_hud", "file": "terminal_tactical_ds.w3a", "reason": "Dense technical fallback for status-heavy product showcases."}
+      ],
+      "default_blocks": ["hero_summary", "solution_showcase", "metrics_panel", "timeline_story", "resource_archive", "inquiry_form"],
+      "default_actions": ["read_product_page", "list_solutions", "select_solution", "read_timeline", "search_resources", "request_resource", "submit_inquiry"]
+    },
+    {
+      "template_id": "mobile_product_app",
+      "file": "mobile_product_app.json",
+      "display_name": "Mobile product app",
+      "tags": ["mobile_app", "app_shell", "bottom_tabs", "product_carousel", "case_metrics", "timeline", "resource_vault", "contact", "hmi"],
+      "best_for": ["mobile_product_app", "product_intro_app", "industrial_product_app", "field_engineer_app", "mobile_brochure_app"],
+      "source_inspiration": "user_provided_mobile_product_app_html_2026_06_28",
+      "recommended_design_templates": [
+        {"handle": "mobile_holographic_hmi_app", "file": "mobile_holographic_hmi_ds.w3a", "reason": "Best fit for bottom-tab mobile app shells, HMI modals, compact cards, and toast layers."},
+        {"handle": "modern_industrial_glass_site", "file": "modern_industrial_glass_ds.w3a", "reason": "Good fallback when the app should render as a public product site."},
+        {"handle": "terminal_tactical_hud", "file": "terminal_tactical_ds.w3a", "reason": "Good fallback for technical operator dashboards and resource vaults."}
+      ],
+      "default_blocks": ["product_carousel", "case_metrics", "milestone_timeline", "resource_vault", "contact_terminal"],
+      "default_actions": ["list_product_units", "select_product_unit", "read_case_metrics", "read_milestones", "search_resources", "request_resource", "request_call", "submit_inquiry"]
+    }
+  ]
+}

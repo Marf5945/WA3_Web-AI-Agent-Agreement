@@ -1,0 +1,220 @@
+{
+  "template_id": "mobile_product_app",
+  "template_version": "1.0.0",
+  "display_name": "Mobile product app",
+  "recommended_design_templates": [
+    {"handle": "mobile_holographic_hmi_app", "file": "mobile_holographic_hmi_ds.w3a", "reason": "Best fit for bottom-tab mobile app shells, HMI modals, compact cards, and toast layers."},
+    {"handle": "modern_industrial_glass_site", "file": "modern_industrial_glass_ds.w3a", "reason": "Good fallback when the app should render as a public product site."},
+    {"handle": "terminal_tactical_hud", "file": "terminal_tactical_ds.w3a", "reason": "Good fallback for technical operator dashboards and resource vaults."}
+  ],
+  "default_app": {
+    "id": "com.example.mobile_product_app",
+    "version": "1.0",
+    "backend": "mock://mobile-product-app",
+    "scope": "shared"
+  },
+  "entities": [
+    {
+      "id": "product_unit",
+      "fields": [
+        {"name": "id", "type": "ㄐㄩ"},
+        {"name": "title", "type": "ㄐㄩ"},
+        {"name": "summary", "type": "ㄐㄩ"},
+        {"name": "category", "type": "ㄐㄩ"},
+        {"name": "spec_one", "type": "ㄐㄩ"},
+        {"name": "spec_two", "type": "ㄐㄩ"},
+        {"name": "spec_three", "type": "ㄐㄩ"}
+      ]
+    },
+    {
+      "id": "case_metric",
+      "fields": [
+        {"name": "id", "type": "ㄐㄩ"},
+        {"name": "region", "type": "ㄐㄩ"},
+        {"name": "title", "type": "ㄐㄩ"},
+        {"name": "summary", "type": "ㄐㄩ"},
+        {"name": "impact", "type": "ㄐㄩ"},
+        {"name": "year", "type": "ㄐㄩ"}
+      ]
+    },
+    {
+      "id": "milestone",
+      "fields": [
+        {"name": "id", "type": "ㄐㄩ"},
+        {"name": "period", "type": "ㄐㄩ"},
+        {"name": "title", "type": "ㄐㄩ"},
+        {"name": "summary", "type": "ㄐㄩ"}
+      ]
+    },
+    {
+      "id": "technical_resource",
+      "fields": [
+        {"name": "id", "type": "ㄐㄩ"},
+        {"name": "title", "type": "ㄐㄩ"},
+        {"name": "kind", "type": "ㄐㄩ"},
+        {"name": "size", "type": "ㄐㄩ"},
+        {"name": "summary", "type": "ㄐㄩ"}
+      ]
+    },
+    {
+      "id": "contact_inquiry",
+      "fields": [
+        {"name": "id", "type": "ㄐㄩ"},
+        {"name": "name", "type": "ㄐㄩ"},
+        {"name": "email", "type": "ㄐㄩ"},
+        {"name": "message", "type": "ㄐㄩ"},
+        {"name": "created_at", "type": "ㄋㄞ"}
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": "list_product_units",
+      "verb": "ㄎㄢ",
+      "target": "/products",
+      "mutates": false,
+      "confirm": false,
+      "risk_class": "read",
+      "purpose": "Read product or solution cards for the mobile app carousel.",
+      "data_impact": "read-only",
+      "inputs": [],
+      "outputs": ["list", "product_unit"]
+    },
+    {
+      "id": "select_product_unit",
+      "verb": "ㄗㄜ",
+      "target": "/products/{id}",
+      "mutates": false,
+      "confirm": false,
+      "risk_class": "read",
+      "purpose": "Select one product card without changing backend data.",
+      "data_impact": "read-only selection",
+      "inputs": [{"name": "id", "type": "ㄐㄩ"}],
+      "outputs": ["product_unit"]
+    },
+    {
+      "id": "read_case_metrics",
+      "verb": "ㄎㄢ",
+      "target": "/cases",
+      "mutates": false,
+      "confirm": false,
+      "risk_class": "read",
+      "purpose": "Read global delivery metrics and case highlights.",
+      "data_impact": "read-only",
+      "inputs": [],
+      "outputs": ["list", "case_metric"]
+    },
+    {
+      "id": "read_milestones",
+      "verb": "ㄎㄢ",
+      "target": "/milestones",
+      "mutates": false,
+      "confirm": false,
+      "risk_class": "read",
+      "purpose": "Read company or product chronology for a timeline tab.",
+      "data_impact": "read-only",
+      "inputs": [],
+      "outputs": ["list", "milestone"]
+    },
+    {
+      "id": "search_resources",
+      "verb": "ㄙㄡ",
+      "target": "/resources/search",
+      "mutates": false,
+      "confirm": false,
+      "risk_class": "read",
+      "purpose": "Search technical manuals, CAD files, firmware notes, or product resources.",
+      "data_impact": "read-only",
+      "inputs": [{"name": "q", "type": "ㄐㄩ"}],
+      "outputs": ["list", "technical_resource"]
+    },
+    {
+      "id": "request_resource",
+      "verb": "ㄎㄢ",
+      "target": "/resources/{id}",
+      "mutates": false,
+      "confirm": false,
+      "risk_class": "read",
+      "purpose": "Open or request one declared technical resource through the runtime.",
+      "data_impact": "read-only resource access",
+      "inputs": [{"name": "id", "type": "ㄐㄩ"}],
+      "outputs": ["technical_resource"]
+    },
+    {
+      "id": "request_call",
+      "verb": "ㄔㄥ",
+      "target": "/contact/call-requests",
+      "mutates": true,
+      "confirm": true,
+      "risk_class": "low_mutate",
+      "purpose": "Submit a call request or phone-contact intent.",
+      "data_impact": "writes one contact request",
+      "inputs": [
+        {"name": "name", "type": "ㄐㄩ"},
+        {"name": "phone", "type": "ㄐㄩ"}
+      ],
+      "outputs": ["contact_inquiry"]
+    },
+    {
+      "id": "submit_inquiry",
+      "verb": "ㄔㄥ",
+      "target": "/contact/inquiries",
+      "mutates": true,
+      "confirm": true,
+      "risk_class": "low_mutate",
+      "purpose": "Submit a secure product inquiry from the app contact form.",
+      "data_impact": "writes one inquiry item",
+      "inputs": [
+        {"name": "name", "type": "ㄐㄩ"},
+        {"name": "email", "type": "ㄐㄩ"},
+        {"name": "message", "type": "ㄐㄩ"}
+      ],
+      "outputs": ["contact_inquiry"]
+    }
+  ],
+  "blocks": [
+    {
+      "id": "product_carousel",
+      "type": "ㄉㄟ",
+      "source": "list_product_units",
+      "actions": ["select_product_unit", "request_call", "submit_inquiry"],
+      "fallback": ["ㄗㄞ", "ㄇㄢ"]
+    },
+    {
+      "id": "case_metrics",
+      "type": "ㄗㄞ",
+      "source": "read_case_metrics",
+      "actions": [],
+      "fallback": ["ㄇㄢ"]
+    },
+    {
+      "id": "milestone_timeline",
+      "type": "ㄗㄞ",
+      "source": "read_milestones",
+      "actions": [],
+      "fallback": ["ㄇㄢ"]
+    },
+    {
+      "id": "resource_vault",
+      "type": "ㄙㄞ",
+      "source": "search_resources",
+      "actions": ["request_resource"],
+      "fallback": ["ㄗㄞ", "ㄇㄢ"]
+    },
+    {
+      "id": "contact_terminal",
+      "type": "ㄔㄠ",
+      "source": "list_product_units",
+      "actions": ["request_call", "submit_inquiry"],
+      "fallback": ["ㄇㄢ"]
+    }
+  ],
+  "preferences": {
+    "readonly": [],
+    "hidden_actions": [],
+    "theme_colors": ["ㄍㄟ", "ㄘㄠ", "ㄕㄞ"],
+    "font_sizes": ["1", "2"],
+    "density": "compact",
+    "visible_blocks": ["product_carousel", "case_metrics", "milestone_timeline", "resource_vault", "contact_terminal"]
+  }
+}

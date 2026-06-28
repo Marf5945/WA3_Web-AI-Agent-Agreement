@@ -1,0 +1,50 @@
+{
+  "answers_schema_version": "1.0",
+  "template_id": "board",
+  "template_version": "1.0.0",
+  "app": {
+    "id": "com.demo.board",
+    "version": "1.0",
+    "backend": "mock://board",
+    "scope": "shared"
+  },
+  "publisher": {
+    "id": "com.demo.publisher"
+  },
+  "llm_suggestions": [
+    {
+      "field_path": "actions.submit_message.purpose",
+      "value": "Let people post a short message.",
+      "provenance": "system_suggested"
+    }
+  ],
+  "human_decisions": [
+    {
+      "action_id": "read_messages",
+      "decision": "keep",
+      "writer": "human",
+      "provenance": "user_confirmed"
+    },
+    {
+      "action_id": "submit_message",
+      "decision": "keep",
+      "writer": "human",
+      "provenance": "user_confirmed"
+    },
+    {
+      "action_id": "react",
+      "decision": "keep",
+      "confirm_disabled_by_user": true,
+      "warning_acknowledged": true,
+      "writer": "human",
+      "provenance": "user_confirmed"
+    },
+    {
+      "action_id": "search_messages",
+      "decision": "keep",
+      "writer": "human",
+      "provenance": "user_confirmed"
+    }
+  ],
+  "opaque_confirmations": []
+}

@@ -1,0 +1,302 @@
+# W3A Design Template: Mobile Holographic HMI App
+
+ㄊㄡ：W3A design-template v0.1
+ㄏㄠ：design.mobile.holographic_hmi_app
+ㄉㄞ：0.1
+ㄏㄡ：design://local/pasted-mobile-holographic-hmi
+ㄈㄢ：reference-only
+
+ㄝㄇㄜ：design_template
+ㄝㄕㄡ：mobile_holographic_hmi_app
+ㄝㄌㄞ：【source】user-provided pasted HTML attachment, future-tech mobile app preview【extracted】2026-06-28
+ㄝㄉㄧ：Display guidance only; not an operable W3A contract and not part of the operable W3A canonical/signature trust profile.
+
+## Purpose
+
+Use this template when a W3A renderer needs a compact mobile-first app shell
+with a premium future-tech HMI mood: simulated device viewport, glowing nebula
+background, frosted quartz cards, bottom tab navigation, metric/story/resource
+pages, holographic modal confirmations, progress affordances, and short
+nonblocking toast feedback.
+
+## Safety Boundary
+
+- Display guidance only; never execute source code from the referenced design.
+- Do not copy backend targets, providers, policies, permissions, secrets, true
+  action ids, true button labels, source asset references, fonts, visual
+  identity assets, or executable implementation files.
+- Treat words such as "secure", "encrypted", "biometric", "vault", and
+  "verified" as visual tone unless a verified W3A contract/runtime state says
+  otherwise.
+- Long-press, scan, fingerprint, call, mail, download, and transmission motifs
+  are interaction shapes only. They must not imply authentication, delivery,
+  local storage, network transfer, or permission state.
+- Every real interaction must map back to a verified operable W3A contract and
+  pass through `w3a-core`.
+
+## Layout Profile
+
+```json
+{
+  "layout_id": "mobile.holographic_hmi.device_shell",
+  "viewport": {
+    "desktop_min_width": 1024,
+    "mobile_behavior": "native-size app shell fills viewport; desktop may center it in a device-like frame",
+    "target_shell_width": 412,
+    "target_shell_height": 846,
+    "safe_area": "top status island plus bottom tab bar"
+  },
+  "regions": [
+    {
+      "id": "device_frame",
+      "role": "bounded_mobile_viewport",
+      "content": ["ambient_background", "status_island", "app_surface"]
+    },
+    {
+      "id": "app_header",
+      "role": "identity_and_quick_actions",
+      "content": ["compact_title_stack", "round_icon_buttons"]
+    },
+    {
+      "id": "tab_page_stack",
+      "role": "single_visible_page_region",
+      "content": ["product_showcase", "metric_cases", "timeline_story", "resource_list"]
+    },
+    {
+      "id": "bottom_tab_nav",
+      "role": "native_bottom_navigation",
+      "content": ["tab_icon_label_buttons", "sliding_pillow_indicator"]
+    },
+    {
+      "id": "modal_layer",
+      "role": "holographic_confirmation_and_form_surface",
+      "content": ["hmi_modal", "form_controls", "long_press_progress_control"]
+    },
+    {
+      "id": "toast_layer",
+      "role": "bottom_feedback_overlay",
+      "content": ["holographic_toast"]
+    }
+  ],
+  "grid": {
+    "columns": "single-column mobile stack with compact internal card grids",
+    "gap": 12,
+    "page_gap": 16
+  }
+}
+```
+
+## Visual Tokens
+
+```json
+{
+  "font_stack": {
+    "display": ["Inter", "system-ui", "sans-serif"],
+    "mono": ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "monospace"]
+  },
+  "density": "compact",
+  "radius": {
+    "device_frame": 50,
+    "panel": 16,
+    "card": 16,
+    "control": 12,
+    "round_icon": 999,
+    "status_chip": 6
+  },
+  "colors": {
+    "background_deep": "#030514",
+    "background_slate": "#090D26",
+    "surface_dark": "rgba(9,13,38,0.94)",
+    "card_quartz": "rgba(229,231,235,0.14)",
+    "card_highlight": "rgba(246,246,240,0.25)",
+    "accent_blue": "#5275FF",
+    "accent_silver": "#BAC7D5",
+    "text": "#EBF1F5",
+    "text_muted": "#94A3B8",
+    "neon_cyan": "#00F0FF",
+    "neon_purple": "#A020F0",
+    "modal_scrim": "rgba(2,6,23,0.8)",
+    "soft_border": "rgba(255,255,255,0.12)"
+  },
+  "effects": {
+    "page_background": "dark radial nebula gradient with cyan, blue, and purple light blooms",
+    "glass_card": "matte quartz glass, high blur, inner highlight, soft shadow",
+    "hmi_panel": "dark translucent panel with cyan border glow and small corner brackets",
+    "scanline": "thin cyan line passing through modal content; optional and nonsemantic",
+    "particles": "small translucent bubbles or light packets behind content",
+    "motion": "floating cards, tab fade, counter tick, and progress ring only when reduced motion is not requested"
+  },
+  "spacing": {
+    "shell_padding_x": 20,
+    "header_height": 56,
+    "bottom_nav_height": 58,
+    "card_padding": 16,
+    "control_height": 36,
+    "icon_button_size": 36
+  }
+}
+```
+
+## Component Roles
+
+```json
+{
+  "device_frame": {
+    "shape": "centered rounded mobile viewport with dark metal rim and hidden overflow",
+    "desktop": "may appear as a device preview; avoid using the frame when the app is already inside a real mobile container",
+    "mobile": "remove decorative outer rim and use real safe areas"
+  },
+  "status_island": {
+    "shape": "small black pill at top center with tiny sensor dots",
+    "notes": "pure decoration; carries no device, camera, identity, or permission state"
+  },
+  "ambient_background": {
+    "shape": "full-bleed deep-space gradient with blurred cyan/purple light fields",
+    "behavior": "background motion must be subtle and optional"
+  },
+  "compact_title_stack": {
+    "shape": "tiny mono uppercase eyebrow above bold short title with a small pulsing status dot",
+    "notes": "status dot only reflects verified runtime state when bound to real state"
+  },
+  "round_icon_button": {
+    "shape": "36px circular glass button with icon centered, cyan hover/focus ring, active scale feedback",
+    "states": ["default", "hover", "focus", "pressed", "disabled"],
+    "notes": "icon buttons map to declared actions only at render time"
+  },
+  "page_section_header": {
+    "shape": "compact row with numbered section label left and mono status chip right",
+    "body": "short muted paragraph; keep to two or three lines on mobile"
+  },
+  "quartz_product_card": {
+    "shape": "large frosted glass card with icon cell, mono index, bold title, short body, and three compact spec cells",
+    "states": ["default", "hover_or_pressed", "loading"],
+    "notes": "spec values are plain display data unless backed by verified data provenance"
+  },
+  "carousel_dots": {
+    "shape": "tiny pill indicators; active item expands horizontally",
+    "behavior": "switches display-only page/item state unless wired to a declared W3A action"
+  },
+  "metric_card": {
+    "shape": "glass card with label, large numeric value, icon cell, and tiny legend row",
+    "notes": "animated counters should settle to verified values; never fabricate live metrics"
+  },
+  "horizontal_case_card": {
+    "shape": "fixed-width snap card with small mono tag, icon, title, concise body, and bottom metadata row",
+    "mobile": "horizontal scroll with hidden scrollbar and snap points"
+  },
+  "timeline": {
+    "shape": "vertical glowing spine with small circular nodes and compact milestone cards",
+    "mobile": "single-column scroll area with current item highlighted"
+  },
+  "resource_row": {
+    "shape": "glass list row with file/type icon cell, title/meta stack, and square icon action button",
+    "states": ["available", "disabled", "preparing"],
+    "notes": "download or open behavior must map to a declared action and runtime confirmation when required"
+  },
+  "bottom_tab_nav": {
+    "shape": "fixed bottom navigation with four icon+label tabs and translucent sliding active indicator",
+    "behavior": "only one tab page visible; active color is cyan, inactive is muted slate"
+  },
+  "hmi_modal": {
+    "shape": "centered dark glass panel over blurred scrim with cyan border glow, corner brackets, and optional scanline",
+    "use_for": ["confirmation", "contact", "detail", "form"],
+    "notes": "modal cannot replace W3A confirmation, permission checks, or trust state"
+  },
+  "hmi_form_control": {
+    "shape": "dark compact input with mono uppercase label, soft border, cyan focus ring, and small text",
+    "states": ["default", "focus", "invalid", "disabled"]
+  },
+  "long_press_progress_control": {
+    "shape": "round icon button inside circular progress ring with hold-to-complete feedback",
+    "behavior": "visual confirmation affordance only; completion reports intent to runtime",
+    "notes": "does not authenticate the user unless the verified runtime provides real authentication"
+  },
+  "holographic_toast": {
+    "shape": "bottom floating HMI panel with icon cell, mono heading, short description, and cyan corner accents",
+    "duration": "short and nonblocking; persistent errors become inline panels"
+  },
+  "action_role_slots": {
+    "primary_submit": {
+      "match": "verified W3A action that submits the current modal/form or starts the main mobile flow",
+      "component": "hmi_modal primary button or long_press_progress_control",
+      "style": "small cyan glass button or circular progress button with neon-cyan border, compact label, and fixed height",
+      "fallback": "derive a cyan glass primary control from neon_cyan, surface_dark, and control radius tokens; do not create a feature"
+    },
+    "secondary_action": {
+      "match": "verified secondary action, cancel, close, back, or low-risk helper action",
+      "component": "hmi_modal secondary button",
+      "style": "small muted glass button with soft border and slate text; active scale feedback allowed"
+    },
+    "compact_icon_action": {
+      "match": "verified quick action, resource-row action, or repeated compact control",
+      "component": "round_icon_button or resource_row square icon action",
+      "style": "36px circular or square glass icon button with centered icon, cyan hover/focus ring, and fixed size"
+    },
+    "navigation_or_filter": {
+      "match": "display navigation, tab, carousel switcher, search, or filter control",
+      "component": "bottom_tab_nav, carousel_dots, or compact header filter",
+      "style": "cyan active state, muted slate inactive state, sliding/pill indicator when space allows"
+    },
+    "destructive_confirm": {
+      "match": "verified destructive, irreversible, or high-risk mutating action that already requires confirmation",
+      "component": "hmi_modal confirmation button or long_press_progress_control",
+      "style": "cyan HMI confirmation surface with visible target summary; optional hold progress is extra visual friction",
+      "notes": "visual treatment only; confirmation and target still come from w3a-core"
+    }
+  }
+}
+```
+
+## W3A Block Mapping
+
+```json
+{
+  "ㄆㄤ": "render as tab_page_stack or modal form surface when paired with verified submit/search actions",
+  "ㄗㄞ": "render as quartz_product_card, horizontal_case_card, resource_row, timeline item, or metric_card",
+  "ㄔㄠ": "render as hmi_modal form or compact inline form with long_press_progress_control only when the verified contract allows confirmation",
+  "ㄙㄞ": "render as compact header filter, tab selector, carousel switcher, or resource-list filter",
+  "ㄉㄟ": "render as metric_card, spec cells, resource detail modal, or timeline detail panel",
+  "ㄇㄢ": "render as safe compact text inside page_section_header, card body, toast, or modal body"
+}
+```
+
+## Interaction Guidance
+
+- Keep the app shell compact: repeated controls need stable width/height so tab
+  labels, icons, counters, and progress rings do not resize the layout.
+- Use bottom tabs for major modes and card/row interactions for local
+  navigation. A tab switch is display navigation unless bound to a verified
+  W3A action.
+- Prefer icons from the host renderer's allowed icon system. If none exists,
+  use initials or simple CSS shapes instead of copying icon fonts.
+- Place mutating-operation confirmation in the HMI modal or long-press control
+  only as an additional visual affordance; `w3a-core` still owns confirmation.
+- Keep secure/biometric/download/call/mail wording generic unless the verified
+  contract supplies the actual action and runtime trust state.
+- Disable nebula movement, scanlines, particles, floating cards, animated
+  counters, and circular hold progress under reduced motion.
+- Toasts are for feedback only. Errors that require user action should become
+  visible inline panels inside the relevant page or modal.
+
+## Source Notes
+
+- Durable source: user-provided pasted HTML attachment containing a future-tech
+  mobile app preview.
+- Extraction date: 2026-06-28.
+- License or redistribution note: user-provided local preview; abstract design
+  semantics only.
+- Extracted signals: centered mobile device shell, top status island, deep
+  nebula background, frosted quartz product cards, compact section headers,
+  bottom tab navigation with sliding indicator, horizontal snap cards, vertical
+  timeline, resource rows, holographic modals, circular long-press progress, and
+  bottom HMI toast feedback.
+- Explicitly excluded: original HTML, CSS, JavaScript, CDN links, font links,
+  icon font references, concrete product copy, contact details, filenames,
+  function names, button labels, action ids, backend targets, provider names,
+  permissions, policies, secrets, and executable behavior.
+
+ㄓㄤ
+ㄓㄜ：design.local.mobile_holographic_hmi_app
+ㄎㄟ：
+ㄔㄣ：2026-06-28T00:00:00Z
+ㄓㄥ：

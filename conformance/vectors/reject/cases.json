@@ -1,0 +1,64 @@
+{
+  "cases": [
+    {
+      "name": "bom",
+      "input_b64": "77u/",
+      "expect_error": "E-ENC-BOM"
+    },
+    {
+      "name": "null",
+      "input_b64": "YQBi",
+      "expect_error": "E-ENC-NULL"
+    },
+    {
+      "name": "dup-key",
+      "input": "ㄊㄡ：a\nㄊㄡ：b\n",
+      "expect_error": "E-STRUCT-DUPKEY"
+    },
+    {
+      "name": "no-separator",
+      "input": "ㄊㄡ a\n",
+      "expect_error": "E-STRUCT-PARSE"
+    },
+    {
+      "name": "unknown-core",
+      "input": "ㄓㄠ：x\n",
+      "expect_error": "E-TOKEN-UNKNOWN-CORE"
+    },
+    {
+      "name": "zero-width-in-token",
+      "input": "ㄊㄡ​：x\n",
+      "expect_error": "E-TOKEN-INVALID"
+    },
+    {
+      "name": "zero-width-in-action-id",
+      "input": "ㄋㄥ\nㄓㄠ：sub​mit\n  ㄘ：ㄎㄢ\n",
+      "expect_error": "E-TOKEN-INVALID"
+    },
+    {
+      "name": "dup-action-id",
+      "input": "ㄋㄥ\nㄓㄠ：a\n  ㄘ：ㄎㄢ\nㄓㄠ：a\n  ㄘ：ㄎㄢ\n",
+      "expect_error": "E-STRUCT-DUP-ID"
+    },
+    {
+      "name": "dup-input-id",
+      "input": "ㄋㄥ\nㄓㄠ：a\n  ㄕㄡ：text｜ㄐㄩ\n  ㄕㄡ：text｜ㄐㄩ\n",
+      "expect_error": "E-STRUCT-DUP-ID"
+    },
+    {
+      "name": "dup-entity-field",
+      "input": "ㄋㄥ\nㄕ：message\n  id：ㄐㄩ\n  id：ㄗㄤ\n",
+      "expect_error": "E-STRUCT-DUPKEY"
+    },
+    {
+      "name": "rl-dup-key",
+      "input": "ㄓㄜ：a\nㄓㄜ：b\nㄎㄟ：k\nㄔㄣ：t\nㄑㄢ：full\nㄝㄕㄜ：1\n",
+      "expect_error": "E-STRUCT-DUPKEY"
+    },
+    {
+      "name": "rl-unknown-core",
+      "input": "ㄓㄜ：a\n未知：x\nㄎㄟ：k\nㄔㄣ：t\nㄑㄢ：full\nㄝㄕㄜ：1\n",
+      "expect_error": "E-TOKEN-UNKNOWN-CORE"
+    }
+  ]
+}

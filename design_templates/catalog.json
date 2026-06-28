@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "purpose": "Display-only recommendation index for local W3A design templates. This file is not an operable W3A contract and must not carry action ids, providers, backend targets, permissions, policies, secrets, or trust state.",
+  "selection_policy": {
+    "must_ask_before_apply": true,
+    "user_default_first": true,
+    "fallback_candidate_count": 3,
+    "no_auto_apply": true,
+    "default_handle": "haler_console",
+    "default_handle_note": "Used when the user picks 'use the default template'. A broadly applicable agent/app workspace shell. The separate 'no template' choice uses the neutral fallback renderer in docs/RENDER_PIPELINE.md, not this entry."
+  },
+  "templates": [
+    {
+      "handle": "haler_console",
+      "file": "haler_console_ds.w3a",
+      "default": true,
+      "display_name": "HaLer Console",
+      "tags": ["console", "agent_workspace", "three_rail", "conversation", "tool_heavy", "compact"],
+      "best_for": ["agent_console", "message_board", "task_workspace", "review_surface", "settings_heavy_app"],
+      "layout_tags": ["left_navigation", "main_workspace", "right_tools_rail", "composer", "inline_confirmations"],
+      "density": "compact",
+      "block_type_affinity": ["ㄆㄤ", "ㄗㄞ", "ㄔㄠ", "ㄙㄞ"],
+      "component_roles": ["message_list", "composer", "tool_card", "settings_panel", "confirmation_card"],
+      "action_role_slots": ["primary_submit", "secondary_action", "compact_icon_action", "navigation_or_filter", "destructive_confirm"]
+    },
+    {
+      "handle": "mobile_holographic_hmi_app",
+      "file": "mobile_holographic_hmi_ds.w3a",
+      "display_name": "Mobile Holographic HMI App",
+      "tags": ["mobile", "app_shell", "bottom_tabs", "holographic", "compact", "modal_confirmations"],
+      "best_for": ["mobile_dashboard", "resource_list", "guided_workflow", "metric_app"],
+      "layout_tags": ["device_frame", "bottom_tab_nav", "single_visible_page", "toast_layer", "modal_layer"],
+      "density": "compact",
+      "block_type_affinity": ["ㄇㄢ", "ㄗㄞ", "ㄆㄤ", "ㄙㄞ"],
+      "component_roles": ["bottom_tab_nav", "resource_row", "metric_card", "hmi_modal", "toast"],
+      "action_role_slots": ["primary_submit", "secondary_action", "compact_icon_action", "navigation_or_filter", "destructive_confirm"]
+    },
+    {
+      "handle": "modern_industrial_glass_site",
+      "file": "modern_industrial_glass_ds.w3a",
+      "display_name": "Modern Industrial Glass Site",
+      "tags": ["website", "marketing", "industrial", "glass", "spacious", "sectioned"],
+      "best_for": ["public_site", "product_page", "resource_archive", "timeline_story", "metrics_showcase"],
+      "layout_tags": ["sticky_nav", "hero", "section_grid", "metrics_dashboard", "timeline", "resource_cards"],
+      "density": "comfortable",
+      "block_type_affinity": ["ㄇㄢ", "ㄗㄞ", "ㄙㄞ", "ㄉㄟ"],
+      "component_roles": ["feature_card", "metric_card", "resource_card", "corporate_modal", "solution_tabs"],
+      "action_role_slots": ["primary_submit", "secondary_action", "compact_icon_action", "navigation_or_filter", "destructive_confirm"]
+    },
+    {
+      "handle": "terminal_tactical_hud",
+      "file": "terminal_tactical_ds.w3a",
+      "display_name": "Terminal Tactical HUD",
+      "tags": ["terminal", "hud", "dense", "status_heavy", "command_console", "dashboard"],
+      "best_for": ["monitoring_console", "audit_history", "resource_vault", "status_dashboard", "operator_workflow"],
+      "layout_tags": ["hud_nav", "mission_gateway", "telemetry_grid", "timeline", "resource_grid", "command_modal"],
+      "density": "compact",
+      "block_type_affinity": ["ㄇㄢ", "ㄗㄞ", "ㄆㄤ", "ㄔㄠ", "ㄙㄞ"],
+      "component_roles": ["status_chip", "telemetry_panel", "resource_card", "command_modal", "tab_selector"],
+      "action_role_slots": ["primary_submit", "secondary_action", "compact_icon_action", "navigation_or_filter", "destructive_confirm"]
+    }
+  ]
+}

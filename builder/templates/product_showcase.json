@@ -1,0 +1,212 @@
+{
+  "template_id": "product_showcase",
+  "template_version": "1.0.0",
+  "display_name": "Product showcase",
+  "recommended_design_templates": [
+    {"handle": "modern_industrial_glass_site", "file": "modern_industrial_glass_ds.w3a", "reason": "Best fit for website-style product pages with hero, metrics, timeline, and resource cards."},
+    {"handle": "mobile_holographic_hmi_app", "file": "mobile_holographic_hmi_ds.w3a", "reason": "Mobile-first fallback for product cards and resource flows."},
+    {"handle": "terminal_tactical_hud", "file": "terminal_tactical_ds.w3a", "reason": "Dense technical fallback for status-heavy product showcases."}
+  ],
+  "default_app": {
+    "id": "com.example.product_showcase",
+    "version": "1.0",
+    "backend": "mock://product-showcase",
+    "scope": "shared"
+  },
+  "entities": [
+    {
+      "id": "product",
+      "fields": [
+        {"name": "id", "type": "ㄐㄩ"},
+        {"name": "name", "type": "ㄐㄩ"},
+        {"name": "category", "type": "ㄐㄩ"},
+        {"name": "summary", "type": "ㄐㄩ"},
+        {"name": "primary_metric", "type": "ㄐㄩ"},
+        {"name": "secondary_metric", "type": "ㄐㄩ"},
+        {"name": "updated_at", "type": "ㄋㄞ"}
+      ]
+    },
+    {
+      "id": "solution",
+      "fields": [
+        {"name": "id", "type": "ㄐㄩ"},
+        {"name": "title", "type": "ㄐㄩ"},
+        {"name": "summary", "type": "ㄐㄩ"},
+        {"name": "spec_label", "type": "ㄐㄩ"},
+        {"name": "spec_value", "type": "ㄐㄩ"}
+      ]
+    },
+    {
+      "id": "timeline_event",
+      "fields": [
+        {"name": "id", "type": "ㄐㄩ"},
+        {"name": "period", "type": "ㄐㄩ"},
+        {"name": "title", "type": "ㄐㄩ"},
+        {"name": "summary", "type": "ㄐㄩ"}
+      ]
+    },
+    {
+      "id": "resource",
+      "fields": [
+        {"name": "id", "type": "ㄐㄩ"},
+        {"name": "title", "type": "ㄐㄩ"},
+        {"name": "kind", "type": "ㄐㄩ"},
+        {"name": "summary", "type": "ㄐㄩ"}
+      ]
+    },
+    {
+      "id": "inquiry",
+      "fields": [
+        {"name": "id", "type": "ㄐㄩ"},
+        {"name": "name", "type": "ㄐㄩ"},
+        {"name": "email", "type": "ㄐㄩ"},
+        {"name": "interest", "type": "ㄐㄩ"},
+        {"name": "message", "type": "ㄐㄩ"},
+        {"name": "created_at", "type": "ㄋㄞ"}
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": "read_product_page",
+      "verb": "ㄎㄢ",
+      "target": "/product",
+      "mutates": false,
+      "confirm": false,
+      "risk_class": "read",
+      "purpose": "Read the product overview, positioning, and headline metrics.",
+      "data_impact": "read-only",
+      "inputs": [],
+      "outputs": ["product"]
+    },
+    {
+      "id": "list_solutions",
+      "verb": "ㄎㄢ",
+      "target": "/solutions",
+      "mutates": false,
+      "confirm": false,
+      "risk_class": "read",
+      "purpose": "Read solution or feature sections for the product page.",
+      "data_impact": "read-only",
+      "inputs": [],
+      "outputs": ["list", "solution"]
+    },
+    {
+      "id": "select_solution",
+      "verb": "ㄗㄜ",
+      "target": "/solutions/{id}",
+      "mutates": false,
+      "confirm": false,
+      "risk_class": "read",
+      "purpose": "Focus one solution section without changing backend data.",
+      "data_impact": "read-only selection",
+      "inputs": [{"name": "id", "type": "ㄐㄩ"}],
+      "outputs": ["solution"]
+    },
+    {
+      "id": "read_timeline",
+      "verb": "ㄎㄢ",
+      "target": "/timeline",
+      "mutates": false,
+      "confirm": false,
+      "risk_class": "read",
+      "purpose": "Read product milestones or release chronology.",
+      "data_impact": "read-only",
+      "inputs": [],
+      "outputs": ["list", "timeline_event"]
+    },
+    {
+      "id": "search_resources",
+      "verb": "ㄙㄡ",
+      "target": "/resources/search",
+      "mutates": false,
+      "confirm": false,
+      "risk_class": "read",
+      "purpose": "Search brochures, specs, case studies, or other product resources.",
+      "data_impact": "read-only",
+      "inputs": [{"name": "q", "type": "ㄐㄩ"}],
+      "outputs": ["list", "resource"]
+    },
+    {
+      "id": "request_resource",
+      "verb": "ㄎㄢ",
+      "target": "/resources/{id}",
+      "mutates": false,
+      "confirm": false,
+      "risk_class": "read",
+      "purpose": "Open or request one declared product resource through the runtime.",
+      "data_impact": "read-only resource access",
+      "inputs": [{"name": "id", "type": "ㄐㄩ"}],
+      "outputs": ["resource"]
+    },
+    {
+      "id": "submit_inquiry",
+      "verb": "ㄔㄥ",
+      "target": "/inquiries",
+      "mutates": true,
+      "confirm": true,
+      "risk_class": "low_mutate",
+      "purpose": "Submit a product inquiry or contact request.",
+      "data_impact": "writes one inquiry item",
+      "inputs": [
+        {"name": "name", "type": "ㄐㄩ"},
+        {"name": "email", "type": "ㄐㄩ"},
+        {"name": "interest", "type": "ㄐㄩ"},
+        {"name": "message", "type": "ㄐㄩ"}
+      ],
+      "outputs": ["inquiry"]
+    }
+  ],
+  "blocks": [
+    {
+      "id": "hero_summary",
+      "type": "ㄇㄢ",
+      "source": "read_product_page",
+      "actions": ["submit_inquiry"],
+      "fallback": ["ㄇㄢ"]
+    },
+    {
+      "id": "solution_showcase",
+      "type": "ㄉㄟ",
+      "source": "list_solutions",
+      "actions": ["select_solution", "submit_inquiry"],
+      "fallback": ["ㄗㄞ", "ㄇㄢ"]
+    },
+    {
+      "id": "metrics_panel",
+      "type": "ㄉㄟ",
+      "source": "read_product_page",
+      "actions": [],
+      "fallback": ["ㄇㄢ"]
+    },
+    {
+      "id": "timeline_story",
+      "type": "ㄗㄞ",
+      "source": "read_timeline",
+      "actions": [],
+      "fallback": ["ㄇㄢ"]
+    },
+    {
+      "id": "resource_archive",
+      "type": "ㄙㄞ",
+      "source": "search_resources",
+      "actions": ["request_resource"],
+      "fallback": ["ㄗㄞ", "ㄇㄢ"]
+    },
+    {
+      "id": "inquiry_form",
+      "type": "ㄔㄠ",
+      "source": "read_product_page",
+      "actions": ["submit_inquiry"],
+      "fallback": ["ㄇㄢ"]
+    }
+  ],
+  "preferences": {
+    "readonly": [],
+    "hidden_actions": [],
+    "theme_colors": ["ㄍㄟ", "ㄘㄠ", "ㄕㄞ"],
+    "font_sizes": ["1", "2"],
+    "density": "comfortable",
+    "visible_blocks": ["hero_summary", "solution_showcase", "metrics_panel", "timeline_story", "resource_archive", "inquiry_form"]
+  }
+}

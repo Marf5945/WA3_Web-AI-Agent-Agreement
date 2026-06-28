@@ -1,0 +1,4 @@
+interface:
+  display_name: "W3A Spec"
+  short_description: "Review and evolve W3A .w3a skill contracts"
+  default_prompt: "Use $w3a-spec to review a .w3a contract, check W3A safety rules, or evolve the W3A specification safely."

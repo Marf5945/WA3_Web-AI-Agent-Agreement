@@ -1,0 +1,98 @@
+{
+  "template_id": "board",
+  "template_version": "1.0.0",
+  "display_name": "Message board",
+  "default_app": {
+    "id": "com.example.board",
+    "version": "1.0",
+    "backend": "mock://board",
+    "scope": "shared"
+  },
+  "entities": [
+    {
+      "id": "message",
+      "fields": [
+        {"name": "id", "type": "ㄐㄩ"},
+        {"name": "author", "type": "ㄐㄩ"},
+        {"name": "text", "type": "ㄐㄩ"},
+        {"name": "created_at", "type": "ㄋㄞ"},
+        {"name": "like", "type": "ㄗㄤ"},
+        {"name": "question", "type": "ㄗㄤ"},
+        {"name": "pat", "type": "ㄗㄤ"},
+        {"name": "angry", "type": "ㄗㄤ"},
+        {"name": "down", "type": "ㄗㄤ"},
+        {"name": "speechless", "type": "ㄗㄤ"}
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": "read_messages",
+      "verb": "ㄎㄢ",
+      "target": "/messages",
+      "mutates": false,
+      "confirm": false,
+      "risk_class": "read",
+      "purpose": "Read board messages.",
+      "data_impact": "read-only",
+      "inputs": [],
+      "outputs": ["list", "message"]
+    },
+    {
+      "id": "submit_message",
+      "verb": "ㄔㄥ",
+      "target": "/messages",
+      "mutates": true,
+      "confirm": true,
+      "risk_class": "low_mutate",
+      "purpose": "Post a new message.",
+      "data_impact": "writes one message",
+      "inputs": [{"name": "text", "type": "ㄐㄩ"}],
+      "outputs": ["message"]
+    },
+    {
+      "id": "react",
+      "verb": "ㄢ",
+      "target": "/messages/{id}/reaction",
+      "mutates": true,
+      "confirm": true,
+      "risk_class": "low_mutate",
+      "purpose": "Add a lightweight reaction.",
+      "data_impact": "updates one reaction counter",
+      "inputs": [
+        {"name": "target", "type": "ㄐㄩ"},
+        {"name": "reaction", "type": "ㄐㄩ"}
+      ],
+      "outputs": []
+    },
+    {
+      "id": "search_messages",
+      "verb": "ㄙㄡ",
+      "target": "/messages/search",
+      "mutates": false,
+      "confirm": false,
+      "risk_class": "read",
+      "purpose": "Search messages.",
+      "data_impact": "read-only",
+      "inputs": [{"name": "q", "type": "ㄐㄩ"}],
+      "outputs": ["list", "message"]
+    }
+  ],
+  "blocks": [
+    {
+      "id": "main_board",
+      "type": "ㄆㄤ",
+      "source": "read_messages",
+      "actions": ["submit_message", "react", "search_messages"],
+      "fallback": ["ㄗㄞ", "ㄇㄢ"]
+    }
+  ],
+  "preferences": {
+    "readonly": [],
+    "hidden_actions": [],
+    "theme_colors": ["ㄍㄟ", "ㄋㄠ", "ㄕㄞ"],
+    "font_sizes": ["1", "2"],
+    "density": "comfortable",
+    "visible_blocks": ["main_board"]
+  }
+}

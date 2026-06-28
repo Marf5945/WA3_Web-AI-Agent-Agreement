@@ -1,0 +1,239 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://w3a.dev/schemas/builder-answers-v1.json",
+  "title": "W3A Builder Answers v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "answers_schema_version",
+    "template_id",
+    "template_version",
+    "app",
+    "publisher"
+  ],
+  "properties": {
+    "answers_schema_version": {
+      "const": "1.0",
+      "x-w3a-owner": "code_owned"
+    },
+    "template_id": {
+      "enum": ["board", "task_list", "feedback_form", "product_showcase", "mobile_product_app", "custom_generic"],
+      "x-w3a-owner": "human_only"
+    },
+    "template_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "x-w3a-owner": "code_owned"
+    },
+    "app": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "backend", "scope"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9_-]+)+$",
+          "x-w3a-owner": "human_only"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+$",
+          "x-w3a-owner": "human_only"
+        },
+        "backend": {
+          "type": "string",
+          "x-w3a-owner": "human_only",
+          "description": "Use a stable handle such as mock://board, gdrive://BOARD_FILE_ID, or api://provider/resource. Secrets are forbidden."
+        },
+        "scope": {
+          "enum": ["local", "private", "shared"],
+          "x-w3a-owner": "human_only"
+        }
+      }
+    },
+    "publisher": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9_-]+)+$",
+          "x-w3a-owner": "human_only"
+        },
+        "public_key": {
+          "type": "string",
+          "x-w3a-owner": "code_owned"
+        }
+      }
+    },
+    "custom_template": {
+      "type": "object",
+      "x-w3a-owner": "human_only",
+      "description": "Required when template_id is custom_generic. Holds user-confirmed webpage extraction structure.",
+      "additionalProperties": false,
+      "required": ["template_id", "template_version", "display_name", "default_app", "entities", "actions", "blocks", "preferences"],
+      "properties": {
+        "template_id": {"const": "custom_generic"},
+        "template_version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "display_name": {"type": "string"},
+        "default_app": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "version", "backend", "scope"],
+          "properties": {
+            "id": {"type": "string"},
+            "version": {"type": "string"},
+            "backend": {"type": "string"},
+            "scope": {"enum": ["local", "private", "shared"]}
+          }
+        },
+        "entities": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "fields"],
+            "properties": {
+              "id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+              "fields": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["name", "type"],
+                  "properties": {
+                    "name": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+                    "type": {"enum": ["ㄐㄩ", "ㄗㄤ", "ㄋㄞ"]}
+                  }
+                }
+              }
+            }
+          }
+        },
+        "actions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "verb", "target", "mutates", "confirm", "risk_class", "purpose", "data_impact", "inputs", "outputs"],
+            "properties": {
+              "id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+              "verb": {"enum": ["ㄎㄢ", "ㄔㄥ", "ㄢ", "ㄗㄜ", "ㄙㄡ", "ㄕㄢ"]},
+              "target": {"type": "string"},
+              "mutates": {"type": "boolean"},
+              "confirm": {"type": "boolean"},
+              "risk_class": {"enum": ["read", "low_mutate", "high_mutate", "irreversible"], "x-w3a-owner": "code_owned"},
+              "purpose": {"type": "string"},
+              "data_impact": {"type": "string"},
+              "inputs": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["name", "type"],
+                  "properties": {
+                    "name": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+                    "type": {"enum": ["ㄐㄩ", "ㄗㄤ", "ㄋㄞ"]}
+                  }
+                }
+              },
+              "outputs": {
+                "type": "array",
+                "items": {"type": "string"}
+              }
+            }
+          }
+        },
+        "blocks": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "type", "source", "actions", "fallback"],
+            "properties": {
+              "id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+              "type": {"enum": ["ㄇㄢ", "ㄗㄞ", "ㄆㄤ", "ㄔㄠ", "ㄙㄞ", "ㄉㄟ"]},
+              "source": {"type": "string"},
+              "actions": {
+                "type": "array",
+                "items": {"type": "string"}
+              },
+              "fallback": {
+                "type": "array",
+                "items": {"enum": ["ㄇㄢ", "ㄗㄞ", "ㄆㄤ", "ㄔㄠ", "ㄙㄞ", "ㄉㄟ"]}
+              }
+            }
+          }
+        },
+        "preferences": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["readonly", "hidden_actions", "theme_colors", "font_sizes", "density", "visible_blocks"],
+          "properties": {
+            "readonly": {"type": "array", "items": {"type": "string"}},
+            "hidden_actions": {"type": "array", "items": {"type": "string"}},
+            "theme_colors": {"type": "array", "items": {"type": "string"}},
+            "font_sizes": {"type": "array", "items": {"type": "string"}},
+            "density": {"type": "string"},
+            "visible_blocks": {"type": "array", "items": {"type": "string"}}
+          }
+        }
+      }
+    },
+    "llm_suggestions": {
+      "type": "array",
+      "x-w3a-owner": "llm_suggestable",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["field_path", "value", "provenance"],
+        "properties": {
+          "field_path": {"type": "string"},
+          "value": {"type": "string"},
+          "provenance": {"const": "system_suggested"}
+        }
+      }
+    },
+    "human_decisions": {
+      "type": "array",
+      "x-w3a-owner": "human_only",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["action_id", "decision"],
+        "properties": {
+          "action_id": {"type": "string"},
+          "decision": {"enum": ["keep", "remove", "rename"]},
+          "new_id": {"type": "string"},
+          "confirm_disabled_by_user": {"type": "boolean"},
+          "warning_acknowledged": {"type": "boolean"},
+          "provenance": {"const": "user_confirmed"},
+          "writer": {"const": "human"}
+        }
+      }
+    },
+    "opaque_confirmations": {
+      "type": "array",
+      "x-w3a-owner": "human_only",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["field_path", "reason", "provenance", "writer"],
+        "properties": {
+          "field_path": {"type": "string"},
+          "reason": {"type": "string"},
+          "provenance": {"const": "user_confirmed"},
+          "writer": {"const": "human"}
+        }
+      }
+    }
+  }
+}

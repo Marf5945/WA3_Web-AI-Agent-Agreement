@@ -1,0 +1,24 @@
+{
+  "answers_schema_version": "1.0",
+  "template_id": "board",
+  "template_version": "1.0.0",
+  "app": {
+    "id": "com.demo.llmconfirm",
+    "version": "1.0",
+    "backend": "mock://board",
+    "scope": "shared"
+  },
+  "publisher": {
+    "id": "com.demo.publisher"
+  },
+  "human_decisions": [
+    {
+      "action_id": "react",
+      "decision": "keep",
+      "confirm_disabled_by_user": true,
+      "warning_acknowledged": true,
+      "writer": "llm",
+      "provenance": "system_suggested"
+    }
+  ]
+}

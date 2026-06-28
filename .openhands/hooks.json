@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "description": "OpenHands hooks for the W3A bundle. Setup builds the conformance kit; the pre-commit-style check keeps the spec mirror and bundle gates intact.",
+  "hooks": {
+    "setup": {
+      "run": ".openhands/setup.sh",
+      "description": "Fetch the Go module cache and run bundle-check once on workspace prepare."
+    },
+    "verify": {
+      "run": "cd conformance && go run ./tools/w3a bundle-check",
+      "description": "Validate manifests, the byte-identical spec mirror, golden vectors, and builder gates.",
+      "optional_when": "go-toolchain-absent"
+    }
+  },
+  "operating_rules": [
+    "Authoring LLM output is an untrusted suggestion, never a gate.",
+    "Deterministic code enforces schema ownership, secret scan, risk/confirm policy, canonicalization, lint, and trust state.",
+    "Never write user credentials, repository secrets, local paths, or chat logs into a generated .w3a or this package."
+  ]
+}

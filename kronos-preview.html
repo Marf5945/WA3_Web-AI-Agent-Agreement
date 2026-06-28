@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KRONOS MANUFACTURING // 現代高階工業官網</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & JetBrains Mono for High-End Engineering Aesthetic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        industrial: {
+                            // Cold Metal Slate Palette
+                            bgDarker: '#090B0F',   // Deepest steel backing
+                            bgDark: '#12161F',     // Carbon slate base
+                            bgCard: '#1B212D',     // Plate steel card grey
+                            accentBlue: '#829AB1',  // Cold Light Blue Metal (冷調淺藍金屬)
+                            accentLight: '#BAC7D5', // Frosted silver-blue accent
+                            textWhite: '#F0F4F8',   // Cold white/silver text
+                            textMuted: '#627D98',   // Muted steel slate text
+                            borderSlate: '#243042', // Cold metal structural line
+                            borderActive: '#829AB1' // Focused metal stroke
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Modern Industrial Premium Radial & Linear Gradients for Non-Control Backgrounds */
+        .premium-industrial-bg {
+            background: radial-gradient(circle at 50% 40%, #18202C 0%, #090B0E 100%);
+            background-attachment: fixed;
+        }
+
+        /* Luxury Warm-Champagne / Soft Yellowed-Grey Frosted Glass Card with Lustrous Borders */
+        .luxury-glass-card {
+            background: rgba(229, 231, 235, 0.45); /* Base #E5E7EB tint */
+            background-image: linear-gradient(135deg, rgba(250, 248, 242, 0.6) 0%, rgba(229, 231, 235, 0.45) 100%); /* Infused with elegant light warm champagne */
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            /* Double glow ring: Soft Outer Halo & Bright Inner Bevel Reflectance */
+            box-shadow: 0 10px 40px -10px rgba(7, 9, 15, 0.6), 
+                        0 0 15px rgba(130, 154, 177, 0.15), 
+                        inset 0 1px 1px rgba(255, 255, 255, 0.9);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .luxury-glass-card:hover {
+            background-image: linear-gradient(135deg, rgba(250, 248, 242, 0.75) 0%, rgba(229, 231, 235, 0.55) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.85);
+            /* Advanced hovering metal luster */
+            box-shadow: 0 15px 50px -12px rgba(7, 9, 15, 0.75), 
+                        0 0 25px rgba(130, 154, 177, 0.4), 
+                        inset 0 1px 2px rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
+        }
+
+        /* Premium custom scrollbar matching clean slate grey */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090B0F;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #243042;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #829AB1;
+        }
+    </style>
+</head>
+<body class="premium-industrial-bg text-industrial-textWhite font-sans antialiased relative min-h-screen">
+
+    <!-- NAVIGATION BAR -->
+    <header class="sticky top-0 z-40 bg-industrial-bgDarker/90 backdrop-blur-md border-b border-industrial-borderSlate w-full">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 flex items-center justify-center border-2 border-industrial-accentBlue bg-industrial-bgDarker/70 relative overflow-hidden">
+                    <span class="font-bold text-lg text-industrial-accentBlue font-mono">K</span>
+                </div>
+                <div>
+                    <span class="font-extrabold tracking-widest text-lg text-industrial-textWhite block uppercase">KRONOS</span>
+                    <span class="text-[10px] block font-mono text-industrial-accentBlue tracking-widest -mt-1">PRECISION MFG</span>
+                </div>
+            </div>
+            
+            <!-- Modern Wix-Style Navigation -->
+            <nav class="hidden md:flex items-center space-x-8 text-xs font-semibold tracking-widest text-industrial-textMuted uppercase">
+                <button onclick="routeTo('page-overview')" id="nav-page-overview" class="hover:text-industrial-textWhite transition-colors duration-150 py-2 border-b-2 border-industrial-accentBlue text-industrial-textWhite">
+                    工程方案 / SOLUTIONS
+                </button>
+                <button onclick="routeTo('page-telemetry')" id="nav-page-telemetry" class="hover:text-industrial-textWhite transition-colors duration-150 py-2 border-b-2 border-transparent">
+                    數據看板 / METRICS
+                </button>
+                <button onclick="routeTo('page-chronology')" id="nav-page-chronology" class="hover:text-industrial-textWhite transition-colors duration-150 py-2 border-b-2 border-transparent">
+                    企業沿革 / HISTORY
+                </button>
+                <button onclick="routeTo('page-downloads')" id="nav-page-downloads" class="hover:text-industrial-textWhite transition-colors duration-150 py-2 border-b-2 border-transparent flex items-center space-x-1.5">
+                    <i class="fa-solid fa-file-pdf"></i>
+                    <span>技術下載 / DOWNLOADS</span>
+                </button>
+            </nav>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center space-x-3 text-xs font-semibold">
+                <button onclick="togglePhoneModal(true)" class="border border-industrial-borderSlate hover:border-industrial-accentBlue px-4 py-2.5 transition-all duration-200 text-industrial-accentLight hover:text-industrial-textWhite bg-industrial-bgDarker/40">
+                    <i class="fa-solid fa-phone-flip mr-2"></i>
+                    <span class="hidden sm:inline">服務專線</span>
+                </button>
+                <button onclick="toggleEmailModal(true)" class="bg-industrial-accentBlue text-industrial-bgDarker hover:bg-industrial-accentLight px-4 py-2.5 transition-all duration-200 flex items-center space-x-2 font-bold shadow-md">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>需求諮詢</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN SYSTEM VIEW CONTAINER -->
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        
+        <!-- ==================== VIEW 1: HOME & SOLUTIONS ==================== -->
+        <div id="page-overview" class="view-panel block space-y-16">
+            
+            <!-- HERO BLOCK: High-End Industrial Showcase -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                
+                <!-- Left Content Panel (Corporate message in Frosted Glass Card) -->
+                <div class="lg:col-span-5 flex flex-col justify-between p-10 luxury-glass-card relative">
+                    <div class="space-y-6">
+                        <div class="inline-flex items-center space-x-2 bg-industrial-bgDarker/30 px-3 py-1 border border-industrial-accentBlue/30">
+                            <span class="w-2 h-2 rounded-full bg-industrial-accentBlue animate-pulse"></span>
+                            <span class="text-[10px] font-mono text-industrial-bgDarker font-bold tracking-widest uppercase">KRONOS ENTERPRISE</span>
+                        </div>
+                        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-industrial-bgDarker uppercase leading-tight">
+                            重塑高端<br/><span class="text-industrial-accentBlue">精密工業</span>的極致公差。
+                        </h1>
+                        <p class="text-industrial-bgDarker/80 text-sm leading-relaxed font-medium">
+                            專注於極端載荷與超精密製造工藝，為航太、智慧半導體設備、高防護機械，鑄造符合國際公差標準的實體解決方案。
+                        </p>
+                    </div>
+                    
+                    <div class="border-t border-industrial-bgDarker/20 pt-8 mt-8 grid grid-cols-2 gap-4 text-xs text-industrial-bgDarker">
+                        <div>
+                            <span class="text-industrial-bgDarker/60 block font-mono uppercase tracking-wider">FOUNDED</span>
+                            <span class="font-extrabold text-sm">2016 / 台北總部</span>
+                        </div>
+                        <div>
+                            <span class="text-industrial-bgDarker/60 block font-mono uppercase tracking-wider">CERTIFICATION</span>
+                            <span class="text-industrial-accentBlue font-extrabold text-sm">ISO 9001:2026</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Solutions Interactive Gallery (Frosted Glass Card) -->
+                <div class="lg:col-span-7 p-10 luxury-glass-card flex flex-col justify-between relative">
+                    <div>
+                        <div class="flex justify-between items-center mb-6">
+                            <span class="text-xs font-mono text-industrial-bgDarker/70 uppercase tracking-wider font-semibold">[ 解決方案類別 / SOLUTION MODULES ]</span>
+                            <span class="text-xs font-mono text-industrial-accentBlue font-bold">V3.1 SECURE</span>
+                        </div>
+                        
+                        <!-- TAB SELECTORS (Modern Wix Aesthetic - Solid and Clean) -->
+                        <div class="grid grid-cols-3 gap-3 mb-8 text-xs uppercase tracking-wider font-bold">
+                            <button id="tab-btn-1" onclick="switchSolution(1)" class="py-3.5 px-2 border border-industrial-accentBlue text-industrial-bgDarker bg-industrial-accentBlue font-extrabold text-center shadow-sm transition-all duration-200">
+                                複合材料與防護結構
+                            </button>
+                            <button id="tab-btn-2" onclick="switchSolution(2)" class="py-3.5 px-2 border border-industrial-bgDarker/20 text-industrial-bgDarker/70 hover:border-industrial-accentBlue hover:text-industrial-bgDarker font-semibold text-center transition-all duration-200">
+                                五軸精密加工產線
+                            </button>
+                            <button id="tab-btn-3" onclick="switchSolution(3)" class="py-3.5 px-2 border border-industrial-bgDarker/20 text-industrial-bgDarker/70 hover:border-industrial-accentBlue hover:text-industrial-bgDarker font-semibold text-center transition-all duration-200">
+                                智能工業互聯網系統
+                            </button>
+                        </div>
+
+                        <!-- Info Display Panel & Realistic Blueprints -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                            <div class="space-y-4">
+                                <h3 id="solution-title" class="text-xl font-black text-industrial-bgDarker uppercase tracking-wide">
+                                    高強度複合外殼及特種防護
+                                </h3>
+                                <p id="solution-desc" class="text-xs text-industrial-bgDarker/80 font-medium leading-relaxed">
+                                    專為重載抗震、極端環境與防爆機殼設計。運用多層航太級複合鋼材，抗剪強度高達 780 MPa，且具備全面的電磁干擾遮蔽性能。
+                                </p>
+                                <div class="space-y-2.5 border-t border-industrial-bgDarker/20 pt-4 font-mono text-[11px] text-industrial-bgDarker">
+                                    <div class="flex justify-between">
+                                        <span class="text-industrial-bgDarker/60 font-semibold">容許物理應力 Limit:</span>
+                                        <span id="solution-spec-1" class="font-bold">780 MPa</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-industrial-bgDarker/60 font-semibold">防腐蝕等級 Level:</span>
+                                        <span id="solution-spec-2" class="text-industrial-accentBlue font-bold">IP67 Waterproof</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- PREMIUM CAD SIMULATION SCREEN (Clean CAD Wireframe style, with sleek outer glow) -->
+                            <div class="relative border border-white/40 bg-industrial-bgDarker/80 shadow-[0_0_15px_rgba(130,154,177,0.3)] p-4 h-64 flex flex-col justify-between overflow-hidden">
+                                <!-- CAD Overlay metadata -->
+                                <div class="flex justify-between items-center text-[9px] font-mono text-industrial-textMuted">
+                                    <span class="uppercase">AUTO-CAD VIEWPORT</span>
+                                    <span class="text-industrial-accentBlue">3D MODEL v4.0</span>
+                                </div>
+
+                                <!-- Dynamic mechanical gear assembly outline in cold blue -->
+                                <div class="w-full flex-grow flex items-center justify-center relative">
+                                    <svg id="cad-canvas" viewBox="0 0 200 200" class="w-40 h-40">
+                                        <!-- Precise geometric reference circles -->
+                                        <circle cx="100" cy="100" r="85" fill="none" stroke="#243042" stroke-width="0.5" />
+                                        <circle cx="100" cy="100" r="50" fill="none" stroke="#243042" stroke-width="0.5" stroke-dasharray="3,3" />
+                                        
+                                        <!-- Rotating CAD Blueprint group -->
+                                        <g id="cad-machinery-group" class="origin-[100px_100px]">
+                                            <!-- Rotational Gear Teeth (Precise vector mechanical drawing) -->
+                                            <circle cx="100" cy="100" r="60" fill="none" stroke="#829AB1" stroke-width="1.5" />
+                                            <!-- Gear spoke lines -->
+                                            <line x1="100" y1="40" x2="100" y2="160" stroke="#829AB1" stroke-width="0.75" />
+                                            <line x1="40" y1="100" x2="160" y2="100" stroke="#829AB1" stroke-width="0.75" />
+                                            <line x1="57.5" y1="57.5" x2="142.5" y2="142.5" stroke="#829AB1" stroke-width="0.5" stroke-dasharray="2,2" />
+                                            <line x1="57.5" y1="142.5" x2="142.5" y2="57.5" stroke="#829AB1" stroke-width="0.5" stroke-dasharray="2,2" />
+                                            
+                                            <!-- Dynamic rotating polygon element representing mechanical unit -->
+                                            <polygon id="cad-poly-1" points="100,50 143.3,75 143.3,125 100,150 56.7,125 56.7,75" fill="none" stroke="#BAC7D5" stroke-width="1.5">
+                                                <animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="20s" repeatCount="indefinite" />
+                                            </polygon>
+                                            
+                                            <!-- Small inner planetary gears blueprint -->
+                                            <circle cx="100" cy="100" r="20" fill="none" stroke="#829AB1" stroke-width="1" />
+                                        </g>
+                                    </svg>
+                                </div>
+
+                                <!-- Viewport interactive utilities -->
+                                <div class="border-t border-industrial-borderSlate pt-2 flex justify-between items-center text-[10px] font-mono text-industrial-textMuted">
+                                    <div class="flex space-x-2">
+                                        <button onclick="toggleCADRotation(this)" class="px-2 py-0.5 border border-industrial-borderSlate hover:border-industrial-accentBlue text-industrial-textWhite transition-colors">
+                                            PAUSE
+                                        </button>
+                                        <button onclick="zoomCAD()" class="px-2 py-0.5 border border-industrial-borderSlate hover:border-industrial-accentBlue text-industrial-textWhite transition-colors">
+                                            ZOOM
+                                        </button>
+                                    </div>
+                                    <span class="text-industrial-accentLight">ROTATION: ACTIVE</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TEAM SECTION (Frosted Glass Container with high-end cards) -->
+            <div class="p-10 luxury-glass-card">
+                <div class="flex justify-between items-end mb-10 border-b border-industrial-bgDarker/20 pb-6">
+                    <div>
+                        <span class="text-xs font-mono text-industrial-accentBlue uppercase tracking-wider font-extrabold">[ ELITE ENGINEERING CORE ]</span>
+                        <h2 class="text-3xl font-bold text-industrial-bgDarker uppercase mt-2">高階工程與核心技術團隊</h2>
+                    </div>
+                    <span class="text-xs font-mono text-industrial-bgDarker/60 font-semibold">專業誠信 · 鋼鐵品質</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-industrial-bgDarker">
+                    <!-- Member 1 -->
+                    <div class="bg-white/40 border border-white/50 shadow-sm overflow-hidden group hover:border-industrial-accentBlue transition-all duration-300">
+                        <div class="h-64 bg-industrial-bgDarker/10 relative overflow-hidden">
+                            <img src="https://placehold.co/600x600/12161f/829ab1?text=K.D.+CHEN" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" alt="Founder Member">
+                            <div class="absolute bottom-3 left-3 bg-white/90 px-2.5 py-1 border border-industrial-accentBlue text-[10px] font-mono text-industrial-accentBlue uppercase tracking-wider font-extrabold">
+                                CORE FOUNDER
+                            </div>
+                        </div>
+                        <div class="p-6 space-y-2">
+                            <span class="text-xs font-mono text-industrial-bgDarker/60 block font-semibold">[ 主導軟體架構 / 精密信號聯鎖 ]</span>
+                            <h4 class="text-lg font-extrabold uppercase">陳 國 棟 (K.D. Chen)</h4>
+                            <p class="text-xs text-industrial-bgDarker/80 leading-relaxed font-medium">
+                                專攻工業 4.0 超大流量邊緣運算及極端抗震控制程式編寫，擁有超過十年的實務技術淬鍊。
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Member 2 -->
+                    <div class="bg-white/40 border border-white/50 shadow-sm overflow-hidden group hover:border-industrial-accentBlue transition-all duration-300">
+                        <div class="h-64 bg-industrial-bgDarker/10 relative overflow-hidden">
+                            <img src="https://placehold.co/600x600/12161f/829ab1?text=HANA+CHANG" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" alt="Design Lead">
+                            <div class="absolute bottom-3 left-3 bg-white/90 px-2.5 py-1 border border-industrial-accentBlue text-[10px] font-mono text-industrial-accentBlue uppercase tracking-wider font-extrabold">
+                                DESIGN HUB LEAD
+                            </div>
+                        </div>
+                        <div class="p-6 space-y-2">
+                            <span class="text-xs font-mono text-industrial-bgDarker/60 block font-semibold">[ 嵌入式 HMI 介面與工業結構設計 ]</span>
+                            <h4 class="text-lg font-extrabold uppercase">張 筱 涵 (Hana Chang)</h4>
+                            <p class="text-xs text-industrial-bgDarker/80 leading-relaxed font-medium">
+                                專精高規格抗腐蝕防砂防塵外殼外觀造型與工業高可用性 HMI 人機介面佈局。
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Member 3 -->
+                    <div class="bg-white/40 border border-white/50 shadow-sm overflow-hidden group hover:border-industrial-accentBlue transition-all duration-300">
+                        <div class="h-64 bg-industrial-bgDarker/20 flex items-center justify-center relative">
+                            <!-- SVG Blueprint Compass Draft for Quality and Maintenance Lead -->
+                            <svg class="w-24 h-24 text-industrial-borderSlate group-hover:text-industrial-accentBlue/40 transition-colors duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m11.314 11.314l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                            </svg>
+                            <div class="absolute bottom-3 left-3 bg-white/90 px-2.5 py-1 border border-industrial-accentBlue text-[10px] font-mono text-industrial-accentBlue uppercase tracking-wider font-extrabold">
+                                QUALITY & DEFENSE LEAD
+                            </div>
+                        </div>
+                        <div class="p-6 space-y-2">
+                            <span class="text-xs font-mono text-industrial-bgDarker/60 block font-semibold">[ ISO 標準建置 / 四人品檢與售後連隊 ]</span>
+                            <h4 class="text-lg font-extrabold uppercase">林 俊 宇 (Leon Lin)</h4>
+                            <p class="text-xs text-industrial-bgDarker/80 leading-relaxed font-medium">
+                                帶領團隊依據 ISO 9001 與航太抗衝擊標準執行疲勞拉伸、防鹽霧酸蝕檢驗。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== VIEW 2: METRICS & PERFORMANCE ==================== -->
+        <div id="page-telemetry" class="view-panel hidden space-y-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Large Corporate SVG chart in Luxury Glass -->
+                <div class="lg:col-span-8 p-8 luxury-glass-card">
+                    <div class="flex justify-between items-center mb-8">
+                        <div>
+                            <span class="text-xs font-mono text-industrial-accentBlue uppercase tracking-wider font-extrabold">[ CORPORATE GROWTH AUDIT ]</span>
+                            <h3 class="text-xl font-bold text-industrial-bgDarker uppercase mt-1">
+                                十年研發業績成長與年度淨收益走勢
+                            </h3>
+                        </div>
+                        <span class="text-xs font-mono text-industrial-accentBlue flex items-center font-bold">
+                            <i class="fa-solid fa-square-poll-vertical mr-1.5"></i>已審計實時數據
+                        </span>
+                    </div>
+
+                    <!-- Clean Premium Line Chart using Light-Blue metallic gradients -->
+                    <div class="w-full h-80 relative mb-4">
+                        <svg viewBox="0 0 1000 300" class="w-full h-full">
+                            <defs>
+                                <linearGradient id="metal-blue-grad" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#829AB1" stop-opacity="0.3" />
+                                    <stop offset="100%" stop-color="#829AB1" stop-opacity="0.0" />
+                                </linearGradient>
+                            </defs>
+                            
+                            <!-- Grid reference lines -->
+                            <line x1="50" y1="50" x2="950" y2="50" stroke="rgba(36,48,66,0.2)" stroke-dasharray="2,2" />
+                            <line x1="50" y1="130" x2="950" y2="130" stroke="rgba(36,48,66,0.2)" stroke-dasharray="2,2" />
+                            <line x1="50" y1="210" x2="950" y2="210" stroke="rgba(36,48,66,0.2)" stroke-dasharray="2,2" />
+                            <line x1="50" y1="280" x2="950" y2="280" stroke="#243042" />
+
+                            <!-- Elegant Metallic Gradient Trend Fill -->
+                            <path d="M 50 280 L 150 250 L 300 230 L 450 180 L 600 130 L 750 90 L 950 40 L 950 280 Z" fill="url(#metal-blue-grad)" />
+                            
+                            <!-- Smooth Trend Line -->
+                            <polyline points="50,280 150,250 300,230 450,180 600,130 750,90 950,40" fill="none" stroke="#243042" stroke-width="3" stroke-linecap="round" />
+                            
+                            <!-- Steel Data points with glow effects -->
+                            <circle cx="50" cy="280" r="5" fill="#E5E7EB" stroke="#243042" stroke-width="3" />
+                            <circle cx="150" cy="250" r="5" fill="#E5E7EB" stroke="#243042" stroke-width="3" />
+                            <circle cx="300" cy="230" r="5" fill="#E5E7EB" stroke="#243042" stroke-width="3" />
+                            <circle cx="450" cy="180" r="5" fill="#E5E7EB" stroke="#243042" stroke-width="3" />
+                            <circle cx="600" cy="130" r="5" fill="#E5E7EB" stroke="#243042" stroke-width="3" />
+                            <circle cx="750" cy="90" r="5" fill="#E5E7EB" stroke="#243042" stroke-width="3" />
+                            <circle cx="950" cy="40" r="5" fill="#E5E7EB" stroke="#243042" stroke-width="3" />
+
+                            <!-- X Axis Labels -->
+                            <text x="50" y="295" fill="#243042" font-family="Inter" font-size="11" font-weight="600" text-anchor="middle">創辦年 (YR 1)</text>
+                            <text x="300" y="295" fill="#243042" font-family="Inter" font-size="11" font-weight="600" text-anchor="middle">擴張年 (YR 3)</text>
+                            <text x="600" y="295" fill="#243042" font-family="Inter" font-size="11" font-weight="600" text-anchor="middle">整合期 (YR 6)</text>
+                            <text x="950" y="295" fill="#829AB1" font-family="Inter" font-size="11" font-weight="800" text-anchor="middle">當前年度 (YR 10)</text>
+                        </svg>
+                    </div>
+
+                    <div class="flex justify-between items-center text-xs font-mono border-t border-industrial-bgDarker/20 pt-4 mt-6 text-industrial-bgDarker">
+                        <span class="font-bold">十年間業績年增長率：+52.14%</span>
+                        <span class="text-industrial-accentBlue font-bold">KRONOS BUSINESS AUDITED STATUS [A+]</span>
+                    </div>
+                </div>
+
+                <!-- Right Side statistics in luxury glass cards -->
+                <div class="lg:col-span-4 flex flex-col justify-between space-y-6 text-industrial-bgDarker">
+                    
+                    <!-- Production Efficiency card -->
+                    <div class="p-6 luxury-glass-card flex items-center justify-between">
+                        <div>
+                            <span class="text-xs font-mono text-industrial-bgDarker/60 uppercase tracking-wider font-extrabold">[ PRODUCTION EFFICIENCY ]</span>
+                            <h3 class="text-lg font-bold text-industrial-bgDarker uppercase mt-1">五軸精準加工良率</h3>
+                            <span class="text-3xl font-extrabold font-mono text-industrial-accentBlue block mt-3">99.88%</span>
+                        </div>
+                        <div class="w-16 h-16 relative flex items-center justify-center">
+                            <svg class="w-full h-full transform -rotate-90">
+                                <circle cx="32" cy="32" r="28" stroke="rgba(36,48,66,0.2)" stroke-width="4" fill="transparent" />
+                                <circle cx="32" cy="32" r="28" stroke="#829AB1" stroke-width="4" fill="transparent" stroke-dasharray="175" stroke-dashoffset="1" />
+                            </svg>
+                            <i class="fa-solid fa-microchip absolute text-industrial-accentBlue text-xs"></i>
+                        </div>
+                    </div>
+
+                    <!-- Mechanical limits specs card -->
+                    <div class="p-6 luxury-glass-card flex-grow flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs font-mono text-industrial-bgDarker/60 uppercase tracking-wider font-extrabold">[ STRUCTURAL COEFFICIENT ]</span>
+                            <h3 class="text-lg font-bold text-industrial-bgDarker uppercase mt-1">結構抗疲勞物理係數</h3>
+                        </div>
+                        <div class="space-y-3.5 font-mono text-xs mt-6 text-industrial-bgDarker">
+                            <div class="flex justify-between border-b border-industrial-bgDarker/10 pb-2">
+                                <span class="text-industrial-bgDarker/70 font-semibold">抗拉極限 Tensile:</span>
+                                <span class="font-extrabold">920 MPa</span>
+                            </div>
+                            <div class="flex justify-between border-b border-industrial-bgDarker/10 pb-2">
+                                <span class="text-industrial-bgDarker/70 font-semibold">疲勞極限週期:</span>
+                                <span class="font-extrabold">10,000,000+</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-industrial-bgDarker/70 font-semibold">熱膨脹係數 Coeff:</span>
+                                <span class="text-industrial-accentBlue font-extrabold">1.2 x 10^-5 / K</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== VIEW 3: CHRONOLOGY & EVOLUTION ==================== -->
+        <div id="page-chronology" class="view-panel hidden space-y-12">
+            
+            <div class="p-10 luxury-glass-card relative">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 border-b border-industrial-bgDarker/20 pb-6 text-industrial-bgDarker">
+                    <div>
+                        <span class="text-xs font-mono text-industrial-accentBlue uppercase tracking-wider font-extrabold">[ HISTORICAL GENESIS ]</span>
+                        <h2 class="text-3xl font-bold text-industrial-bgDarker uppercase mt-2">KRONOS 十年鋼鐵沿革</h2>
+                    </div>
+                    <span class="text-xs font-mono text-industrial-bgDarker/60 font-semibold">EST. 2016 ➡️ EST. 2026 GLOBAL</span>
+                </div>
+
+                <!-- Clean Vertical Timeline Backbone (Sleek architectural steel line) -->
+                <div class="relative w-full max-w-4xl mx-auto text-industrial-bgDarker">
+                    <!-- Central Vertical structural line -->
+                    <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] bg-industrial-borderSlate/30 transform md:-translate-x-1/2"></div>
+                    
+                    <!-- Milestone 1: Year 3 -->
+                    <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between mb-16">
+                        <div class="w-full md:w-1/2 md:pr-12 pl-12 md:pl-0 md:text-right">
+                            <div class="inline-block bg-white/40 border border-white/55 p-6 max-w-md text-left md:text-right space-y-2 shadow-sm">
+                                <span class="font-mono text-industrial-accentBlue text-xs block font-extrabold">YEAR 03 // FOUNDATIONAL TRINITY</span>
+                                <h3 class="text-base font-bold uppercase">3人核心創辦</h3>
+                                <p class="text-xs text-industrial-bgDarker/80 font-medium">
+                                    公司成立第三年，由三位系統整合架構師在精密重型機械、嵌入式系統及抗震外殼控制方向定調核心技術。
+                                </p>
+                            </div>
+                        </div>
+                        <div class="absolute left-4 md:left-1/2 w-8 h-8 rounded-none border border-industrial-accentBlue bg-white transform -translate-x-1/2 flex items-center justify-center font-mono text-[10px] text-industrial-accentBlue font-bold shadow-sm">03</div>
+                        <div class="hidden md:block w-1/2"></div>
+                    </div>
+
+                    <!-- Milestone 2: Year 6 -->
+                    <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between mb-16">
+                        <div class="hidden md:block w-1/2"></div>
+                        <div class="absolute left-4 md:left-1/2 w-8 h-8 rounded-none border border-industrial-borderSlate bg-white transform -translate-x-1/2 flex items-center justify-center font-mono text-[10px] font-bold shadow-sm">06</div>
+                        <div class="w-full md:w-1/2 pl-12">
+                            <div class="bg-white/40 border border-white/55 p-6 max-w-md space-y-2 shadow-sm">
+                                <span class="font-mono text-industrial-accentBlue text-xs block font-extrabold">YEAR 06 // HMI CREATIVE HUB</span>
+                                <h3 class="text-base font-bold uppercase">5人精密設計團隊</h3>
+                                <p class="text-xs text-industrial-bgDarker/80 font-medium">
+                                    第六年引進多位高級人機介面（HMI）與機械外觀專家，正式實現實體外殼抗摔與軟體整合操控的一體化完美設計。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Milestone 3: Year 8 -->
+                    <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between mb-16">
+                        <div class="w-full md:w-1/2 md:pr-12 pl-12 md:pl-0 md:text-right">
+                            <div class="inline-block bg-white/40 border border-white/55 p-6 max-w-md text-left md:text-right space-y-2 shadow-sm">
+                                <span class="font-mono text-industrial-accentBlue text-xs block font-extrabold">YEAR 08 // INTEGRITY QA BULWARK</span>
+                                <h3 class="text-base font-bold uppercase">4人品檢與維修連隊</h3>
+                                <p class="text-xs text-industrial-bgDarker/80 font-medium">
+                                    第八年正式設立獨立的國家級實驗室檢測線，配備應力拉伸機與氣密霧化檢測儀，保障全球客戶在24小時內完成極速售後響應。
+                                </p>
+                            </div>
+                        </div>
+                        <div class="absolute left-4 md:left-1/2 w-8 h-8 rounded-none border border-industrial-borderSlate bg-white transform -translate-x-1/2 flex items-center justify-center font-mono text-[10px] font-bold shadow-sm">08</div>
+                        <div class="hidden md:block w-1/2"></div>
+                    </div>
+
+                    <!-- Milestone 4: Year 10 & Beyond (Global Expansion Plan) -->
+                    <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between">
+                        <div class="hidden md:block w-1/2"></div>
+                        <div class="absolute left-4 md:left-1/2 w-8 h-8 rounded-none border-2 border-industrial-accentBlue bg-industrial-accentBlue transform -translate-x-1/2 flex items-center justify-center text-industrial-bgDarker font-bold text-xs shadow-md">
+                            <i class="fa-solid fa-earth-americas"></i>
+                        </div>
+                        <div class="w-full md:w-1/2 pl-12">
+                            <div class="bg-white/60 border border-industrial-accentBlue/60 p-6 max-w-md space-y-3 relative overflow-hidden shadow-md">
+                                <span class="font-mono text-industrial-accentBlue text-xs block font-extrabold">YEAR 10 // DECENNIAL DEPLOYMENT ACT</span>
+                                <h3 class="text-lg font-bold uppercase">未來 10 年跨全球部署計劃</h3>
+                                <p class="text-xs text-industrial-bgDarker/90 font-semibold">
+                                    建構以台灣為高階技術研發總部核心，未來十年內在德國慕尼黑、美國德克薩斯州、日本東京，陸續設立高效率售後與品檢在地化支撐網點。
+                                </p>
+                                <div class="h-28 bg-industrial-bgDarker border border-industrial-borderSlate flex items-center justify-center p-3">
+                                    <div class="text-center space-y-1.5">
+                                        <i class="fa-solid fa-network-wired text-xl text-industrial-accentBlue animate-pulse"></i>
+                                        <span class="text-[10px] font-mono block text-industrial-accentLight uppercase font-bold">GLOBAL NETWORK SYNC ESTABLISHED</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== VIEW 4: DOWNLOADS ARCHIVE ==================== -->
+        <div id="page-downloads" class="view-panel hidden space-y-8">
+            <div class="p-10 luxury-glass-card">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 border-b border-industrial-bgDarker/20 pb-6 text-industrial-bgDarker">
+                    <div>
+                        <span class="text-xs font-mono text-industrial-accentBlue uppercase tracking-wider font-extrabold">[ SPECIFICATION MANUALS ]</span>
+                        <h2 class="text-3xl font-bold text-industrial-bgDarker uppercase mt-2">技術文檔與工程規格書下載</h2>
+                    </div>
+                    <span class="text-xs font-mono text-industrial-bgDarker/60 font-semibold">PDF & CAD-DWG ARCHIVES v1.2</span>
+                </div>
+
+                <!-- Clean Corporate File preparation loader (No military/hacky terminal decryption) -->
+                <div id="download-progress-container" class="hidden mb-8 p-6 border border-industrial-accentBlue bg-industrial-bgDarker font-mono text-xs space-y-3">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-2 h-2 rounded-full bg-industrial-accentBlue animate-pulse"></span>
+                            <span class="text-industrial-textWhite font-medium">正在為您準備下載檔案:</span>
+                            <span id="download-target-file" class="text-industrial-accentBlue font-bold">FILE_NAME.pdf</span>
+                        </div>
+                        <span id="download-percentage" class="text-industrial-textWhite font-bold">0%</span>
+                    </div>
+                    <div class="w-full bg-industrial-bgDark border border-industrial-borderSlate h-3 overflow-hidden">
+                        <div id="download-progress-bar" class="bg-industrial-accentBlue h-full w-0 transition-all duration-100"></div>
+                    </div>
+                </div>
+
+                <!-- Downloads Grid in Frosted Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-industrial-bgDarker">
+                    <!-- Download Card 1 -->
+                    <div class="bg-white/40 border border-white/50 p-6 flex flex-col justify-between hover:border-industrial-accentBlue transition-all duration-300 shadow-sm">
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-start">
+                                <span class="bg-white/80 px-2.5 py-0.5 border border-industrial-borderSlate/20 text-[10px] font-mono text-industrial-accentBlue uppercase font-bold">3D CAD-DWG</span>
+                                <span class="text-industrial-bgDarker/60 text-[10px] font-mono">14.8 MB</span>
+                            </div>
+                            <h4 class="text-base font-bold uppercase tracking-wide">3D 五軸綜合防震孔位裝配圖 (2026_DWG)</h4>
+                            <p class="text-xs text-industrial-bgDarker/80 font-medium leading-relaxed">
+                                提供完整的三維立體定位 CAD 模型，適用於 SolidWorks、AutoCAD、CATIA 五軸精密拼裝。
+                            </p>
+                        </div>
+                        <button onclick="startCleanDownload('SPEC_CAD_2026_Model.dwg')" class="w-full mt-8 py-2.5 border-2 border-industrial-accentBlue text-industrial-accentBlue hover:bg-industrial-accentBlue hover:text-industrial-bgDarker text-xs font-bold uppercase tracking-wider transition-all duration-150 shadow-sm">
+                            <i class="fa-solid fa-file-arrow-down mr-1.5"></i> 下載三維設計圖
+                        </button>
+                    </div>
+
+                    <!-- Download Card 2 -->
+                    <div class="bg-white/40 border border-white/50 p-6 flex flex-col justify-between hover:border-industrial-accentBlue transition-all duration-300 shadow-sm">
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-start">
+                                <span class="bg-white/80 px-2.5 py-0.5 border border-industrial-borderSlate/20 text-[10px] font-mono text-industrial-accentBlue uppercase font-bold">PDF SPEC</span>
+                                <span class="text-industrial-bgDarker/60 text-[10px] font-mono">6.2 MB</span>
+                            </div>
+                            <h4 class="text-base font-bold uppercase tracking-wide">高耐受疲勞與防鹽霧測試規格白皮書</h4>
+                            <p class="text-xs text-industrial-bgDarker/80 font-medium leading-relaxed">
+                                內附經第三方審查的 ISO 9001 認證報告、疲勞測試強度報告，及高阻抗鹽霧實驗結果數據。
+                            </p>
+                        </div>
+                        <button onclick="startCleanDownload('ISO_9001_Fatigue_Spec.pdf')" class="w-full mt-8 py-2.5 border-2 border-industrial-accentBlue text-industrial-accentBlue hover:bg-industrial-accentBlue hover:text-industrial-bgDarker text-xs font-bold uppercase tracking-wider transition-all duration-150 shadow-sm">
+                            <i class="fa-solid fa-file-arrow-down mr-1.5"></i> 下載檢驗白皮書
+                        </button>
+                    </div>
+
+                    <!-- Download Card 3 -->
+                    <div class="bg-white/40 border border-white/50 p-6 flex flex-col justify-between hover:border-industrial-accentBlue transition-all duration-300 shadow-sm">
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-start">
+                                <span class="bg-white/80 px-2.5 py-0.5 border border-industrial-borderSlate/20 text-[10px] font-mono text-industrial-accentBlue uppercase font-bold">DRIVERS ZIP</span>
+                                <span class="text-industrial-bgDarker/60 text-[10px] font-mono">3.9 MB</span>
+                            </div>
+                            <h4 class="text-base font-bold uppercase tracking-wide">邊緣 HMI 終端 Modbus 控制整合驅動組</h4>
+                            <p class="text-xs text-industrial-bgDarker/80 font-medium leading-relaxed">
+                                用於相容 PLC 以及 Modbus TCP 的嵌入式控制介面基礎通訊套件，整合快速通訊指令包。
+                            </p>
+                        </div>
+                        <button onclick="startCleanDownload('KRONOS_HMI_Drivers.zip')" class="w-full mt-8 py-2.5 border-2 border-industrial-accentBlue text-industrial-accentBlue hover:bg-industrial-accentBlue hover:text-industrial-bgDarker text-xs font-bold uppercase tracking-wider transition-all duration-150 shadow-sm">
+                            <i class="fa-solid fa-file-arrow-down mr-1.5"></i> 下載驅動套件
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER (Structured solid metal aesthetic) -->
+    <footer class="max-w-7xl mx-auto px-6 mt-20 border-t border-industrial-borderSlate pt-12 pb-16">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12 text-xs font-medium tracking-wide">
+            <div class="space-y-4">
+                <span class="font-bold text-industrial-textWhite text-sm uppercase">KRONOS PRECISION</span>
+                <p class="text-industrial-textMuted leading-relaxed text-[11px]">
+                    致力於為全球高端精密製造產業研發和實施高規格的工藝基礎結構，捍衛每一個納米級公差與強度指標。
+                </p>
+            </div>
+            <div class="space-y-4">
+                <span class="font-bold text-industrial-textWhite uppercase">網站地圖 / SCHEME INDEX</span>
+                <ul class="space-y-2 text-industrial-textMuted">
+                    <li><button onclick="routeTo('page-overview')" class="hover:text-industrial-accentBlue">01 / 精密工程方案</button></li>
+                    <li><button onclick="routeTo('page-telemetry')" class="hover:text-industrial-accentBlue">02 / 年度數據看板</button></li>
+                    <li><button onclick="routeTo('page-chronology')" class="hover:text-industrial-accentBlue">03 / 十年發展沿革</button></li>
+                    <li><button onclick="routeTo('page-downloads')" class="hover:text-industrial-accentBlue">04 / 技術下載專區</button></li>
+                </ul>
+            </div>
+            <div class="space-y-4">
+                <span class="font-bold text-industrial-textWhite uppercase">技術標準 / SPECIFICATIONS</span>
+                <ul class="space-y-2 text-industrial-textMuted text-[11px]">
+                    <li><span>ISO-9001 QUALITY CERTIFIED</span></li>
+                    <li><span>HIGH-TENSILE STRENGTH: >920MPA</span></li>
+                    <li><span>MIL-STD-810H CERT COMPLIANT</span></li>
+                </ul>
+            </div>
+            <div class="space-y-4">
+                <span class="font-bold text-industrial-accentBlue uppercase">聯絡中心 / CONCIERGE</span>
+                <div class="space-y-3">
+                    <button onclick="togglePhoneModal(true)" class="w-full text-left py-2 px-3 border border-industrial-borderSlate hover:border-industrial-accentBlue text-industrial-textWhite flex justify-between items-center bg-industrial-bgDarker/60 transition-all duration-200">
+                        <span>開啟服務專線</span>
+                        <i class="fa-solid fa-phone text-industrial-accentBlue"></i>
+                    </button>
+                    <button onclick="toggleEmailModal(true)" class="w-full text-left py-2 px-3 border border-industrial-borderSlate hover:border-industrial-accentBlue text-industrial-textWhite flex justify-between items-center bg-industrial-bgDarker/60 transition-all duration-200">
+                        <span>發送需求郵件</span>
+                        <i class="fa-solid fa-envelope-open-text text-industrial-accentBlue"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-industrial-borderSlate/50 pt-6 flex flex-col sm:flex-row justify-between items-center text-[10px] font-mono text-industrial-textMuted">
+            <span>© 2026 KRONOS MANUFACTURING SYSTEMS LTD. 版權所有。</span>
+            <span>[ SYSTEM ID: KRN-IND-V4 // TACTILE SOLID STATE: OK ]</span>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE MODAL 1: PHONE SERVICE POPUP (Clean and corporate with glossy backdrop) -->
+    <div id="phone-modal" class="fixed inset-0 z-50 bg-industrial-bgDarker/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
+        <div class="bg-industrial-bgDark border border-industrial-accentBlue max-w-md w-full p-8 relative">
+            <button onclick="togglePhoneModal(false)" class="absolute top-4 right-4 text-industrial-textMuted hover:text-industrial-textWhite text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="text-center space-y-6">
+                <div class="w-14 h-14 border border-industrial-accentBlue rounded-none flex items-center justify-center mx-auto text-industrial-accentBlue text-xl">
+                    <i class="fa-solid fa-phone-volume"></i>
+                </div>
+                <div class="space-y-1">
+                    <span class="text-[10px] font-mono text-industrial-textMuted block uppercase">[ KRONOS SECURE INQUIRY ]</span>
+                    <h3 class="text-xl font-bold text-industrial-textWhite uppercase">精密工業方案諮詢熱線</h3>
+                </div>
+                
+                <div class="bg-industrial-bgDarker border border-industrial-borderSlate p-4">
+                    <p class="text-industrial-accentBlue text-2xl font-bold tracking-widest">+886 4-2345-6789</p>
+                    <span class="text-[10px] text-industrial-textMuted block mt-1">服務時間：週一至週五 08:30 - 18:00 (GMT+8)</span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 text-xs font-semibold">
+                    <button onclick="copyPhoneToClipboard('+886423456789')" class="py-2.5 border border-industrial-borderSlate hover:border-industrial-accentBlue text-industrial-textWhite transition-all duration-150">
+                        複製諮詢號碼
+                    </button>
+                    <a href="tel:+886423456789" class="block py-2.5 bg-industrial-accentBlue text-industrial-bgDarker font-bold hover:bg-industrial-accentLight text-center transition-all duration-150">
+                        立即通話
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE MODAL 2: EMAIL FORM POPUP -->
+    <div id="email-modal" class="fixed inset-0 z-50 bg-industrial-bgDarker/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
+        <div class="bg-industrial-bgDark border border-industrial-borderSlate max-w-lg w-full p-8 relative">
+            <button onclick="toggleEmailModal(false)" class="absolute top-4 right-4 text-industrial-textMuted hover:text-industrial-textWhite text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="space-y-6">
+                <div class="flex items-center space-x-3 border-b border-industrial-borderSlate pb-4">
+                    <i class="fa-solid fa-envelope-open-text text-industrial-accentBlue text-2xl"></i>
+                    <div>
+                        <h3 class="text-lg font-bold text-industrial-textWhite uppercase">提交您的工程與規格需求</h3>
+                        <span class="text-[10px] font-mono text-industrial-textMuted uppercase">[ ENTERPRISE INQUIRY FORM ]</span>
+                    </div>
+                </div>
+                
+                <form id="inquiryForm" onsubmit="handleInquirySubmit(event)" class="space-y-4 text-xs">
+                    <div>
+                        <label class="block text-industrial-textMuted font-mono mb-1 uppercase">聯絡人單位與姓名 CONTACT NAME *</label>
+                        <input type="text" required class="w-full bg-industrial-bgDarker border border-industrial-borderSlate focus:border-industrial-accentBlue px-3 py-2 text-industrial-textWhite outline-none transition-colors" placeholder="e.g. 詹姆斯 · 研發經理">
+                    </div>
+                    <div>
+                        <label class="block text-industrial-textMuted font-mono mb-1 uppercase">企業電子郵件 BUSINESS MAIL *</label>
+                        <input type="email" required class="w-full bg-industrial-bgDarker border border-industrial-borderSlate focus:border-industrial-accentBlue px-3 py-2 text-industrial-textWhite outline-none transition-colors" placeholder="e.g. james@enterprise.com">
+                    </div>
+                    <div>
+                        <label class="block text-industrial-textMuted font-mono mb-1 uppercase">感興趣的解決方案 CATEGORY *</label>
+                        <select class="w-full bg-industrial-bgDarker border border-industrial-borderSlate focus:border-industrial-accentBlue px-3 py-2 text-industrial-textWhite outline-none transition-colors">
+                            <option>複合材料與防護外殼解決方案</option>
+                            <option>五軸精密加工與精密銑削製程</option>
+                            <option>智能工業互聯網節點建置</option>
+                            <option>特種規格與國家標準客製化專案</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-industrial-textMuted font-mono mb-1 uppercase">技術需求與防護公差規格說明 SPECIFICATIONS DESCRIPTION</label>
+                        <textarea class="w-full bg-industrial-bgDarker border border-industrial-borderSlate focus:border-industrial-accentBlue px-3 py-2 text-industrial-textWhite outline-none transition-colors h-24" placeholder="請描述您的物理限制（如：抗剪強度極限、防護等級IPXX或精度控制公差需求）..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="w-full py-3 bg-industrial-accentBlue text-industrial-bgDarker font-extrabold hover:bg-industrial-accentLight transition-all duration-150 uppercase tracking-widest text-center">
+                        提交技術合規評估需求
+                    </button>
+                </form>
+                
+                <!-- Successful Delivery Notification -->
+                <div id="form-success-alert" class="hidden p-4 border border-industrial-accentBlue bg-industrial-bgDarker text-industrial-textWhite text-center text-xs space-y-1.5">
+                    <i class="fa-solid fa-circle-check text-industrial-accentBlue text-lg"></i>
+                    <p class="font-bold">需求資料已成功傳輸！</p>
+                    <p class="text-industrial-textMuted text-[10px]">我們的技術工程團隊將在 12 小時內審查您的規格並與您取得聯繫。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TACTICAL TOAST SYSTEM (Corporate level feedback popups, never alert()) -->
+    <div id="tactical-toast" class="fixed bottom-6 right-6 z-50 bg-industrial-bgDark border border-industrial-accentBlue p-4 hidden flex items-center space-x-3 shadow-lg max-w-sm">
+        <i class="fa-solid fa-circle-info text-industrial-accentBlue text-lg"></i>
+        <div class="font-mono text-xs">
+            <span class="text-industrial-accentBlue block font-bold uppercase">[ SYSTEM NOTICE ]</span>
+            <span id="toast-message" class="text-industrial-textWhite">作業順利完成。</span>
+        </div>
+    </div>
+
+    <!-- JS TACTICAL CONTROL UNIT -->
+    <script>
+        // Multi-Page SPA Simulated Router
+        function routeTo(pageId) {
+            // Hide all views
+            const panels = document.querySelectorAll('.view-panel');
+            panels.forEach(p => p.classList.add('hidden'));
+            
+            // Show requested view
+            const activePanel = document.getElementById(pageId);
+            if (activePanel) {
+                activePanel.classList.remove('hidden');
+            }
+
+            // Adjust navigation tabs highlight border
+            const navButtons = document.querySelectorAll('nav button');
+            navButtons.forEach(btn => {
+                btn.className = "hover:text-industrial-textWhite transition-colors duration-150 py-2 border-b-2 border-transparent";
+            });
+
+            const activeBtn = document.getElementById(`nav-${pageId}`);
+            if (activeBtn) {
+                activeBtn.className = "hover:text-industrial-textWhite transition-colors duration-150 py-2 border-b-2 border-industrial-accentBlue text-industrial-textWhite";
+            }
+        }
+
+        // Custom Corporate Toast System
+        function showCorporateToast(message) {
+            const toast = document.getElementById('tactical-toast');
+            const text = document.getElementById('toast-message');
+            text.innerText = message;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3500);
+        }
+
+        function copyPhoneToClipboard(text) {
+            const dummy = document.createElement("input");
+            document.body.appendChild(dummy);
+            dummy.value = text;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+            showCorporateToast("諮詢電話號碼已成功複製至剪貼簿！");
+        }
+
+        // Modals control
+        function togglePhoneModal(show) {
+            const modal = document.getElementById('phone-modal');
+            if (show) modal.classList.remove('hidden');
+            else modal.classList.add('hidden');
+        }
+
+        function toggleEmailModal(show) {
+            const modal = document.getElementById('email-modal');
+            if (show) {
+                modal.classList.remove('hidden');
+                document.getElementById('inquiryForm').classList.remove('hidden');
+                document.getElementById('form-success-alert').classList.add('hidden');
+            }
+            else modal.classList.add('hidden');
+        }
+
+        function handleInquirySubmit(e) {
+            e.preventDefault();
+            document.getElementById('inquiryForm').classList.add('hidden');
+            document.getElementById('form-success-alert').classList.remove('hidden');
+            setTimeout(() => {
+                toggleEmailModal(false);
+                showCorporateToast("技術規格諮詢上傳成功，我們將盡快回覆。");
+            }, 3000);
+        }
+
+        // Solutions Database
+        const solutionsDb = {
+            1: {
+                title: "高強度複合外殼及特種防護",
+                desc: "專為重載抗震、極端環境與防爆機殼設計。運用多層航太級複合鋼材，抗剪強度高達 780 MPa，且具備全面的電磁干擾遮蔽性能，通過嚴酷環境下連續物理耐受測試驗證。",
+                spec1: "780 MPa",
+                spec2: "IP67 Waterproof",
+                polyPoints: "100,50 143.3,75 143.3,125 100,150 56.7,125 56.7,75"
+            },
+            2: {
+                title: "五軸精密加工與精密銑削製程",
+                desc: "極限公差調校，公差控制高達奈米精度級別（Nano-Grade）。配置精準雷射干涉實時補償器。主要應用於車規半導體载台、軍航太高強度鋁合金精密零件一體切削加工。",
+                spec1: "< 0.002 mm (Nano-Grade)",
+                spec2: "ISO-14001 Compliant",
+                polyPoints: "100,35 155,65 155,135 100,165 45,135 45,65"
+            },
+            3: {
+                title: "智能工業互聯網與動態遙測節點",
+                desc: "自主開發的超低延時工業邊緣通訊模組。在設備高震幅關節嵌入微型壓電應變片。當機台發生拉力或應力極限突變時，可在 12 毫秒內實施保護切斷與應力重整調配。",
+                spec1: "12 ms Latency",
+                spec2: "AES-256 Encrypted",
+                polyPoints: "100,55 130,80 130,120 100,145 70,120 70,80"
+            }
+        };
+
+        function switchSolution(id) {
+            // Reset state styling on Wix style tabs
+            for (let i = 1; i <= 3; i++) {
+                const btn = document.getElementById(`tab-btn-${i}`);
+                if (i === id) {
+                    btn.className = "py-3.5 px-2 border border-industrial-accentBlue text-industrial-bgDarker bg-industrial-accentBlue font-extrabold text-center transition-all duration-200";
+                } else {
+                    btn.className = "py-3.5 px-2 border border-industrial-bgDarker/20 text-industrial-bgDarker/70 hover:border-industrial-accentBlue hover:text-industrial-bgDarker font-semibold text-center transition-all duration-200";
+                }
+            }
+
+            // Update solutions information dynamically
+            const item = solutionsDb[id];
+            document.getElementById('solution-title').innerText = item.title;
+            document.getElementById('solution-desc').innerText = item.desc;
+            document.getElementById('solution-spec-1').innerText = item.spec1;
+            document.getElementById('solution-spec-2').innerText = item.spec2;
+
+            // Change geometric vector drawing coordinates to represent different models
+            document.getElementById('cad-poly-1').setAttribute('points', item.polyPoints);
+        }
+
+        // CAD Blueprint Controls
+        let isCADRotating = true;
+        let isZoomed = false;
+        
+        function toggleCADRotation(btn) {
+            const group = document.getElementById('cad-machinery-group');
+            if (isCADRotating) {
+                group.style.animationPlayState = 'paused';
+                btn.innerText = 'PLAY';
+                btn.parentElement.nextElementSibling.innerText = 'ROTATION: PAUSED';
+                isCADRotating = false;
+            } else {
+                group.style.animationPlayState = 'running';
+                btn.innerText = 'PAUSE';
+                btn.parentElement.nextElementSibling.innerText = 'ROTATION: ACTIVE';
+                isCADRotating = true;
+            }
+        }
+
+        function zoomCAD() {
+            const svgGroup = document.getElementById('cad-machinery-group');
+            if (!isZoomed) {
+                svgGroup.style.transform = 'scale(1.25)';
+                isZoomed = true;
+                showCorporateToast("CAD 視角模型已縮放：1.25X");
+            } else {
+                svgGroup.style.transform = 'scale(1)';
+                isZoomed = false;
+                showCorporateToast("CAD 視角已恢復正常尺寸");
+            }
+        }
+
+        // Clean Corporate Download Loader
+        function startCleanDownload(filename) {
+            const container = document.getElementById('download-progress-container');
+            const targetText = document.getElementById('download-target-file');
+            const percentText = document.getElementById('download-percentage');
+            const progressBar = document.getElementById('download-progress-bar');
+
+            targetText.innerText = filename;
+            container.classList.remove('hidden');
+            
+            let percentage = 0;
+            progressBar.style.width = '0%';
+            percentText.innerText = '0%';
+
+            const interval = setInterval(() => {
+                percentage += Math.floor(Math.random() * 20) + 10;
+                if (percentage >= 100) {
+                    percentage = 100;
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        container.classList.add('hidden');
+                        showCorporateToast(`檔案 ${filename} 已成功傳輸至您的下載端！`);
+                    }, 600);
+                }
+                progressBar.style.width = percentage + '%';
+                percentText.innerText = percentage + '%';
+            }, 100);
+        }
+    </script>
+</body>
+</html>

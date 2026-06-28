@@ -1,0 +1,23 @@
+{
+  "answers_schema_version": "1.0",
+  "template_id": "board",
+  "template_version": "1.0.0",
+  "app": {
+    "id": "com.demo.override",
+    "version": "1.0",
+    "backend": "mock://board",
+    "scope": "shared"
+  },
+  "publisher": {
+    "id": "com.demo.publisher"
+  },
+  "human_decisions": [
+    {
+      "action_id": "react",
+      "decision": "keep",
+      "risk_class": "read",
+      "writer": "human",
+      "provenance": "user_confirmed"
+    }
+  ]
+}

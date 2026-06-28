@@ -1,0 +1,17 @@
+{
+  "name": "w3a",
+  "owner": {
+    "name": "W3A Project"
+  },
+  "metadata": {
+    "description": "W3A skill-contract bundle marketplace.",
+    "version": "0.3.0-draft"
+  },
+  "plugins": [
+    {
+      "name": "w3a-spec",
+      "source": "./",
+      "description": "Review, author, build, canonicalize, and verify signed .w3a agent-skill contracts. Includes the authoritative spec, builder schema/templates, and Go conformance kit."
+    }
+  ]
+}

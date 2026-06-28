@@ -1,0 +1,301 @@
+# W3A Design Template: Modern Industrial Glass Site
+
+ㄊㄡ：W3A design-template v0.1
+ㄏㄠ：design.modern.industrial_glass_site
+ㄉㄞ：0.1
+ㄏㄡ：design://local/kronos-preview
+ㄈㄢ：reference-only
+
+ㄝㄇㄜ：design_template
+ㄝㄕㄡ：modern_industrial_glass_site
+ㄝㄌㄞ：【source】kronos-preview.html【extracted】2026-06-28
+ㄝㄉㄧ：Display guidance only; not an operable W3A contract and not part of the operable W3A canonical/signature trust profile.
+
+## Purpose
+
+Use this template when a W3A renderer needs a polished modern website with a
+clear industrial theme: cold metallic palette, frosted glass content cards,
+simple sticky navigation, spacious product/solution sections, clean metrics,
+timeline storytelling, resource/download cards, and corporate modal forms.
+
+## Safety Boundary
+
+- Display guidance only; never execute source code from the referenced design.
+- Do not copy backend targets, providers, policies, permissions, secrets, true
+  action ids, true button labels, source asset references, fonts, visual
+  identity assets, or executable implementation files.
+- Treat words such as "secure", "certified", "audited", and "encrypted" as
+  design tone unless a verified W3A contract/runtime state says otherwise.
+- Abstract placeholders are allowed when they cannot operate.
+- Every real interaction must map back to a verified operable W3A contract and
+  pass through `w3a-core`.
+
+## Layout Profile
+
+```json
+{
+  "layout_id": "modern.industrial_glass.marketing_site",
+  "viewport": {
+    "desktop_min_width": 1024,
+    "max_content_width": 1280,
+    "page_padding_x": 24,
+    "page_padding_y": 48,
+    "mobile_behavior": "stack sections; convert horizontal nav into a compact menu; keep CTA group visible"
+  },
+  "regions": [
+    {
+      "id": "site_nav",
+      "role": "sticky_identity_navigation",
+      "height": 80,
+      "content": ["identity_cell", "section_links", "secondary_cta", "primary_cta"]
+    },
+    {
+      "id": "hero_solution_split",
+      "role": "first_viewport_brand_and_primary_offer",
+      "layout": "desktop 5/7 split, mobile single column",
+      "content": ["hero_card", "solution_gallery_card"]
+    },
+    {
+      "id": "team_or_feature_grid",
+      "role": "credibility_or_feature_section",
+      "layout": "three-card grid inside one glass section",
+      "content": ["section_header", "feature_cards"]
+    },
+    {
+      "id": "metrics_dashboard",
+      "role": "business_or_product_metrics",
+      "layout": "desktop 8/4 split, mobile stacked",
+      "content": ["large_line_chart", "stat_card", "spec_card"]
+    },
+    {
+      "id": "timeline_story",
+      "role": "history_or_process_steps",
+      "layout": "center spine on desktop, left spine on mobile",
+      "content": ["milestone_cards", "current_or_future_highlight"]
+    },
+    {
+      "id": "resource_archive",
+      "role": "downloads_or_resource_collection",
+      "layout": "responsive 1/2/3 card grid",
+      "content": ["progress_strip", "resource_cards"]
+    },
+    {
+      "id": "modal_layer",
+      "role": "contact_and_form_overlays",
+      "content": ["phone_modal", "inquiry_modal", "toast"]
+    },
+    {
+      "id": "footer",
+      "role": "structured_footer",
+      "layout": "four-column desktop, stacked mobile",
+      "content": ["brand_summary", "site_map", "standards_list", "contact_actions"]
+    }
+  ],
+  "grid": {
+    "columns": "marketing sections with 12-column desktop splits",
+    "gap": 32,
+    "section_gap": 64
+  }
+}
+```
+
+## Visual Tokens
+
+```json
+{
+  "font_stack": {
+    "display": ["Inter", "system-ui", "sans-serif"],
+    "mono": ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "monospace"]
+  },
+  "density": "comfortable",
+  "radius": {
+    "panel": 0,
+    "card": 0,
+    "control": 0,
+    "status_chip": 999
+  },
+  "colors": {
+    "background_deep": "#090B0F",
+    "background": "#12161F",
+    "card_dark": "#1B212D",
+    "accent": "#829AB1",
+    "accent_light": "#BAC7D5",
+    "text": "#F0F4F8",
+    "text_muted": "#627D98",
+    "border": "#243042",
+    "glass_tint": "rgba(229,231,235,0.45)",
+    "glass_highlight": "rgba(250,248,242,0.6)",
+    "modal_scrim": "rgba(9,11,15,0.8)"
+  },
+  "effects": {
+    "page_background": "fixed radial industrial gradient from slate metal to near-black",
+    "glass_card": "warm frosted glass over dark metal background; bright inner bevel; soft outer shadow",
+    "hover": "slight upward lift, stronger border highlight, stronger metallic glow",
+    "focus": "cold blue border; no color-only focus",
+    "motion": "subtle pulse or CAD rotation only when reduced motion is not requested"
+  },
+  "spacing": {
+    "nav_height": 80,
+    "section_padding": 40,
+    "card_padding": 24,
+    "hero_padding": 40,
+    "control_padding_y": 10,
+    "control_padding_x": 16
+  }
+}
+```
+
+## Component Roles
+
+```json
+{
+  "site_nav": {
+    "shape": "sticky translucent dark nav with identity cell left, section links center, CTA group right",
+    "active_state": "bottom border plus bright text; avoid heavy filled tabs",
+    "mobile": "collapse section links; keep primary CTA reachable"
+  },
+  "identity_cell": {
+    "shape": "square bordered monogram or runtime-provided initial mark, paired with uppercase title stack",
+    "fallback": "initial letter supplied by renderer"
+  },
+  "glass_panel": {
+    "shape": "large frosted glass section with square corners, white translucent border, soft shadow, inner highlight",
+    "use_for": ["hero", "solution gallery", "feature grid", "metrics", "timeline", "resources"],
+    "notes": "use as full section container; avoid nesting decorative cards inside cards"
+  },
+  "eyebrow_chip": {
+    "shape": "small inline status row with dot and mono uppercase text",
+    "use_for": ["template category", "trust enum", "runtime status", "section label"],
+    "notes": "security words must map to verified runtime state when used"
+  },
+  "hero_card": {
+    "shape": "left glass panel with compact eyebrow, large uppercase headline, short body, two-column metadata footer",
+    "headline": "large, tight, brand/theme-forward; supporting value proposition stays in body copy"
+  },
+  "solution_tabs": {
+    "shape": "three equal-width square buttons; active is filled accent, inactive is outline text",
+    "mobile": "wrap or become segmented vertical stack; do not shrink labels beyond readability"
+  },
+  "cad_viewport": {
+    "shape": "dark metal preview frame inside glass card with tiny metadata row and centered line-art diagram",
+    "use_for": ["diagram", "mock preview", "chart", "visual artifact preview"],
+    "notes": "diagram is illustrative unless backed by verified data"
+  },
+  "feature_card": {
+    "shape": "white translucent card with media/placeholder area, small mono label, bold title, concise body",
+    "hover": "border changes to accent; optional grayscale-to-color transition only for local allowed media"
+  },
+  "metric_chart": {
+    "shape": "large frosted card with section label, chart title, line/area chart, footer status row",
+    "notes": "live/audited wording must reflect actual runtime data provenance"
+  },
+  "stat_card": {
+    "shape": "compact frosted card with label, title, large mono value, optional circular gauge",
+    "use_for": ["status", "progress", "quota", "trust", "sync"]
+  },
+  "timeline": {
+    "shape": "thin vertical structural line with square numbered nodes and alternating frosted cards",
+    "mobile": "left spine, all cards stacked"
+  },
+  "resource_card": {
+    "shape": "translucent white card with type badge, metadata, title, body, full-width outline CTA",
+    "use_for": ["download", "document", "tool", "dataset", "reference item"],
+    "notes": "CTA maps only to declared actions"
+  },
+  "progress_strip": {
+    "shape": "dark metal strip inside glass section with filename/status and rectangular progress bar",
+    "use_for": ["download prep", "build", "verify", "sync"]
+  },
+  "corporate_modal": {
+    "shape": "centered dark modal on blurred scrim; square borders; header row; labeled form controls",
+    "success": "inline dark success panel with accent icon/label",
+    "notes": "modal cannot bypass W3A confirmation or permission state"
+  },
+  "toast": {
+    "shape": "bottom-right dark metal toast with accent border and short mono heading",
+    "duration": "short, nonblocking; persistent errors become inline panels"
+  },
+  "action_role_slots": {
+    "primary_submit": {
+      "match": "verified W3A action that submits a form, starts the main offer flow, or performs the primary page action",
+      "component": "primary_cta or corporate_modal primary button",
+      "style": "square filled cold-blue or metallic accent button with clear text, strong focus border, and stable height",
+      "fallback": "derive a same-style filled CTA from accent, text, and control spacing tokens; do not create a feature"
+    },
+    "secondary_action": {
+      "match": "verified secondary action, cancel, close, back, or low-risk helper action",
+      "component": "secondary_cta or corporate_modal secondary button",
+      "style": "square outline button with dark glass fill, accent border on hover/focus, muted text at rest"
+    },
+    "compact_icon_action": {
+      "match": "verified repeated row/card action that should not dominate the section",
+      "component": "small square icon or metadata action inside resource_card/stat_card",
+      "style": "compact glass control with icon/short label, no pill shape, visible focus ring"
+    },
+    "navigation_or_filter": {
+      "match": "display navigation, section filter, resource archive filter, or solution tab",
+      "component": "section_links or solution_tabs",
+      "style": "active state uses accent fill or bottom border; inactive state stays outline/muted"
+    },
+    "destructive_confirm": {
+      "match": "verified destructive, irreversible, or high-risk mutating action that already requires confirmation",
+      "component": "corporate_modal confirmation action",
+      "style": "square danger-tinted outline/fill inside a dark modal with target summary",
+      "notes": "visual treatment only; confirmation and target still come from w3a-core"
+    }
+  }
+}
+```
+
+## W3A Block Mapping
+
+```json
+{
+  "ㄆㄤ": "render as modern activity/resource section when paired with submit/search actions; otherwise as feature/resource cards",
+  "ㄗㄞ": "render as frosted feature cards, resource cards, timeline entries, or compact comparison rows",
+  "ㄔㄠ": "render as corporate_modal form or inline glass_panel form",
+  "ㄙㄞ": "render as nav-level search, section filter, or resource archive filter",
+  "ㄉㄟ": "render as cad_viewport, stat_card, spec_card, or modal detail view",
+  "ㄇㄢ": "render as safe text inside glass_panel or footer/info block"
+}
+```
+
+## Interaction Guidance
+
+- Use clear section navigation and avoid overloading the first screen. The brand
+  or product category should be visible in the first viewport.
+- Keep sections simple: one main idea per band, with generous spacing and strong
+  headings.
+- Use frosted glass cards for major sections and repeated resource/feature
+  cards; do not put card grids inside another card unless the outer container is
+  a full section panel.
+- Use cold blue accent for active/focus states. Keep hover/focus visible through
+  border, text, and shadow changes.
+- Keep "live", "secure", "certified", "audited", and similar labels tied to
+  verified runtime state or make them purely generic.
+- Use local/runtime-provided icons. If no icon set exists, use text initials or
+  simple CSS shapes.
+- Optional CAD/chart motion must be disabled under reduced motion.
+- Mutating actions use W3A confirmation rules regardless of how clean the CTA
+  appears.
+
+## Source Notes
+
+- Durable source: `kronos-preview.html`.
+- Extraction date: 2026-06-28.
+- License or redistribution note: user-provided local preview; abstract design
+  semantics only.
+- Extracted signals: cold metallic radial background, sticky dark nav, square
+  monogram mark, frosted warm-champagne glass cards, cold blue accent, simple
+  solution tabs, CAD-style viewport, three-card feature grid, metric dashboard,
+  clean timeline, resource archive cards, corporate modal forms, bottom-right
+  toast, and structured footer.
+- Explicitly excluded: source asset references, font references,
+  implementation snippets, concrete brand copy, concrete person names, concrete
+  file names, phone/email actions, and any operable targets.
+
+ㄓㄤ
+ㄓㄜ：design.local.kronos-preview
+ㄎㄟ：
+ㄔㄣ：2026-06-28T00:00:00Z
+ㄓㄥ：

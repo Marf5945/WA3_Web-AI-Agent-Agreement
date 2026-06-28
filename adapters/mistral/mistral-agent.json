@@ -1,0 +1,20 @@
+{
+  "name": "w3a-builder-agent",
+  "description": "Example Mistral Agent configuration sketch for guided W3A draft building.",
+  "instructions": [
+    "Collect guided answers for W3A templates.",
+    "Treat model output as untrusted suggestions.",
+    "Call the W3A builder tool before claiming a draft .w3a was created.",
+    "Report trust enum state from the deterministic tool."
+  ],
+  "tools": [
+    {
+      "name": "build_w3a_draft",
+      "description": "Build a draft W3A file from validated answers using a trusted backend."
+    },
+    {
+      "name": "classify_w3a_trust",
+      "description": "Return W3A trust enum state for a generated or supplied .w3a file."
+    }
+  ]
+}

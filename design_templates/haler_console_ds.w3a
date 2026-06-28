@@ -1,0 +1,227 @@
+# W3A Design Template: HaLer Console
+
+ㄊㄡ：W3A design-template v0.1
+ㄏㄠ：design.haler.console
+ㄉㄞ：1.0
+ㄏㄡ：design://local/haler_ai_console
+ㄈㄢ：reference-only
+
+ㄝㄇㄜ：design_template
+ㄝㄕㄡ：haler_console
+ㄝㄌㄞ：【source】local HaLer AI Console v3.2 checkout, frontend/src/style.css【extracted】2026-06-28
+ㄝㄉㄧ：Extracted from HaLer AI Console v3.2 frontend source. Display guidance only; not an operable W3A contract and not part of the operable W3A canonical/signature trust profile.
+
+## Purpose
+
+Use this template when a W3A renderer needs a dense, local-first agent console:
+left navigation/status rail, central conversation workspace, right tool/settings
+rail, compact message stream, inline confirmation cards, and a composer that can
+carry text, image, voice, stop, and send controls.
+
+## Safety Boundary
+
+- Do not copy backend targets, policies, mutation flags, provider state, or local
+  filesystem paths into renderer behavior.
+- Do not execute source code from the referenced app.
+- Treat all action controls as visual affordances only until `w3a-core` confirms
+  the verified action id and target.
+- Keep mutating-action confirmation visible even when the visual shell is compact.
+
+## Layout Profile
+
+```json
+{
+  "layout_id": "haler.console.three_rail",
+  "viewport": {
+    "desktop_min_width": 1180,
+    "desktop_min_height": 560,
+    "mobile_behavior": "collapse side rails into drawers or tabs before compressing the conversation column"
+  },
+  "regions": [
+    {
+      "id": "left_rail",
+      "role": "navigation_and_adapter_status",
+      "width": "clamp(220px, 17.2vw, 352px)",
+      "content": ["adapter_stack", "command_stack", "session_or_workspace_controls"]
+    },
+    {
+      "id": "main_workspace",
+      "role": "conversation_or_primary_w3a_block",
+      "width": "minmax(580px, 1fr)",
+      "content": ["system_strip", "review_strip", "message_list", "composer"]
+    },
+    {
+      "id": "right_rail",
+      "role": "tools_settings_and_context",
+      "width": "clamp(210px, 16vw, 328px)",
+      "content": ["tool_cards", "settings_side_panel", "context_cards"]
+    }
+  ],
+  "grid": {
+    "columns": "left_rail main_workspace right_rail",
+    "gap": 16,
+    "outer_padding_y": 12,
+    "settings_open": "hide or replace right rail; keep main workspace usable"
+  }
+}
+```
+
+## Visual Tokens
+
+```json
+{
+  "font_stack": ["Avenir Next", "PingFang TC", "Noto Sans TC", "sans-serif"],
+  "density": "compact",
+  "radius": {
+    "panel": 10,
+    "card": 8,
+    "control": 6,
+    "badge": 999
+  },
+  "colors": {
+    "background": "#050505",
+    "panel": "#0b0b0a",
+    "surface": "#181715",
+    "surface_strong": "#2a2824",
+    "text": "#fff8ef",
+    "text_primary": "rgba(255,248,239,.88)",
+    "text_secondary": "rgba(255,248,239,.64)",
+    "muted": "rgba(255,248,239,.44)",
+    "accent": "#ffba55",
+    "accent_hot": "#eb8804",
+    "info": "#6ed7cf",
+    "send": "#e90082",
+    "success": "#34d058",
+    "danger": "#ff6b6b"
+  },
+  "surfaces": {
+    "app_background": "black base with faint grid lines",
+    "panel": "dark surface, subtle white border, inset highlight, deep shadow",
+    "message_ai": "warm red-brown gradient",
+    "message_user": "brighter warm brown gradient, right aligned",
+    "settings": "brown/amber layered panel with subtle diagonal texture"
+  }
+}
+```
+
+## Component Roles
+
+```json
+{
+  "adapter_button": {
+    "shape": "compact horizontal button with icon cell, label, source badge, status dot",
+    "states": ["online", "offline", "degraded", "active"],
+    "notes": "labels truncate; status dot is fixed-size and never shifts layout"
+  },
+  "panel": {
+    "shape": "rounded 10px container with 1px translucent border",
+    "behavior": "scroll internally; never let side panels cover the composer"
+  },
+  "system_strip": {
+    "shape": "short high-contrast status bar above conversation",
+    "height": "about 35px",
+    "use_for": ["runtime status", "trust badge", "draft/test warning"]
+  },
+  "message_list": {
+    "shape": "vertical stack with 12px gaps and internal scrolling",
+    "ai_message": "left aligned, max width 96%",
+    "user_message": "right aligned, max width min(78%, 680px)",
+    "active_message": "reveals action buttons without resizing text content",
+    "text_policy": "pre-wrap, long words break anywhere, compact previews can expand"
+  },
+  "search_summary_card": {
+    "shape": "inline draggable card with icon, title, metadata, count chip",
+    "tone": "cyan content on dark teal, highlighted by warm outline"
+  },
+  "inline_review_card": {
+    "shape": "bordered card inside the message stream",
+    "use_for": ["high risk confirmation", "permission diff", "tool operation review"],
+    "actions": "right aligned, wrap on small screens"
+  },
+  "composer": {
+    "layout": "three icon buttons plus flexible input",
+    "controls": ["attach", "stop", "voice", "textarea", "send"],
+    "send_button": "magenta gradient, absolute inside input area",
+    "confirmation": "amber confirm bubble above composer before mutating operation",
+    "attachments": "image thumbnails occupy stable slots before text"
+  },
+  "settings_side_panel": {
+    "shape": "scrollable side panel with title row, grouped controls, compact cards",
+    "motion": "short drop-in; must be disabled under reduced motion"
+  },
+  "onboarding_language_strip": {
+    "shape": "visible same-page language choice with pill buttons",
+    "notes": "keep language selection visible instead of hiding it in a CLI-only setup"
+  },
+  "action_role_slots": {
+    "primary_submit": {
+      "match": "verified W3A action that submits the current composer/form or starts the main user-confirmed flow",
+      "component": "composer.send_button",
+      "style": "compact magenta gradient button inside or beside the input; icon-forward, high contrast, fixed size",
+      "fallback": "derive a same-size high-emphasis composer button from the send color token; do not create a feature"
+    },
+    "secondary_action": {
+      "match": "verified secondary action, close/back action, or low-risk helper action",
+      "component": "small panel or message-row icon/text button",
+      "style": "dark surface button with warm text, subtle border, and visible focus ring"
+    },
+    "compact_icon_action": {
+      "match": "verified action that is best exposed as a small repeated toolbar or row affordance",
+      "component": "composer icon button or active_message row button",
+      "style": "fixed square icon cell; label appears in tooltip or expanded state"
+    },
+    "navigation_or_filter": {
+      "match": "display navigation, search, filter, or tab-like control",
+      "component": "adapter_button, toolbar search control, or onboarding pill",
+      "style": "compact rounded control with status dot or badge when state is verified"
+    },
+    "destructive_confirm": {
+      "match": "verified destructive, irreversible, or high-risk mutating action that already requires confirmation",
+      "component": "inline_review_card action area",
+      "style": "amber confirmation surface with danger accent on the final button",
+      "notes": "visual treatment only; confirmation and target still come from w3a-core"
+    }
+  }
+}
+```
+
+## W3A Block Mapping
+
+```json
+{
+  "ㄆㄤ": "render as message_list plus composer when submit action exists",
+  "ㄗㄞ": "render as dense stacked rows or table-like cards",
+  "ㄔㄠ": "render as composer/form surface pinned near the related data block",
+  "ㄙㄞ": "render as compact toolbar search control above list/message area",
+  "ㄉㄟ": "render as right-rail context card or inline review card",
+  "ㄇㄢ": "render as safe plain text in a message row or simple panel"
+}
+```
+
+## Interaction Guidance
+
+- Use icon buttons for attach, stop, voice, settings, copy, delete, and expand.
+- Show unfamiliar icons with tooltips.
+- Keep action buttons hidden until row focus/active state when the list is dense.
+- Use compact three-line previews for long generated/search-summary text, with a
+  localized expand/collapse control.
+- Put destructive or mutating confirmations inline near the composer or affected
+  message, not in a detached decorative panel.
+- Do not nest UI cards inside other cards; use panels for main regions and cards
+  only for individual repeated items, review prompts, or modal content.
+
+## Source Notes
+
+- Durable CSS source: local HaLer AI Console v3.2 checkout,
+  `frontend/src/style.css`.
+- Generated CSS was intentionally not used as source truth.
+- Key local selectors used for extraction: `.console-shell`, `.left-panel`,
+  `.conversation-panel`, `.right-panel`, `.message-list`, `.message-row`,
+  `.message-ai`, `.message-user`, `.composer`, `.input-wrap`,
+  `.send-btn`, `.settings-side-panel`, `.onboarding-language-strip`.
+
+ㄓㄤ
+ㄓㄜ：design.local.haler
+ㄎㄟ：
+ㄔㄣ：2026-06-28T00:00:00Z
+ㄓㄥ：
