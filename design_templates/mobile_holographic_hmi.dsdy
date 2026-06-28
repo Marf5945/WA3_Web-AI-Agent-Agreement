@@ -277,6 +277,16 @@ nonblocking toast feedback.
   counters, and circular hold progress under reduced motion.
 - Toasts are for feedback only. Errors that require user action should become
   visible inline panels inside the relevant page or modal.
+- Decorative effects such as scanlines, particles, glow brackets, device frames,
+  and scrims must not intercept pointer or keyboard activation. Put actionable
+  controls above decorative layers and give noninteractive layers no hit target.
+- Forms and confirmation modals must account for the bottom tab safe area. The
+  primary submit/confirm control must be visible and reachable without being
+  covered by the tab bar, device frame, toast, or modal decoration.
+- If a renderer offers mock persistence for preview, such as local storage or an
+  in-memory provider, label it as renderer/runtime preview behavior. Do not
+  treat this template as authorizing storage, provider calls, trust state, or
+  backend semantics.
 
 ## Source Notes
 

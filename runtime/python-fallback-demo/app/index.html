@@ -1,0 +1,59 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>com.demo.board — WA3 (Python fallback)</title>
+<style>
+ body{font:15px/1.5 system-ui,sans-serif;max-width:640px;margin:2rem auto;padding:0 1rem;color:#1c2530}
+ h1{font-size:1.25rem} .pill{font-size:.7rem;background:#e7f0ff;color:#1a52c4;border-radius:99px;padding:2px 8px}
+ .card{border:1px solid #e2e6ec;border-radius:10px;padding:.8rem 1rem;margin:.6rem 0}
+ .msg{border-bottom:1px solid #eef1f4;padding:.4rem 0} .msg:last-child{border:0}
+ input,button{font:inherit;padding:.45rem .6rem;border-radius:8px;border:1px solid #cdd4dd}
+ button{background:#1a52c4;color:#fff;border:0;cursor:pointer} button.ghost{background:#eef1f6;color:#1c2530}
+ .row{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center} .muted{color:#6b7785;font-size:.85rem}
+ .warn{color:#a33;font-size:.85rem}
+</style></head><body>
+<h1>com.demo.board <span class="pill">verified · python fallback</span></h1>
+<p class="muted">backend <code>mock://board</code> — served by the wa3lite operate layer. Mutating actions require core-side confirmation.</p>
+<div id="board" class="card"><em class="muted">loading…</em></div>
+<div id="controls"></div>
+<p id="err" class="warn"></p>
+<script>
+const MODEL = {"app_id": "com.demo.board", "backend": "mock://board", "actions": [{"id": "read_messages", "verb": "ㄎㄢ", "target": "/messages", "mutates": false, "confirm": false, "inputs": [], "resource": "messages"}, {"id": "submit_message", "verb": "ㄔㄥ", "target": "/messages", "mutates": true, "confirm": true, "inputs": ["text"], "resource": "messages"}, {"id": "react", "verb": "ㄢ", "target": "/messages/{id}/reaction", "mutates": true, "confirm": false, "inputs": ["reaction", "target"], "resource": "messages"}, {"id": "search_messages", "verb": "ㄙㄡ", "target": "/messages/search", "mutates": false, "confirm": false, "inputs": ["q"], "resource": "messages"}]};
+const board = document.getElementById('board'), controls = document.getElementById('controls'), err = document.getElementById('err');
+function api(action, inputs, confirm){
+  const u = new URL(location.origin + '/api/' + action);
+  for(const k in inputs) u.searchParams.set('in.'+k, inputs[k]);
+  if(confirm) u.searchParams.set('confirm','1');
+  return fetch(u, {method: confirm? 'POST':'GET'}).then(async r=>{const j=await r.json(); if(!r.ok) throw new Error(j.error||r.status); return j;});
+}
+function esc(s){return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+const readAct = MODEL.actions.find(a=>a.verb==='ㄎㄢ');
+const searchAct = MODEL.actions.find(a=>a.verb==='ㄙㄡ');
+const writeActs = MODEL.actions.filter(a=>a.mutates);
+function renderRows(rows){
+  board.innerHTML = rows.length? rows.map(m=>`<div class="msg"><b>${esc(m.author||m.title||m.id)}</b> ${esc(m.text||m.summary||'')}</div>`).join('') : '<em class="muted">no records</em>';
+}
+function refresh(){ if(readAct) api(readAct.id,{}).then(j=>renderRows(j.result)).catch(e=>err.textContent=e.message); }
+writeActs.forEach(a=>{
+  const c=document.createElement('div'); c.className='card';
+  c.innerHTML=`<div class="muted">${esc(a.id)} ${a.confirm?'· needs confirm':''}</div>`;
+  const row=document.createElement('div'); row.className='row'; row.style.marginTop='.5rem';
+  const fields={};
+  a.inputs.forEach(name=>{const i=document.createElement('input'); i.placeholder=name; row.appendChild(i); fields[name]=i;});
+  const b=document.createElement('button'); b.textContent=a.id;
+  b.onclick=()=>{const vals={}; for(const k in fields) vals[k]=fields[k].value;
+    if(a.confirm && !window.confirm('Confirm mutating action: '+a.id+'?')) return;
+    api(a.id, vals, true).then(()=>{for(const k in fields)fields[k].value='';refresh();}).catch(e=>err.textContent=e.message);};
+  row.appendChild(b); c.appendChild(row); controls.appendChild(c);
+});
+if(searchAct){
+  const c=document.createElement('div'); c.className='card';
+  const row=document.createElement('div'); row.className='row';
+  const i=document.createElement('input'); i.placeholder='search…';
+  const b=document.createElement('button'); b.className='ghost'; b.textContent='search';
+  const clr=document.createElement('button'); clr.className='ghost'; clr.textContent='clear';
+  b.onclick=()=>api(searchAct.id,{q:i.value}).then(j=>renderRows(j.result)).catch(e=>err.textContent=e.message);
+  clr.onclick=()=>{i.value='';refresh();};
+  row.append(i,b,clr); c.appendChild(row); controls.appendChild(c);
+}
+refresh();
+</script></body></html>

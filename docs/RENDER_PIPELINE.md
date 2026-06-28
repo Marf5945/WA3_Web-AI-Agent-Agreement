@@ -50,6 +50,16 @@ Renderers and host agents should check:
   policies, trust state, or real action ids.
 - If no design role matches an action, the renderer may choose fallback styling
   but must keep the verified action id and core safety semantics.
+- Decorative layers, pseudo-elements, scanlines, particles, scrims, device
+  frames, and visual progress rings must never intercept pointer, keyboard, or
+  assistive-technology activation for a verified control.
+- Confirmation controls must remain reachable by pointer and keyboard in the
+  actual rendered viewport. Fixed navigation, safe-area insets, device frames,
+  and modal effects must not cover or push the confirm/submit control outside
+  the usable area.
+- Preview persistence, such as in-memory state, local storage, fixture files, or
+  mock providers, is a renderer/runtime choice. It must be labeled as preview or
+  mock behavior and must not be inferred from a `*.dsdy` design template.
 
 ## Neutral Default and No-Template
 

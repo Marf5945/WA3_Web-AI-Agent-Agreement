@@ -58,7 +58,12 @@ the repo checkout.
 3. Record source and extraction date together in `ㄝㄌㄞ`, using bracket labels:
    `ㄝㄌㄞ：【source】...【extracted】YYYY-MM-DD`.
 4. Extract only layout, visual tokens, component role/shape/state, WA3 block
-   mapping, abstract action role slots, and interaction guidance.
+   mapping, abstract action role slots, and interaction guidance. For overlays,
+   drawers, modals, bottom navigation, fixed headers, scanlines, glow layers,
+   particles, and device frames, also capture display-only reachability
+   constraints: which layers are decorative, which controls must stay on top,
+   what safe-area padding is needed, and whether submit/confirm controls must
+   remain reachable by pointer, keyboard, and assistive technology.
 5. Exclude real copy, real action ids, backend targets, providers, permissions,
    policies, secrets, remote assets, executable HTML/JS/CSS, third-party fonts,
    and logos. Abstract placeholders are allowed when they cannot operate.

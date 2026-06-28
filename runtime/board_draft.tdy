@@ -1,0 +1,63 @@
+ㄊㄡ：WA3 v0.3
+ㄏㄠ：com.example.board
+ㄉㄞ：1.0
+ㄏㄡ：local://board
+ㄈㄢ：shared
+
+ㄋㄥ
+ㄕ：message
+  id：ㄐㄩ
+  author：ㄐㄩ
+  text：ㄐㄩ
+  created_at：ㄋㄞ
+  like：ㄗㄤ
+  question：ㄗㄤ
+  down：ㄗㄤ
+
+ㄓㄠ：read_messages
+  ㄘ：ㄎㄢ
+  ㄓ：/messages
+  ㄍㄞ：no
+  ㄉㄜ：list｜message
+
+ㄓㄠ：submit_message
+  ㄘ：ㄔㄥ
+  ㄓ：/messages
+  ㄍㄞ：yes
+  ㄖㄣ：yes
+  ㄕㄡ：text｜ㄐㄩ
+  ㄉㄜ：message
+
+ㄓㄠ：react
+  ㄘ：ㄢ
+  ㄓ：/messages/{id}/mood
+  ㄍㄞ：yes
+  ㄖㄣ：yes
+  ㄕㄡ：target｜ㄐㄩ
+  ㄕㄡ：mood｜ㄐㄩ
+
+ㄓㄠ：search_messages
+  ㄘ：ㄙㄡ
+  ㄓ：/messages/search
+  ㄍㄞ：no
+  ㄕㄡ：q｜ㄐㄩ
+  ㄉㄜ：list｜message
+
+ㄎㄜ
+ㄑㄩ：main_board
+  ㄍㄜ：ㄆㄤ
+  ㄩㄢ：read_messages
+  ㄊㄠ：submit_message｜react｜search_messages
+  ㄊㄞ：ㄗㄞ｜ㄇㄢ
+
+ㄕㄜ
+ㄙㄜ：ㄍㄟ｜ㄋㄠ｜ㄕㄞ
+ㄗ：1｜2
+ㄉㄥ：compact｜comfortable
+ㄎㄞ：main_board
+
+ㄓㄤ
+ㄓㄜ：com.example.publisher
+ㄎㄟ：ed25519:PUBLIC_KEY_BASE64
+ㄔㄣ：2026-06-26T10:00:00Z
+ㄓㄥ：

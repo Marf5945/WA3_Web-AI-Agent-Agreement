@@ -116,6 +116,8 @@ func main() {
 		err = cmdInit(os.Args[2:])
 	case "build":
 		err = cmdBuild(os.Args[2:])
+	case "link-check":
+		err = cmdLinkCheck(os.Args[2:])
 	case "operate":
 		err = cmdOperate(os.Args[2:])
 	case "keygen":
@@ -139,7 +141,7 @@ func main() {
 }
 
 func usage() {
-	fmt.Fprintln(os.Stderr, "usage: wa3 canonical <file> | init --answers <answers.json> [--backend <handle>] [--out <answers.json>] | build --answers <answers.json> --out <app.tdy> [--test-sign] [--mock-demo <demo.json>] | operate <file.tdy> --action <id> [--input k=v ...] [--confirm] [--trusted-pub <hex>] [--data-dir <dir>] [--mock-demo <seed.json>] | keygen --publisher <id> --key-out <private-key.json> [--force] | sign --key-file <private-key.json> --in <draft.tdy> --out <app.tdy> | trust [--trusted-pub <hex>] [--revoked-pub <hex>] [--rl <file.tdy-rl>] <file> | gen-vectors | bundle-check")
+	fmt.Fprintln(os.Stderr, "usage: wa3 canonical <file> | init --answers <answers.json> [--backend <handle>] [--out <answers.json>] | build --answers <answers.json> --out <app.tdy> [--test-sign] [--mock-demo <demo.json>] | link-check <source> | operate <file.tdy> --action <id> [--input k=v ...] [--confirm] [--trusted-pub <hex>] [--data-dir <dir>] [--mock-demo <seed.json>] | keygen --publisher <id> --key-out <private-key.json> [--force] | sign --key-file <private-key.json> --in <draft.tdy> --out <app.tdy> | trust [--trusted-pub <hex>] [--revoked-pub <hex>] [--rl <file.tdy-rl>] <file> | gen-vectors | bundle-check")
 }
 
 func cmdCanonical(args []string) error {
@@ -2112,6 +2114,9 @@ func cmdBundleCheck(args []string) error {
 		return err
 	}
 	if err := checkBuilder(specRoot); err != nil {
+		return err
+	}
+	if err := checkLinkGuard(); err != nil {
 		return err
 	}
 	if err := scanForbidden(specRoot); err != nil {

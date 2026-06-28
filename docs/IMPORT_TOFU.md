@@ -5,10 +5,15 @@ full provider adapter exists.
 
 ## Manual Import
 
-1. Download the `.tdy` bytes from the shared location. If the link is a rendered
-   page, ask the publisher for a direct file handle or byte download.
-2. Run `wa3 trust <file>` or the host Runtime's equivalent trust inspection.
-3. If the result is `unsigned_draft`, treat it as a local preview only.
+0. Run `wa3 link-check <source>` or the host Runtime's equivalent static source
+   guard. Reject rendered editor/preview pages, unstable signed URLs, and
+   token-shaped query parameters before any import UI offers a download.
+1. Download the `.tdy` bytes from the shared location into a quarantine/import
+   staging area. If the link is a rendered page, ask the publisher for a direct
+   file handle or byte download.
+2. Run `wa3 trust <file>` or the host Runtime's equivalent trust inspection
+   before rendering controls or exposing any operation.
+3. If the result is `unsigned_draft`, treat it as a local/mock preview only.
 4. If the result is `test_signed`, do not pin it and do not use it for
    production.
 5. If the result is `sig_mismatch` or `revoked`, stop.
@@ -36,6 +41,20 @@ Do not pin when:
 - The file came from a rendered editor page or an unstable export.
 - The Runtime cannot distinguish draft, test, untrusted, trusted, revoked, and
   mismatch states.
+
+## Host Import Guard
+
+Hosts that show a generic "download" button for `.tdy` files must keep that
+button separate from trust and execution. A successful download means only "the
+bytes were saved"; it never means "the contract is trusted." The host should:
+
+- Store downloads in an import staging/quarantine location until trust succeeds.
+- Show the trust state from deterministic code, not from renderer text.
+- Disable provider calls unless the state is `signed_trusted`.
+- Use mock/local preview labels for `unsigned_draft`, `test_signed`, and
+  `signed_untrusted_key`.
+- Route every mutating action through core confirmation after re-reading the
+  verified contract.
 
 ## Suggested UI Copy
 

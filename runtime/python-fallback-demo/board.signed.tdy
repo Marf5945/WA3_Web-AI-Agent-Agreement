@@ -1,0 +1,62 @@
+ㄊㄡ：WA3 v0.3
+ㄏㄠ：com.demo.board
+ㄉㄞ：1.0
+ㄏㄡ：mock://board
+ㄈㄢ：shared
+
+ㄋㄥ
+ㄕ：message
+  id：ㄐㄩ
+  author：ㄐㄩ
+  text：ㄐㄩ
+  created_at：ㄋㄞ
+  like：ㄗㄤ
+  question：ㄗㄤ
+  pat：ㄗㄤ
+  angry：ㄗㄤ
+  down：ㄗㄤ
+  speechless：ㄗㄤ
+ㄓㄠ：read_messages
+  ㄘ：ㄎㄢ
+  ㄓ：/messages
+  ㄍㄞ：no
+  ㄉㄜ：list｜message
+ㄓㄠ：submit_message
+  ㄘ：ㄔㄥ
+  ㄓ：/messages
+  ㄍㄞ：yes
+  ㄖㄣ：yes
+  ㄕㄡ：text｜ㄐㄩ
+  ㄉㄜ：message
+ㄓㄠ：react
+  ㄘ：ㄢ
+  ㄓ：/messages/{id}/reaction
+  ㄍㄞ：yes
+  ㄖㄣ：no
+  ㄕㄡ：target｜ㄐㄩ
+  ㄕㄡ：reaction｜ㄐㄩ
+ㄓㄠ：search_messages
+  ㄘ：ㄙㄡ
+  ㄓ：/messages/search
+  ㄍㄞ：no
+  ㄕㄡ：q｜ㄐㄩ
+  ㄉㄜ：list｜message
+
+ㄎㄜ
+ㄑㄩ：main_board
+  ㄍㄜ：ㄆㄤ
+  ㄩㄢ：read_messages
+  ㄊㄠ：submit_message｜react｜search_messages
+  ㄊㄞ：ㄗㄞ｜ㄇㄢ
+
+ㄕㄜ
+ㄙㄜ：ㄍㄟ｜ㄋㄠ｜ㄕㄞ
+ㄗ：1｜2
+ㄉㄥ：comfortable
+ㄎㄞ：main_board
+
+ㄓㄤ
+ㄓㄜ：com.demo.publisher
+ㄎㄟ：ed25519:35mRGz7vLp1/N9JTsbEAwUjOE+YuX44/XBGfxGciaTY=
+ㄔㄣ：2026-06-27T00:00:00Z
+ㄓㄥ：IXRrc3fYXMhxLXMlZJafg3P63F/pj9c7U7c2aazmsR59/Ar1NcGoFas5hl+eAPmbCRJSyrg3L6Jjr9GLdXExBg==

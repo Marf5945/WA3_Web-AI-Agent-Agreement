@@ -30,6 +30,12 @@ because an agent extracted it.
 - Human-readable purpose and data impact for the Feature Manifest.
 - Design needs as display hints, not behavior: density, text size, preferred
   layout, or possible `*.dsdy` tag matches.
+- If extracting a `*.dsdy` visual reference from a webpage or app shell, capture
+  overlay and modal reachability as display guidance: decorative layers must not
+  intercept controls, submit/confirm controls must stay above effects, and fixed
+  headers/bottom navigation/device frames require safe-area space. Do not turn
+  these observations into storage, provider, backend, permission, or trust
+  semantics.
 
 ## What Not to Extract
 

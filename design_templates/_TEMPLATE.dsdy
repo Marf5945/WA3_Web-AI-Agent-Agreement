@@ -138,6 +138,14 @@ copy product copy, campaign language, or user data from the source.
   or be marked display-navigation/display-only. If the template lacks a matching
   role, derive a fallback from the template's tokens and record it as styling,
   not as a new feature.
+- Decorative layers, pseudo-elements, scrims, glow effects, particles, scanlines,
+  and device frames must not intercept pointer, keyboard, or assistive-technology
+  activation for verified controls.
+- Account for fixed navigation, safe areas, and overlays so submit/confirm
+  controls remain visible and reachable in the actual rendered viewport.
+- Preview persistence belongs to the renderer/runtime and must be labeled as
+  mock or preview behavior. Do not put storage, provider, backend, trust, or
+  permission semantics into the design template.
 
 ## Source Notes
 
