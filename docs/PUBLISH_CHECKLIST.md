@@ -32,7 +32,8 @@ For Google Drive, the user-facing flow should be:
 
 ## Static Guard
 
-A publisher tool or adapter should fail closed when:
+A publisher tool or adapter should run `wa3 link-check <source>` or an
+equivalent static guard, and fail closed when:
 
 - The publish link contains `/edit`, `/preview`, or a non-byte render page.
 - The source contains token-shaped query parameters.

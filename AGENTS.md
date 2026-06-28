@@ -44,7 +44,12 @@ profile.
    extraction date together in `ㄝㄌㄞ` with bracket labels, for example
    `ㄝㄌㄞ：【source】frontend/src/style.css【extracted】2026-06-28`.
 3. Extract only layout regions/grid/viewport, visual tokens, component
-   roles/shapes/states, WA3 block mapping, and interaction guidance.
+   roles/shapes/states, WA3 block mapping, and interaction guidance. For
+   overlays, drawers, modals, bottom navigation, fixed headers, scanlines, glow
+   layers, particles, and device frames, also record display-only reachability
+   constraints: which layers are decorative, which controls must stay on top,
+   what safe-area padding is needed, and whether submit/confirm controls must
+   remain reachable by pointer, keyboard, and assistive technology.
 4. Exclude real copy, real action ids, backend targets, providers, permissions,
    policies, secrets, remote assets, executable HTML/JS/CSS, third-party fonts,
    and logos. Abstract placeholders are allowed when they cannot operate.

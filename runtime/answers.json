@@ -1,0 +1,8 @@
+{
+  "app": {
+    "backend": "local://board"
+  },
+  "_provenance": {
+    "app.backend": "user_confirmed"
+  }
+}

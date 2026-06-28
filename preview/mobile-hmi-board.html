@@ -1,0 +1,1381 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WA3 Mobile HMI Board Preview</title>
+  <style>
+    :root {
+      --bg-deep: #030514;
+      --bg-slate: #090d26;
+      --panel: rgba(8, 13, 38, 0.92);
+      --glass: rgba(229, 231, 235, 0.13);
+      --glass-strong: rgba(246, 246, 240, 0.22);
+      --line: rgba(255, 255, 255, 0.13);
+      --line-hot: rgba(0, 240, 255, 0.64);
+      --cyan: #00f0ff;
+      --blue: #5275ff;
+      --violet: #a020f0;
+      --silver: #bac7d5;
+      --text: #ebf1f5;
+      --muted: #94a3b8;
+      --danger: #ff6b8a;
+      --ok: #7cf7c4;
+      --warn: #ffd166;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+      --font-body: "Avenir Next", "Helvetica Neue", system-ui, sans-serif;
+      --font-mono: "SF Mono", "Menlo", "Monaco", ui-monospace, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+      margin: 0;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(0, 240, 255, 0.24), transparent 31%),
+        radial-gradient(circle at 82% 8%, rgba(160, 32, 240, 0.26), transparent 32%),
+        radial-gradient(circle at 50% 88%, rgba(82, 117, 255, 0.20), transparent 34%),
+        linear-gradient(135deg, #02030d 0%, #06091d 44%, #111936 100%);
+      color: var(--text);
+      font-family: var(--font-body);
+      letter-spacing: 0;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .stage {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stage::before,
+    .stage::after {
+      content: "";
+      position: absolute;
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      filter: blur(18px);
+      opacity: 0.28;
+      pointer-events: none;
+    }
+
+    .stage::before {
+      left: calc(50% - 520px);
+      top: 9vh;
+      background: repeating-radial-gradient(circle, rgba(0, 240, 255, 0.7) 0 1px, transparent 1px 13px);
+    }
+
+    .stage::after {
+      right: calc(50% - 530px);
+      bottom: 6vh;
+      background: repeating-radial-gradient(circle, rgba(160, 32, 240, 0.62) 0 1px, transparent 1px 15px);
+    }
+
+    .device {
+      width: min(412px, 100vw);
+      height: min(846px, 100vh);
+      max-height: 846px;
+      border-radius: 50px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.18), transparent 15% 86%, rgba(255, 255, 255, 0.08)),
+        #070918;
+      padding: 10px;
+      box-shadow: var(--shadow), inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+      position: relative;
+      z-index: 1;
+    }
+
+    .shell {
+      height: 100%;
+      border-radius: 42px;
+      overflow: hidden;
+      position: relative;
+      background:
+        radial-gradient(circle at 20% 8%, rgba(0, 240, 255, 0.22), transparent 30%),
+        radial-gradient(circle at 92% 18%, rgba(160, 32, 240, 0.22), transparent 36%),
+        linear-gradient(180deg, rgba(6, 11, 32, 0.92), rgba(3, 5, 20, 0.98));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .shell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 24px 24px;
+      mask-image: linear-gradient(to bottom, black 0 70%, transparent);
+      pointer-events: none;
+    }
+
+    .island {
+      position: absolute;
+      top: 11px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 102px;
+      height: 28px;
+      border-radius: 999px;
+      background: #02040b;
+      z-index: 5;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05), 0 0 24px rgba(0, 0, 0, 0.52);
+    }
+
+    .island::after {
+      content: "";
+      position: absolute;
+      right: 17px;
+      top: 9px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(82, 117, 255, 0.95), #12182d 58%);
+    }
+
+    .app {
+      height: 100%;
+      display: grid;
+      grid-template-rows: 82px 1fr 72px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .topbar {
+      padding: 42px 20px 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .eyebrow,
+    .chip,
+    .mono {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .eyebrow {
+      color: var(--cyan);
+      font-size: 10px;
+      line-height: 1.2;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--danger);
+      box-shadow: 0 0 12px rgba(255, 107, 138, 0.9);
+    }
+
+    h1 {
+      margin: 3px 0 0;
+      font-size: 25px;
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      padding: 0;
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+    }
+
+    .icon-btn svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .icon-btn:hover,
+    .icon-btn:focus-visible {
+      border-color: var(--line-hot);
+      background: rgba(0, 240, 255, 0.12);
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .pages {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .page {
+      position: absolute;
+      inset: 0;
+      padding: 8px 20px 96px;
+      overflow-y: auto;
+      scrollbar-width: none;
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: opacity 220ms ease, transform 220ms ease;
+    }
+
+    .page[hidden] {
+      display: none;
+    }
+
+    .page::-webkit-scrollbar {
+      display: none;
+    }
+
+    .page.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .trust-banner {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      margin-bottom: 12px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(255, 107, 138, 0.15), rgba(0, 240, 255, 0.08));
+      border: 1px solid rgba(255, 107, 138, 0.28);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+
+    .seal {
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      background: rgba(3, 5, 20, 0.72);
+      border: 1px solid rgba(0, 240, 255, 0.27);
+      color: var(--danger);
+      font-family: var(--font-mono);
+      font-size: 18px;
+    }
+
+    .trust-banner strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.2;
+    }
+
+    .trust-banner span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin: 3px 0 11px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.1;
+    }
+
+    .chip {
+      border: 1px solid rgba(0, 240, 255, 0.24);
+      border-radius: 6px;
+      color: var(--cyan);
+      background: rgba(0, 240, 255, 0.08);
+      padding: 5px 7px;
+      font-size: 9px;
+      white-space: nowrap;
+    }
+
+    .search-wrap {
+      display: grid;
+      grid-template-columns: 1fr 36px;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .field,
+    .textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(3, 5, 20, 0.58);
+      color: var(--text);
+      padding: 10px 12px;
+      outline: none;
+      transition: border-color 160ms ease, box-shadow 160ms ease;
+    }
+
+    .field {
+      height: 36px;
+      font-size: 13px;
+    }
+
+    .textarea {
+      min-height: 98px;
+      resize: vertical;
+      line-height: 1.45;
+      font-size: 13px;
+    }
+
+    .field:focus,
+    .textarea:focus {
+      border-color: var(--line-hot);
+      box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.12);
+    }
+
+    .message-stack {
+      display: grid;
+      gap: 12px;
+      padding-bottom: 8px;
+    }
+
+    .message-card {
+      position: relative;
+      border-radius: 16px;
+      padding: 14px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.06)),
+        rgba(9, 13, 38, 0.66);
+      border: 1px solid var(--line);
+      box-shadow: 0 16px 35px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+      overflow: hidden;
+    }
+
+    .message-card.blocked {
+      opacity: 0.46;
+      filter: saturate(0.7);
+    }
+
+    .message-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 14px;
+      right: 14px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.75), transparent);
+    }
+
+    .message-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background:
+        radial-gradient(circle at 35% 25%, rgba(0, 240, 255, 0.9), transparent 34%),
+        linear-gradient(135deg, rgba(82, 117, 255, 0.82), rgba(160, 32, 240, 0.42));
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: 800;
+      flex: 0 0 auto;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+    }
+
+    .author b,
+    .message-card h3 {
+      overflow-wrap: anywhere;
+    }
+
+    .author b {
+      display: block;
+      font-size: 12px;
+      line-height: 1.1;
+    }
+
+    .time {
+      color: var(--muted);
+      font-size: 10px;
+      margin-top: 3px;
+    }
+
+    .message-card h3 {
+      margin: 12px 0 6px;
+      font-size: 16px;
+      line-height: 1.16;
+    }
+
+    .message-card p {
+      margin: 0;
+      color: #d7e1e8;
+      font-size: 13px;
+      line-height: 1.48;
+      overflow-wrap: anywhere;
+    }
+
+    .reaction-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .reaction {
+      min-width: 44px;
+      height: 31px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--silver);
+      background: rgba(2, 6, 23, 0.38);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 0 8px;
+      font-size: 12px;
+      transition: transform 140ms ease, border-color 140ms ease, color 140ms ease;
+    }
+
+    .reaction:hover,
+    .reaction:focus-visible {
+      border-color: var(--line-hot);
+      color: var(--cyan);
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .mini-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .square-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      padding: 0;
+    }
+
+    .square-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .square-btn:hover,
+    .square-btn:focus-visible {
+      border-color: var(--line-hot);
+      color: var(--cyan);
+      outline: none;
+    }
+
+    .compose-panel,
+    .filter-panel,
+    .trust-panel {
+      border-radius: 18px;
+      padding: 16px;
+      background: var(--panel);
+      border: 1px solid rgba(0, 240, 255, 0.18);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 16px 44px rgba(0, 0, 0, 0.24);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .compose-panel::before,
+    .filter-panel::before,
+    .trust-panel::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      opacity: 0.68;
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 11px;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      font-size: 10px;
+    }
+
+    .primary,
+    .secondary,
+    .danger {
+      height: 38px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      padding: 0 14px;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.08);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .primary {
+      border-color: rgba(0, 240, 255, 0.54);
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.24), rgba(82, 117, 255, 0.18));
+      box-shadow: 0 0 24px rgba(0, 240, 255, 0.13);
+    }
+
+    .danger {
+      border-color: rgba(255, 107, 138, 0.42);
+      background: rgba(255, 107, 138, 0.12);
+    }
+
+    .primary:hover,
+    .primary:focus-visible,
+    .secondary:hover,
+    .secondary:focus-visible,
+    .danger:hover,
+    .danger:focus-visible {
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .hmi-map {
+      width: 100%;
+      height: 142px;
+      margin-bottom: 12px;
+      border-radius: 16px;
+      background: rgba(2, 6, 23, 0.48);
+      border: 1px solid rgba(0, 240, 255, 0.16);
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .stat {
+      min-height: 64px;
+      border-radius: 14px;
+      padding: 10px;
+      background: var(--glass);
+      border: 1px solid var(--line);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 18px;
+      line-height: 1.1;
+    }
+
+    .stat span {
+      display: block;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 9px;
+      text-transform: uppercase;
+      margin-top: 5px;
+    }
+
+    .filter-list,
+    .trust-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .filter-row,
+    .trust-row {
+      display: grid;
+      grid-template-columns: 34px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      min-height: 48px;
+      border-radius: 14px;
+      padding: 8px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .glyph {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: rgba(0, 240, 255, 0.10);
+      display: grid;
+      place-items: center;
+      color: var(--cyan);
+      font-family: var(--font-mono);
+      font-size: 13px;
+    }
+
+    .row-title {
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .row-meta {
+      color: var(--muted);
+      font-size: 10px;
+      margin-top: 2px;
+      overflow-wrap: anywhere;
+    }
+
+    .tabs {
+      height: 72px;
+      padding: 8px 18px 14px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      background: linear-gradient(180deg, transparent, rgba(3, 5, 20, 0.9) 20%);
+    }
+
+    .tab {
+      position: relative;
+      border: 0;
+      border-radius: 18px;
+      background: transparent;
+      color: var(--muted);
+      display: grid;
+      place-items: center;
+      gap: 3px;
+      padding: 5px 0;
+      font-size: 9px;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+    }
+
+    .tab svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .tab.active {
+      color: var(--cyan);
+      background: rgba(0, 240, 255, 0.1);
+    }
+
+    .tab.active::before {
+      content: "";
+      position: absolute;
+      top: 3px;
+      width: 25px;
+      height: 3px;
+      border-radius: 999px;
+      background: var(--cyan);
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.9);
+    }
+
+    .modal-layer {
+      position: absolute;
+      inset: 0;
+      display: none;
+      place-items: center;
+      padding: 24px;
+      background: rgba(2, 6, 23, 0.78);
+      backdrop-filter: blur(14px);
+      z-index: 8;
+    }
+
+    .modal-layer.open {
+      display: grid;
+    }
+
+    .modal {
+      width: 100%;
+      border-radius: 20px;
+      border: 1px solid rgba(0, 240, 255, 0.42);
+      background:
+        linear-gradient(180deg, rgba(11, 18, 45, 0.96), rgba(4, 7, 22, 0.98));
+      padding: 18px;
+      box-shadow: 0 0 52px rgba(0, 240, 255, 0.12), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .modal > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .modal h2 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    .modal p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .modal-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .modal-actions button {
+      position: relative;
+      z-index: 2;
+      pointer-events: auto;
+    }
+
+    .toast {
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: 82px;
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: 10px;
+      align-items: center;
+      min-height: 58px;
+      border-radius: 16px;
+      padding: 10px;
+      background: rgba(7, 12, 34, 0.94);
+      border: 1px solid rgba(0, 240, 255, 0.24);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.38);
+      transform: translateY(22px);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 9;
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast strong {
+      display: block;
+      font-size: 12px;
+    }
+
+    .toast span {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.35;
+    }
+
+    @keyframes scan {
+      0% { transform: translateY(-54px); opacity: 0; }
+      15% { opacity: 0.9; }
+      85% { opacity: 0.9; }
+      100% { transform: translateY(64px); opacity: 0; }
+    }
+
+    @media (max-width: 520px) {
+      .stage {
+        padding: 0;
+      }
+
+      .device {
+        width: 100vw;
+        height: 100vh;
+        max-height: none;
+        border-radius: 0;
+        padding: 0;
+      }
+
+      .shell {
+        border-radius: 0;
+        border: 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="stage">
+    <section class="device" aria-label="WA3 mobile holographic HMI preview">
+      <div class="shell">
+        <div class="island" aria-hidden="true"></div>
+        <div class="app">
+          <header class="topbar">
+            <div>
+              <div class="eyebrow"><span class="status-dot"></span> WA3 mock core</div>
+              <h1>Testboard</h1>
+            </div>
+            <div class="top-actions">
+              <button class="icon-btn" type="button" data-action-id="search_messages" id="focusSearch" title="Search messages" aria-label="Search messages">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m16.5 16.5 4 4"></path></svg>
+              </button>
+              <button class="icon-btn" type="button" data-tab-target="trust" title="Trust state" aria-label="Trust state">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5c0 5 3 8 7 10 4-2 7-5 7-10V6l-7-3Z"></path><path d="m9 12 2 2 4-5"></path></svg>
+              </button>
+            </div>
+          </header>
+
+          <section class="pages">
+            <article class="page active" id="page-board" data-page="board">
+              <div class="trust-banner">
+                <div class="seal">!</div>
+                <div>
+                  <strong>Invalid signature draft</strong>
+                  <span>E-TRUST-BADKEY. Preview uses mock data only; no provider call is made.</span>
+                </div>
+              </div>
+
+              <div class="section-head">
+                <h2>Board stream</h2>
+                <span class="chip" id="resultCount">0 items</span>
+              </div>
+
+              <div class="search-wrap">
+                <input class="field" id="searchInput" data-action-id="search_messages" type="search" placeholder="Search title, text, author">
+                <button class="icon-btn" type="button" data-action-id="search_messages" id="clearSearch" title="Clear search" aria-label="Clear search">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                </button>
+              </div>
+
+              <div class="message-stack" id="messageList" data-source-action-id="read_messages"></div>
+            </article>
+
+            <article class="page" id="page-compose" data-page="compose" hidden aria-hidden="true">
+              <div class="section-head">
+                <h2>Signal composer</h2>
+                <span class="chip">submit_message</span>
+              </div>
+
+              <div class="compose-panel">
+                <svg class="hmi-map" viewBox="0 0 320 142" role="img" aria-label="Holographic routing map">
+                  <defs>
+                    <linearGradient id="pulse" x1="0" x2="1" y1="0" y2="1">
+                      <stop offset="0" stop-color="#00f0ff" stop-opacity=".9"></stop>
+                      <stop offset=".55" stop-color="#5275ff" stop-opacity=".55"></stop>
+                      <stop offset="1" stop-color="#a020f0" stop-opacity=".8"></stop>
+                    </linearGradient>
+                  </defs>
+                  <rect x="1" y="1" width="318" height="140" rx="18" fill="rgba(0,0,0,.16)" stroke="rgba(0,240,255,.24)"></rect>
+                  <path d="M30 104 C70 32, 113 120, 158 58 S247 12, 292 88" fill="none" stroke="url(#pulse)" stroke-width="2"></path>
+                  <path d="M36 38 H112 M196 103 H286 M55 118 H153 M176 28 H267" stroke="rgba(255,255,255,.18)" stroke-width="1"></path>
+                  <g fill="#00f0ff">
+                    <circle cx="30" cy="104" r="5"></circle>
+                    <circle cx="158" cy="58" r="5"></circle>
+                    <circle cx="292" cy="88" r="5"></circle>
+                  </g>
+                  <g fill="none" stroke="rgba(0,240,255,.42)">
+                    <circle cx="30" cy="104" r="15"></circle>
+                    <circle cx="158" cy="58" r="18"></circle>
+                    <circle cx="292" cy="88" r="15"></circle>
+                  </g>
+                </svg>
+
+                <form class="form-grid" id="composeForm" data-action-id="submit_message" autocomplete="off">
+                  <label>
+                    Author
+                    <input class="field" name="author" maxlength="28" value="Marf" required>
+                  </label>
+                  <label>
+                    Title
+                    <input class="field" name="title" maxlength="64" placeholder="Short signal title" required>
+                  </label>
+                  <label>
+                    Text
+                    <textarea class="textarea" name="text" maxlength="260" placeholder="Write a board message" required></textarea>
+                  </label>
+                  <button class="primary" type="submit">
+                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 2 11 13" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"></path><path d="m22 2-7 20-4-9-9-4 20-7Z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"></path></svg>
+                    Submit draft signal
+                  </button>
+                </form>
+              </div>
+            </article>
+
+            <article class="page" id="page-filter" data-page="filter" hidden aria-hidden="true">
+              <div class="section-head">
+                <h2>Reaction matrix</h2>
+                <span class="chip">react</span>
+              </div>
+
+              <div class="filter-panel">
+                <div class="stat-grid">
+                  <div class="stat"><strong id="statMessages">0</strong><span>messages</span></div>
+                  <div class="stat"><strong id="statBlocked">0</strong><span>blocked</span></div>
+                  <div class="stat"><strong id="statReact">0</strong><span>reactions</span></div>
+                </div>
+
+                <div class="filter-list" id="reactionSummary"></div>
+              </div>
+            </article>
+
+            <article class="page" id="page-trust" data-page="trust" hidden aria-hidden="true">
+              <div class="section-head">
+                <h2>Contract state</h2>
+                <span class="chip">sig_mismatch</span>
+              </div>
+
+              <div class="trust-panel">
+                <div class="trust-list">
+                  <div class="trust-row">
+                    <div class="glyph">id</div>
+                    <div><div class="row-title">com.example.testboard</div><div class="row-meta">WA3 v0.3 / version 1.0</div></div>
+                    <span class="chip">app</span>
+                  </div>
+                  <div class="trust-row">
+                    <div class="glyph">bk</div>
+                    <div><div class="row-title">mock://board</div><div class="row-meta">mock provider only in this preview</div></div>
+                    <span class="chip">local</span>
+                  </div>
+                  <div class="trust-row">
+                    <div class="glyph">!</div>
+                    <div><div class="row-title">E-TRUST-BADKEY</div><div class="row-meta">PUBLIC_KEY_BASE64 and UNSIGNED_DRAFT are placeholders</div></div>
+                    <span class="chip">stop</span>
+                  </div>
+                  <div class="trust-row">
+                    <div class="glyph">ui</div>
+                    <div><div class="row-title">mobile_holographic_hmi_app</div><div class="row-meta">Display template only; action ids stay from verified WA3 plan</div></div>
+                    <span class="chip">dsdy</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </section>
+
+          <nav class="tabs" aria-label="Preview tabs">
+            <button class="tab active" type="button" data-tab-target="board" aria-label="Board">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h10"></path></svg>
+              Board
+            </button>
+            <button class="tab" type="button" data-tab-target="compose" data-action-id="submit_message" aria-label="Compose">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
+              Write
+            </button>
+            <button class="tab" type="button" data-tab-target="filter" aria-label="Reactions">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16"></path><path d="M7 12h10"></path><path d="M10 17h4"></path></svg>
+              Matrix
+            </button>
+            <button class="tab" type="button" data-tab-target="trust" aria-label="Trust">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5c0 5 3 8 7 10 4-2 7-5 7-10V6l-7-3Z"></path></svg>
+              Trust
+            </button>
+          </nav>
+        </div>
+
+        <div class="modal-layer" id="modalLayer" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+          <div class="modal">
+            <div class="eyebrow" id="modalAction">wa3-core confirm</div>
+            <h2 id="modalTitle">Confirm action</h2>
+            <p id="modalBody"></p>
+            <div class="modal-actions">
+              <button class="secondary" type="button" id="modalCancel">Cancel</button>
+              <button class="primary" type="button" id="modalConfirm">Confirm</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="toast" id="toast" role="status" aria-live="polite">
+          <div class="glyph">ok</div>
+          <div><strong id="toastTitle">Action recorded</strong><span id="toastBody">Mock state updated locally.</span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const actions = {
+      read_messages: { mutates: false, confirm: false },
+      search_messages: { mutates: false, confirm: false },
+      submit_message: { mutates: true, confirm: true },
+      react: { mutates: true, confirm: true },
+      block_user: { mutates: true, confirm: true },
+      unblock_user: { mutates: true, confirm: true }
+    };
+
+    const reactionLabels = {
+      like: "+",
+      question: "?",
+      angry: "!",
+      pat: "*",
+      down: "-"
+    };
+
+    const STORAGE_KEY = "wa3.mobile_hmi_board.messages.v1";
+
+    const defaultMessages = [
+      {
+        id: "m-101",
+        author: "Ada",
+        title: "Morning checkpoint",
+        text: "The board contract renders as a local HMI shell. Actions are visible, but provider calls stay disabled until trust is valid.",
+        created_at: "2026-06-28T09:12:00Z",
+        like: 7,
+        question: 1,
+        angry: 0,
+        pat: 2,
+        down: 0,
+        blocked: false
+      },
+      {
+        id: "m-102",
+        author: "Lin",
+        title: "Reaction binding",
+        text: "Every reaction pill reports action_id=react with target and mood. The mock core asks for confirmation before updating state.",
+        created_at: "2026-06-28T09:18:00Z",
+        like: 5,
+        question: 2,
+        angry: 0,
+        pat: 4,
+        down: 1,
+        blocked: false
+      },
+      {
+        id: "m-103",
+        author: "Kai",
+        title: "Trust rail",
+        text: "The source file includes placeholder key material, so this preview keeps a visible invalid-signature status.",
+        created_at: "2026-06-28T09:26:00Z",
+        like: 3,
+        question: 3,
+        angry: 1,
+        pat: 1,
+        down: 0,
+        blocked: false
+      }
+    ];
+
+    function loadMessages() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (!saved) return [...defaultMessages];
+        const parsed = JSON.parse(saved);
+        if (!Array.isArray(parsed)) return [...defaultMessages];
+        return parsed.map((message) => ({ ...message }));
+      } catch {
+        return [...defaultMessages];
+      }
+    }
+
+    function saveMessages() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+      } catch {
+        showToast("Storage unavailable", "Mock state updated in memory only.");
+      }
+    }
+
+    let messages = loadMessages();
+
+    let query = "";
+    let pending = null;
+    let toastTimer = null;
+
+    const $ = (selector) => document.querySelector(selector);
+    const list = $("#messageList");
+    const searchInput = $("#searchInput");
+
+    function formatTime(value) {
+      const date = new Date(value);
+      return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    }
+
+    function initials(author) {
+      return (author || "?").slice(0, 1).toUpperCase();
+    }
+
+    function filteredMessages() {
+      const q = query.trim().toLowerCase();
+      if (!q) return messages;
+      return messages.filter((msg) => [msg.author, msg.title, msg.text].join(" ").toLowerCase().includes(q));
+    }
+
+    function iconButton(action, message) {
+      const blocked = message.blocked;
+      const id = blocked ? "unblock_user" : "block_user";
+      const title = blocked ? "Unblock author" : "Block author";
+      const path = blocked
+        ? '<path d="M8 11V8a4 4 0 0 1 7.5-2"></path><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M12 15v2"></path>'
+        : '<rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path><path d="M12 15v2"></path>';
+      return `<button class="square-btn" type="button" data-action-id="${id}" data-message-id="${message.id}" title="${title}" aria-label="${title}">
+        <svg viewBox="0 0 24 24" aria-hidden="true">${path}</svg>
+      </button>`;
+    }
+
+    function renderMessages() {
+      const visible = filteredMessages();
+      $("#resultCount").textContent = `${visible.length} items`;
+      list.innerHTML = visible.map((message) => {
+        const reactionButtons = Object.keys(reactionLabels).map((mood) => {
+          return `<button class="reaction" type="button" data-action-id="react" data-message-id="${message.id}" data-mood="${mood}" aria-label="React ${mood}">
+            <span>${reactionLabels[mood]}</span><b>${message[mood] || 0}</b>
+          </button>`;
+        }).join("");
+        return `<article class="message-card ${message.blocked ? "blocked" : ""}" data-message-id="${message.id}">
+          <div class="message-top">
+            <div class="author">
+              <div class="avatar" aria-hidden="true">${initials(message.author)}</div>
+              <div><b>${escapeHTML(message.author)}</b><div class="time">${formatTime(message.created_at)}</div></div>
+            </div>
+            <div class="mini-actions">${iconButton("block_user", message)}</div>
+          </div>
+          <h3>${escapeHTML(message.title)}</h3>
+          <p>${escapeHTML(message.blocked ? "Author hidden in this local preview." : message.text)}</p>
+          <div class="reaction-row">${reactionButtons}</div>
+        </article>`;
+      }).join("");
+      renderStats();
+    }
+
+    function renderStats() {
+      const totals = Object.keys(reactionLabels).reduce((acc, key) => {
+        acc[key] = messages.reduce((sum, msg) => sum + Number(msg[key] || 0), 0);
+        return acc;
+      }, {});
+      const totalReactions = Object.values(totals).reduce((sum, count) => sum + count, 0);
+      $("#statMessages").textContent = messages.length;
+      $("#statBlocked").textContent = messages.filter((msg) => msg.blocked).length;
+      $("#statReact").textContent = totalReactions;
+      $("#reactionSummary").innerHTML = Object.keys(reactionLabels).map((key) => {
+        return `<div class="filter-row">
+          <div class="glyph">${reactionLabels[key]}</div>
+          <div><div class="row-title">${key}</div><div class="row-meta">action_id=react / mood=${key}</div></div>
+          <span class="chip">${totals[key]}</span>
+        </div>`;
+      }).join("");
+    }
+
+    function escapeHTML(value) {
+      return String(value).replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      })[char]);
+    }
+
+    function switchTab(name) {
+      document.querySelectorAll(".page").forEach((page) => {
+        const active = page.dataset.page === name;
+        page.classList.toggle("active", active);
+        page.hidden = !active;
+        page.setAttribute("aria-hidden", active ? "false" : "true");
+      });
+      document.querySelectorAll(".tab").forEach((tab) => tab.classList.toggle("active", tab.dataset.tabTarget === name));
+    }
+
+    function showToast(title, body) {
+      clearTimeout(toastTimer);
+      $("#toastTitle").textContent = title;
+      $("#toastBody").textContent = body;
+      $("#toast").classList.add("show");
+      toastTimer = setTimeout(() => $("#toast").classList.remove("show"), 2600);
+    }
+
+    function requestConfirm(actionId, summary, apply) {
+      const action = actions[actionId];
+      if (!action || !action.confirm) {
+        apply();
+        return;
+      }
+      pending = apply;
+      $("#modalAction").textContent = `action_id=${actionId}`;
+      $("#modalTitle").textContent = actionId === "block_user" ? "Confirm block" : actionId === "unblock_user" ? "Confirm unblock" : "Confirm mutation";
+      $("#modalBody").textContent = summary;
+      $("#modalLayer").classList.add("open");
+    }
+
+    function closeModal() {
+      pending = null;
+      $("#modalLayer").classList.remove("open");
+    }
+
+    document.addEventListener("click", (event) => {
+      const tab = event.target.closest("[data-tab-target]");
+      if (tab) {
+        switchTab(tab.dataset.tabTarget);
+      }
+
+      const actionButton = event.target.closest("[data-action-id]");
+      if (!actionButton) return;
+
+      const actionId = actionButton.dataset.actionId;
+      if (actionId === "react" && actionButton.dataset.messageId) {
+        const message = messages.find((msg) => msg.id === actionButton.dataset.messageId);
+        const mood = actionButton.dataset.mood;
+        requestConfirm("react", `Update ${message.title} with mood=${mood}.`, () => {
+          message[mood] += 1;
+          saveMessages();
+          renderMessages();
+          showToast("Reaction recorded", `Mock core accepted react / ${mood}.`);
+        });
+      }
+
+      if ((actionId === "block_user" || actionId === "unblock_user") && actionButton.dataset.messageId) {
+        const message = messages.find((msg) => msg.id === actionButton.dataset.messageId);
+        requestConfirm(actionId, `${actionId} for author ${message.author}.`, () => {
+          message.blocked = actionId === "block_user";
+          saveMessages();
+          renderMessages();
+          showToast(actionId === "block_user" ? "Author blocked" : "Author restored", `Mock core accepted ${actionId}.`);
+        });
+      }
+    });
+
+    searchInput.addEventListener("input", () => {
+      query = searchInput.value;
+      renderMessages();
+    });
+
+    $("#clearSearch").addEventListener("click", () => {
+      searchInput.value = "";
+      query = "";
+      renderMessages();
+      searchInput.focus();
+    });
+
+    $("#focusSearch").addEventListener("click", () => {
+      switchTab("board");
+      searchInput.focus();
+    });
+
+    $("#composeForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const form = new FormData(event.currentTarget);
+      const newMessage = {
+        id: `m-${Date.now()}`,
+        author: form.get("author").toString().trim(),
+        title: form.get("title").toString().trim(),
+        text: form.get("text").toString().trim(),
+        created_at: new Date().toISOString(),
+        like: 0,
+        question: 0,
+        angry: 0,
+        pat: 0,
+        down: 0,
+        blocked: false
+      };
+      requestConfirm("submit_message", `Create message "${newMessage.title}" in mock://board.`, () => {
+        messages = [newMessage, ...messages];
+        saveMessages();
+        event.currentTarget.reset();
+        event.currentTarget.author.value = "Marf";
+        renderMessages();
+        switchTab("board");
+        showToast("Message added", "Mock core accepted submit_message.");
+      });
+    });
+
+    $("#modalCancel").addEventListener("click", closeModal);
+    function confirmPendingAction(event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      if (pending) pending();
+      closeModal();
+    }
+    $("#modalConfirm").addEventListener("click", confirmPendingAction);
+    $("#modalConfirm").addEventListener("pointerdown", confirmPendingAction);
+    $("#modalConfirm").addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") confirmPendingAction(event);
+    });
+    $("#modalLayer").addEventListener("click", (event) => {
+      const rect = $("#modalConfirm").getBoundingClientRect();
+      const insideConfirm = event.clientX >= rect.left &&
+        event.clientX <= rect.right &&
+        event.clientY >= rect.top &&
+        event.clientY <= rect.bottom;
+      if (insideConfirm) confirmPendingAction(event);
+    }, true);
+    $("#modalLayer").addEventListener("pointerdown", (event) => {
+      const rect = $("#modalConfirm").getBoundingClientRect();
+      const insideConfirm = event.clientX >= rect.left &&
+        event.clientX <= rect.right &&
+        event.clientY >= rect.top &&
+        event.clientY <= rect.bottom;
+      if (insideConfirm) confirmPendingAction(event);
+    }, true);
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeModal();
+    });
+
+    renderMessages();
+  </script>
+</body>
+</html>

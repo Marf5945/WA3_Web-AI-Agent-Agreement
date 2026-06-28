@@ -38,6 +38,11 @@ when turning a verified WA3 UI plan into an interface.
 3. Extract only the framework of the experience:
    layout regions/grid/viewport, `font_stack`, density, radius, colors, effects,
    component shape/states/role, WA3 block mapping, and interaction guidance.
+   For overlays, drawers, modals, bottom navigation, fixed headers, scanlines,
+   glow layers, particles, and device frames, capture display-only reachability
+   constraints: which layers are decorative, which controls must stay on top,
+   what safe-area padding is needed, and whether submit/confirm controls must
+   remain reachable by pointer, keyboard, and assistive technology.
 4. Exclude content and operable semantics:
    real copy, true button labels, true action ids, backend targets, provider
    names, policy, permissions, secrets, source asset references, executable
